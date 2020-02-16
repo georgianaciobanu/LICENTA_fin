@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
+import com.example.proiect_licenta.view.LoginActivity;
+import com.example.proiect_licenta.view.SignUpClientActivity;
+import com.example.proiect_licenta.view.SignUpServiceActivity;
 
 public class MainActivity extends AppCompatActivity {
 

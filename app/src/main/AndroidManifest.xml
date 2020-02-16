@@ -19,12 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchedServiceActivity"></activity>
-        <activity android:name=".TrimiteCerereActivity" />
-        <activity android:name=".ServicesListActivity" />
-        <activity android:name=".AboutServiceActivity" />
-        <activity android:name=".RequestDetailsActivity" />
-        <activity android:name=".HomeScreenServiceActivity" />
+        <activity android:name=".view.SearchedServiceActivity"></activity>
+        <activity android:name=".presenter.TrimiteCerereActivity" />
+        <activity android:name=".view.ServicesListActivity" />
+        <activity android:name=".view.AboutServiceActivity" />
+        <activity android:name=".view.RequestDetailsActivity" />
+        <activity android:name=".view.HomeScreenServiceActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -33,14 +33,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".SearchLocationActivity" />
-        <activity android:name=".AddServicesListActivity" />
-        <activity android:name=".SignUpServiceProfile2Activity" />
-        <activity android:name=".SignUpServiceProfileActivity" />
-        <activity android:name=".SignUpServiceActivity" />
-        <activity android:name=".HomeScreenClientActivity" />
-        <activity android:name=".SignUpClientActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".view.SearchLocationActivity" />
+        <activity android:name=".view.AddServicesListActivity" />
+        <activity android:name=".view.SignUpServiceProfile2Activity" />
+        <activity android:name=".view.SignUpServiceProfileActivity" />
+        <activity android:name=".view.SignUpServiceActivity" />
+        <activity android:name=".view.HomeScreenClientActivity" />
+        <activity android:name=".view.SignUpClientActivity" />
+        <activity android:name=".view.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

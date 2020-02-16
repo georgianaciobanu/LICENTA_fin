@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
 
-    tools:context=".SignUpServiceActivity">
+    tools:context=".view.SignUpServiceActivity">
     <TextView
         android:id="@+id/TWsignUp"
         android:layout_width="wrap_content"

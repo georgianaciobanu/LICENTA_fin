@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/gradient"
-    tools:context=".HomeScreenServiceActivity"
+    tools:context=".view.HomeScreenServiceActivity"
     tools:openDrawer="start">
 
     <LinearLayout
