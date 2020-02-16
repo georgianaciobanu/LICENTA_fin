@@ -34,17 +34,13 @@ public class SignUpServiceProfile2Activity extends AppCompatActivity implements 
         pc = (CheckBox) findViewById(R.id.Cbox_PC);
         electocasnice = (CheckBox) findViewById(R.id.Cbox_Electrocasnice);
         masini = (CheckBox) findViewById(R.id.Cbox_Masina);
-
-
         completeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getProduse();
             }
         });
-
     }
-
 
     public void goToAddServicesList() {
         Intent itServ = new Intent(this, AddServicesListActivity.class);
@@ -86,17 +82,11 @@ public class SignUpServiceProfile2Activity extends AppCompatActivity implements 
         if (produse.size() == 0) {
             Toast.makeText(getApplicationContext(), "Completarea campurilor este obligatorie", Toast.LENGTH_LONG).show();
         } else {
-
             for (String prod : produse) {
-
                 Toast.makeText(SignUpServiceProfile2Activity.this, prod + " ", Toast.LENGTH_LONG).show();
-
             }
-
             Toast.makeText(getApplicationContext(), "Adresa: " + adresaService, Toast.LENGTH_LONG).show();
             goToAddServicesList();
         }
-
-
     }
 }

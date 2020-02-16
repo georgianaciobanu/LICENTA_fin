@@ -98,7 +98,6 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
 
     }
 
-
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         EditText e = (EditText) v;

@@ -39,7 +39,6 @@ public class HomeScreenServiceActivity extends AppCompatActivity implements Navi
                    new ServiceProfileFragment()).commit();
            navigationView.setCheckedItem(R.id.it_serviceProfile);
        }
-
    }
 
     @Override

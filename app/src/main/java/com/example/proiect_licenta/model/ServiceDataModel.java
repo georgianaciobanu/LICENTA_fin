@@ -20,6 +20,4 @@ public class ServiceDataModel {
     public String getAdresa() {
         return adresa;
     }
-
-
 }

@@ -19,20 +19,13 @@ import com.example.proiect_licenta.view.SearchedServiceActivity;
  * A simple {@link Fragment} subclass.
  */
 public class SearchServiceFragment extends Fragment {
-
-
     Button cauta;
     ListView listView;
 
-
-
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        listView= (ListView)  view.findViewById(R.id.listViewService);
-
-
+        listView = (ListView) view.findViewById(R.id.listViewService);
         cauta = (Button) view.findViewById(R.id.btn_search);
         cauta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,15 +33,11 @@ public class SearchServiceFragment extends Fragment {
                 goToServicesList();
             }
         });
-
-     return view;
+        return view;
     }
 
     public void goToServicesList() {
         Intent it = new Intent(getActivity(), SearchedServiceActivity.class);
         startActivity(it);
-
     }
-
-
 }

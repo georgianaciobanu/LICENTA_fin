@@ -80,11 +80,7 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         completeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 goToLocationScreenService();
-
-
             }
         });
 

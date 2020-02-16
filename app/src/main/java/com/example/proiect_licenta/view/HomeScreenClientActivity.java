@@ -17,13 +17,8 @@ import com.example.proiect_licenta.R;
 
 
 public class HomeScreenClientActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-
     Toolbar toolbar;
     DrawerLayout drawer;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +42,7 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                     new SearchServiceFragment()).commit();
             navigationView.setCheckedItem(R.id.it_search);
         }
-
-
-
-
     }
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -90,8 +79,6 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         startActivity(it);
 
     }
-
-
 
     @Override
     public void onBackPressed() {

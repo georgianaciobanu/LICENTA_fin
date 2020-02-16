@@ -27,11 +27,11 @@ public class SearchedServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_searched_service);
 
 
-        listView=(ListView)findViewById(R.id.list_searchedService);
+        listView = (ListView) findViewById(R.id.list_searchedService);
 
-        dataModels= new ArrayList<>();
+        dataModels = new ArrayList<>();
 
-        Service currentService= new Service();
+        Service currentService = new Service();
 
         currentService.setDescriere("Service GSM.info promoveaza servicii si solutii de intretinere, reparatie si reconditionare, pentru dizpozitivele smartphone, telefoane GSM, tablete GPS-uri si alte echipamente mobile.");
         currentService.setEmail("servicegsm@gmil.com");
@@ -42,7 +42,7 @@ public class SearchedServiceActivity extends AppCompatActivity {
         currentService.setTelefon("0723.50.30.50");
         currentService.setUsername("servicegsm");
 
-        final PhysicalLocation serviceLocation= new PhysicalLocation();
+        final PhysicalLocation serviceLocation = new PhysicalLocation();
 
         serviceLocation.setAdresa("Bulevardul Regina Elisabeta Nr.35, Ap.6, Et.1, Interfon 006, Sector 5, Bucuresti");
         serviceLocation.setLatitudine(44.434744);
@@ -51,29 +51,24 @@ public class SearchedServiceActivity extends AppCompatActivity {
         dataModels.add(new ServiceDataModel(currentService.getNumeService(), serviceLocation.getAdresa()));
         dataModels.add(new ServiceDataModel("SERVICE MASINI", "Android 1.1"));
         dataModels.add(new ServiceDataModel("SERVICE ELECTROCASNICE", "Android 1.5"));
-        dataModels.add(new ServiceDataModel("SERVICE LAPTOP","Android 1.6"));
+        dataModels.add(new ServiceDataModel("SERVICE LAPTOP", "Android 1.6"));
 
 
-        adapter= new ServiceAdapter(getApplicationContext(),dataModels);
+        adapter = new ServiceAdapter(getApplicationContext(), dataModels);
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                    Intent itServ = new Intent(getApplicationContext(), AboutServiceActivity.class);
-
-                    startActivity(itServ);
-
-                }
+                Intent itServ = new Intent(getApplicationContext(), AboutServiceActivity.class);
+                startActivity(itServ);
+            }
 
 
         });
 
 
     }
-
 
 
 }

@@ -107,16 +107,6 @@ public class AboutServiceActivity extends AppCompatActivity {
         String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Uri gmmIntentUri = Uri.parse("geo:0,0?q=");
-//                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//                mapIntent.setPackage("com.google.android.apps.maps");
-//                startActivity(mapIntent);
-//            }
-//        }, 1000);
     }
 
     public void setInfoService(Service currentService, PhysicalLocation servLoc) {

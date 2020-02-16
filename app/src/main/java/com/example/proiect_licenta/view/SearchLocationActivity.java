@@ -54,7 +54,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
     double longitude;
     double latitude;
-    Button finish;
+    Button btnFinish;
     ImageView clearIc;
     private LocationManager locationManager;
     String adresaService;
@@ -76,7 +76,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
     MarkerOptions markerOptions = new MarkerOptions();
 
     private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
-        Log.d(TAG, "getCompleteAddressString" +  LATITUDE + " " +  LONGITUDE);
+        Log.d(TAG, "getCompleteAddressString" + LATITUDE + " " + LONGITUDE);
         String strAdd = "";
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
@@ -98,7 +98,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
             Log.w(TAG, "Canont get Address!");
         }
 
-        Log.d(TAG, "getCompleteAddressString" +  strAdd);
+        Log.d(TAG, "getCompleteAddressString" + strAdd);
         return strAdd;
     }
 
@@ -151,6 +151,83 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d(TAG, "onLocationChanged");
+        longitude = location.getLongitude();
+        latitude = location.getLatitude();
+        address = getCompleteAddressString(latitude, longitude);
+        Log.d(TAG, "onLocationChanged adress: " + address);
+        mSearchText.setText(address);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d(TAG, "onStatusChanged");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.d(TAG, "onProviderEnabled");
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult");
+        mLocationPermissionsGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionsGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                    }
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                    mLocationPermissionsGranted = true;
+                    // map initialisation
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                    mapFragment.getMapAsync(SearchLocationActivity.this);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.d(TAG, "onProviderDisabled");
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
+        setContentView(R.layout.activity_search_location);
+
+        currentLocation = new PhysicalLocation();
+        Intent i = getIntent();
+        adresaService = (String) i.getSerializableExtra("adresa");
+
+        mSearchText = (AutoCompleteTextView) findViewById(R.id.et_searchLocation);
+        mGps = (ImageView) findViewById(R.id.ic_loc);
+        btnFinish = (Button) findViewById(R.id.BTN_finish_service_register);
+        clearIc = (ImageView) findViewById(R.id.ic_clear);
+        checkLocationPermission();
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /*
+                location selected
+             */
+            public void onClick(View v) {
+                setPhysicalLocationService();
+            }
+        });
+    }
+
     public void onSearchClick(View v) {
 
         Log.d(TAG, "onSearchClick");
@@ -190,29 +267,6 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
-        setContentView(R.layout.activity_search_location);
-
-        currentLocation = new PhysicalLocation();
-        Intent i = getIntent();
-        adresaService = (String) i.getSerializableExtra("adresa");
-
-        mSearchText = (AutoCompleteTextView) findViewById(R.id.et_searchLocation);
-        mGps = (ImageView) findViewById(R.id.ic_loc);
-        finish = (Button) findViewById(R.id.BTN_finish_service_register);
-        clearIc = (ImageView) findViewById(R.id.ic_clear);
-        getLocationPermission();
-        finish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getLocation();
-            }
-        });
-    }
-
     public void goToHomeScreen() {
         Log.d(TAG, "goToHomeScreen");
         Intent it = new Intent(this, HomeScreenServiceActivity.class);
@@ -245,7 +299,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
             }
         });
 
-        hideSoftKeyboard();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void geoLocate() {
@@ -260,6 +314,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
 
+            checkLocationPermission();
             return;
         }
         /*
@@ -268,7 +323,6 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         Log.d(TAG, "geoLocate: geolocating");
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        mSearchText.setText(getCompleteAddressString(address.getLatitude(), address.getLongitude()));
         final Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
         double lat = markerOptions.getPosition().latitude;
         double lng = markerOptions.getPosition().longitude;
@@ -325,27 +379,23 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
             mMap.addMarker(options);
         }
 
-        hideSoftKeyboard();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    private void initMap() {
-        Log.d(TAG, "initMap: initializing map");
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-        mapFragment.getMapAsync(SearchLocationActivity.this);
-    }
-
-    private void getLocationPermission() {
+    private void checkLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permissions");
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION};
+        String[] permissions = {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        };
 
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionsGranted = true;
-                initMap();
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                mapFragment.getMapAsync(SearchLocationActivity.this);
             } else {
                 ActivityCompat.requestPermissions(this,
                         permissions,
@@ -358,74 +408,19 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult");
-        mLocationPermissionsGranted = false;
-
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionsGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
-                            return;
-                        }
-                    }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
-                    mLocationPermissionsGranted = true;
-                    //initialize our map
-                    initMap();
-                }
-            }
-        }
-    }
-
-    private void hideSoftKeyboard() {
-        Log.d(TAG, "hideSoftKeyboard");
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged");
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
-        address = getCompleteAddressString(latitude, longitude);
-        Log.d(TAG, "onLocationChanged adress: " + address);
-        mSearchText.setText(address);
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d(TAG, "onStatusChanged");
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Log.d(TAG, "onProviderEnabled");
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Log.d(TAG, "onProviderDisabled");
-
-    }
-
-    public void getLocation() {
+    /*
+        setPhysicalLocationService gets geo location and
+        details about service on the map and inserts them
+        into the DB
+     */
+    public void setPhysicalLocationService() {
         Log.d(TAG, "getLocation");
         if (longitude != 0 && latitude != 0 && mSearchText.getText().toString().isEmpty() != true) {
 
             currentLocation.setLatitudine(latitude);
             currentLocation.setLogitudine(longitude);
             currentLocation.setAdresa(adresaService);
-
-
             if (currentLocation == null) {
-
                 Toast.makeText(SearchLocationActivity.this, "Nu exista locatie", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(SearchLocationActivity.this, "Locatia este " + address, Toast.LENGTH_LONG).show();
@@ -435,7 +430,6 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 //                        + currentLocation.getAdresa(), Toast.LENGTH_LONG).show();
                 goToHomeScreen();
             }
-
         }
     }
 }

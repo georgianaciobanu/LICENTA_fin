@@ -49,7 +49,6 @@ public class ProductsAdaptor extends ArrayAdapter<ProductsItem> {
             imageViewFlag.setImageResource(currentItem.getIcon());
             textViewName.setText(currentItem.getProdus());
         }
-
         return convertView;
     }
 }

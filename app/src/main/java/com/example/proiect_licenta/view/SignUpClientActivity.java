@@ -14,7 +14,7 @@ import com.example.proiect_licenta.R;
 
 import java.util.regex.Pattern;
 
-public class SignUpClientActivity extends AppCompatActivity implements View.OnFocusChangeListener{
+public class SignUpClientActivity extends AppCompatActivity implements View.OnFocusChangeListener {
     Button register;
     EditText username;
     EditText email;
@@ -38,43 +38,34 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_client);
 
-        register=(Button)findViewById(R.id.regButton);
-        username=(EditText)findViewById(R.id.et_username);
-        email=(EditText)findViewById(R.id.et_mail);
-        telefon=(EditText)findViewById(R.id.et_telefon);
-        pass=(EditText)findViewById(R.id.et_pass);
-        comfirmedPass=(EditText)findViewById(R.id.et_confPass);
+        register = (Button) findViewById(R.id.regButton);
+        username = (EditText) findViewById(R.id.et_username);
+        email = (EditText) findViewById(R.id.et_mail);
+        telefon = (EditText) findViewById(R.id.et_telefon);
+        pass = (EditText) findViewById(R.id.et_pass);
+        comfirmedPass = (EditText) findViewById(R.id.et_confPass);
         username.setText("username client");
-        email.setText("client@mail.com" );
+        email.setText("client@mail.com");
         telefon.setText("0789554333");
         pass.setText("pass123!");
         comfirmedPass.setText("pass123!");
-
         username.setOnFocusChangeListener(this);
         email.setOnFocusChangeListener(this);
         telefon.setOnFocusChangeListener(this);
         pass.setOnFocusChangeListener(this);
         comfirmedPass.setOnFocusChangeListener(this);
-
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateUsername() && validateEmail() && validateTelefon() && validatePassword()){
+                if (validateUsername() && validateEmail() && validateTelefon() && validatePassword()) {
                     inregistrareClient();
-
-                }
-                else {
-
+                } else {
                     Toast.makeText(getApplicationContext(), "Completarea campurilor este obligatorie", Toast.LENGTH_LONG).show();
                 }
             }
 
 
         });
-
-
-
     }
 
     public void goToHomeScreenClient() {
@@ -88,8 +79,7 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
         if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             email.setError("Introduceti o adresa de email valida");
             return false;
-        }
-        else {
+        } else {
             email.setError(null);
             return true;
         }
@@ -121,12 +111,10 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
 
     private boolean validatePassword() {
         String passwordInput = pass.getText().toString().trim();
-
         if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             pass.setError("Parola prea usoara");
             return false;
-        }
-        else if((pass.getText().toString()).equals(comfirmedPass.getText().toString())){
+        } else if ((pass.getText().toString()).equals(comfirmedPass.getText().toString())) {
             pass.setError(null);
             return true;
         } else {
@@ -148,7 +136,6 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
                 e.setBackgroundResource(R.drawable.edittext_style);
             }
         }
-
         validateEmail();
         validateUsername();
         validatePassword();
@@ -156,15 +143,15 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
     }
 
 
-    public  void inregistrareClient() {
+    public void inregistrareClient() {
 
-        Client clientNou= new Client();
+        Client clientNou = new Client();
         clientNou.setUsername(username.getText().toString());
         clientNou.setEmail(email.getText().toString());
         clientNou.setTelefon(telefon.getText().toString());
         clientNou.setPass(pass.getText().toString());
 
-        if(clientNou!=null) {
+        if (clientNou != null) {
             Toast.makeText(SignUpClientActivity.this, "Client inregistrat: "
                     + clientNou.getUsername() + " "
                     + clientNou.getEmail() + " "

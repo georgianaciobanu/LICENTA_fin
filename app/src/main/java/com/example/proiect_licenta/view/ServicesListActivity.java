@@ -21,7 +21,7 @@ public class ServicesListActivity extends AppCompatActivity {
 
     ListView listView;
     String mTitle[] = {"Electrocasnice serviciu ", "Telefon/Tableta serviciu", "Masina serviciu", "PC/Laprop serviciu"};
-    Float mPrice[] = {21f,56f,80f,70.6f};
+    Float mPrice[] = {21f, 56f, 80f, 70.6f};
     int images[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
 
     @Override
@@ -35,26 +35,23 @@ public class ServicesListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position ==  0) {
+                if (position == 0) {
                     Toast.makeText(ServicesListActivity.this, "21f", Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  0) {
+                if (position == 0) {
                     Toast.makeText(ServicesListActivity.this, "56f", Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  0) {
+                if (position == 0) {
                     Toast.makeText(ServicesListActivity.this, "80f", Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  0) {
+                if (position == 0) {
                     Toast.makeText(ServicesListActivity.this, "70.6f", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 
     class MyAdapter extends ArrayAdapter<String> {
@@ -64,7 +61,7 @@ public class ServicesListActivity extends AppCompatActivity {
         Float mPrice[];
         int rImgs[];
 
-        MyAdapter (Context c, String title[], Float mPrice[], int imgs[]) {
+        MyAdapter(Context c, String title[], Float mPrice[], int imgs[]) {
             super(c, R.layout.row, R.id.textView1, title);
             this.context = c;
             this.rTitle = title;
@@ -76,20 +73,14 @@ public class ServicesListActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView myTitle = row.findViewById(R.id.textView1);
             TextView myDescription = row.findViewById(R.id.textView2);
-
-
             images.setImageResource(rImgs[position]);
             myTitle.setText(rTitle[position]);
             myDescription.setText(mPrice[position].toString());
-
-
-
-
             return row;
         }
     }
