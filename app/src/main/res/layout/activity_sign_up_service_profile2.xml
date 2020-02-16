@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".SignUpServiceProfile2Activity">
+
+
+    <TextView
+        android:id="@+id/TWceRepari"
+        android:layout_width="370dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/TWceRepari"
+        android:textColor="@color/colorBlue"
+        android:textSize="18dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/Cbox_PC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/Cbox_PC"
+        android:textColor="@color/colorBlue"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toStartOf="@+id/Cbox_Electrocasnice"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TWceRepari" />
+
+    <CheckBox
+        android:id="@+id/Cbox_Telefon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/Cbox_Telefon"
+        android:textColor="@color/colorBlue"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cbox_Electrocasnice" />
+
+    <CheckBox
+        android:id="@+id/Cbox_Masina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="55dp"
+        android:text="@string/Cbox_Masina"
+        android:textColor="@color/colorBlue"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toStartOf="@+id/Cbox_Telefon"
+        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cbox_PC" />
+
+    <CheckBox
+        android:id="@+id/Cbox_Electrocasnice"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/Cbox_Electrocasnice"
+        android:textColor="@color/colorBlue"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TWceRepari" />
+
+    <Button
+        android:id="@+id/BTNprofileRegisterService3"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="156dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_config"
+        android:text="@string/BTNprofileRegisterService3"
+        android:textColor="@color/colorBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cbox_Masina"
+        app:layout_constraintVertical_bias="0.0">
+
+    </Button>
+
+
+</android.support.constraint.ConstraintLayout>

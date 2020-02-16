@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorBlue">#B0E0E6</color>
+
+    <color name="Silver">#dcdcdc</color>
+
+    <color name="primaryDrawer">#795548 </color>
+    <color name="primaryDarkDrawer">#5D4037</color>
+    <color name="whiteDrawer">#ffffff</color>
+    <color name="darkGrayDrawer">#6c6c6c</color>
+    <color name="teacherBackground">#E4F6FE</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="gradStart">#56CCF2</color>
+    <color name="centerColor">#aeea8e</color>
+    <color name="gradStop">#2F80ED</color>
+    <color name="teacherActivGradientStart">#b3e0ff</color>
+    <color name="teacherActivGradientStop">#6A93CB</color>
+    <color name="teachersResultsHeaderColor">#E8E8E8	</color>
+    <color name="teachersResultsListViewItemsColor">#29539B	</color>
+    <color name="Black">#000000</color>
+    <color name="startblue">#09c6df</color>
+    <color name="endblue">#0bcce6</color>
+    <color name="gray">#fafafa</color>
+
+    <color name="grennery">#6fb98f</color>
+    <color name="rain">#2C7873</color>
+    <color name="cadet_blue">#004445</color>
+    <color name="blue_black">#021C1E</color>
+    <color name="aquamarine">#98DBc6</color>
+    <color name="turquoise">#5bc8ac</color>
+    <color name="sea">#20948b</color>
+    <color name="lagoon">#6ab187</color>
+    <color name="paleblue">#3f79bf</color>
+    <color name="strongBlue">#0a57cf</color>
+    <color name="middleBlue">#fe336dc2</color>
+    <color name="skyBlue">#3d96c6</color>
+    <color name="red">#d90424</color>
+    <color name="lightBlue">#c1e1f7</color>
+    <color name="sunset">#FB6542</color>
+    <color name="sunflower">#FFBB00</color>
+    <color name="grass">#3f681c</color>
+    <color name="sandstone">#f4cc70</color>
+    <color name="burnt_orange">#de7a22</color>
+    <color name="crimson">#8d230f</color>
+    <color name="gold">#c99e10</color>
+    <color name="glacier_blue">#1995ad</color>
+    <color name="sunglow">#d9b44a</color>
+    <color name="mist">#acd0c0</color>
+    <color name="blush">#d09683</color>
+    <color name="rust">#aa4b41</color>
+
+</resources>

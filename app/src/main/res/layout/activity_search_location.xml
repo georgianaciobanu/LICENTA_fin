@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".SearchLocationActivity">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="618dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="70dp"
+        tools:context=".SearchLocationActivity" />
+
+    <RelativeLayout
+        android:id="@+id/relLay_searchLocation"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/white_border"
+        android:elevation="10dp"
+        tools:layout_editor_absoluteX="10dp">
+
+        <ImageView
+            android:id="@+id/ic_search"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="370dp"
+            android:layout_marginEnd="1dp"
+            android:onClick="onClick"
+            android:src="@drawable/ic_action_search" />
+
+        <AutoCompleteTextView
+            android:id="@+id/et_searchLocation"
+            android:layout_width="350dp"
+            android:layout_height="42dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+
+            android:layout_marginLeft="-400dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toStartOf="@+id/ic_search"
+            android:layout_toRightOf="@id/ic_search"
+            android:background="@null"
+            android:hint="@string/et_searchLocation"
+            android:imeOptions="actionSearch"
+            android:textColor="#000"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/relLay_searchLocation"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/ic_loc"
+        android:src="@drawable/ic_gps"/>
+
+    <ImageView
+        android:id="@+id/ic_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_alignStart="@+id/relLay_searchLocation"
+        android:layout_alignTop="@+id/relLay_searchLocation"
+        android:layout_alignEnd="@+id/relLay_searchLocation"
+        android:layout_alignBottom="@+id/relLay_searchLocation"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="358dp"
+        android:layout_marginBottom="-44dp"
+        app:srcCompat="@drawable/ic_clear" />
+
+    <Button
+        android:id="@+id/BTN_finish_service_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/map"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="-69dp"
+        android:background="@drawable/button_config"
+        android:text="@string/BTN_finish_service_register"
+        android:textColor="@color/colorBlue" />
+
+
+
+</RelativeLayout>

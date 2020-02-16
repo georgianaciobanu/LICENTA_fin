@@ -1,0 +1,121 @@
+<resources>
+    <string name="app_name">proiect_licenta</string>
+    MAIN ACTIVITY
+    <string name="BTNlogin">LOGIN</string>
+    <string name="BTNsignUpClient">I am  client</string>
+    <string name="TWregister">REGISTER</string>
+    <string name="BTNsignUpService">I am  service</string>
+    LOGIN ACTIVITY
+    <string name="et_login_mail"></string>
+    <string name="et_login_pass"></string>
+    <string name="TWforgetpass">Forgot password?</string>
+    <string name="CardView_btnlogin"></string>
+    <string name="TWlogin">LOGIN</string>
+
+    SIGN UP ACTIVITY
+    <string name="TWsignUp">Register now</string>
+    <string name="et_username"></string>
+    <string name="et_mail"></string>
+    <string name="et_pass"></string>
+    <string name="et_confPass"></string>
+
+    <string name="et_username_service"></string>
+    <string name="et_mail_service"></string>
+    <string name="et_pass_service"></string>
+    <string name="et_confPass_service"></string>
+
+    <string name="registerBtn">REGISTER</string>
+    <string name="BTNprofileRegisterService1">Complete your service profile</string>
+    <string name="BTNprofileRegisterService2">Complete your service profile</string>
+    <string name="BTNprofileRegisterService3">Complete your service profile</string>
+    <string name="BTNprofileRegisterService4">Complete your service profile</string>
+    <string name="fragment_container"></string>
+
+    <string name="et_serviceName">Service Name</string>
+    <string name="et_ownerName">Owner Name</string>
+    <string name="TWceRepari">Alegeti categoriile de produse
+        pe care este specializat service-ul</string>
+    <string name="Cbox_Masina">MASINA</string>
+    <string name="Cbox_PC">PC/LAPTOP</string>
+    <string name="Cbox_Telefon">TELEFON/TABLETA</string>
+    <string name="Cbox_Electrocasnice">ELECTROCASNICE</string>
+    <string name="et_descriereService">Adaugati o descriere potrivita a service-ului</string>
+    <string name="et_program">Adaugati programul de functionare a service-ului,
+        incluzand zilele saptamanii si intervalele orare aferente.</string>
+    <string name="et_adresa">Adaugati adresa completa a service-ului.</string>
+    <string name="TW_img">Adaugati doua imagini resprezentative pentru service</string>
+    <string name="tw_addServices">Oferiti clientului o lista a serviciilor de baza prestate in service</string>
+    <string name="BTN_upload">Upload</string>
+    <string name="BTN_adaugaService">Adauga in lista</string>
+    <string name="BTN_finish_service_register">Finish</string>
+    <string name="et_denumireServiciu">Denumire</string>
+    <string name="et_pretServiciu">Pretul (RON)</string>
+    <string name="spinnerCategorii"></string>
+    <string name="tw_alegeData">Alege data programarii</string>
+    <string name="tw_alegeOra">Alege ora programarii</string>
+
+    <string-array name="categoriiProduse">
+        <item>ELECTROCASNICE</item>
+        <item>MASINA</item>
+        <item>PC/LAPTOP</item>
+        <item>TELEFON/TABLETA</item>
+    </string-array>
+
+    <string name="tw_descriereService">Aici va fi descrierea service-ului din baza de date</string>
+    <string name="tw_PROGRAM">PROGRAM:</string>
+    <string name="tw_programService">Aici va fi programul de functionare a service-ului din baza de date</string>
+    <string name="tw_CONTACT">DATE DE CONTACT</string>
+    <string name="tw_TELEFON">TELEFON:</string>
+    <string name="tw_telefonService">Aici va fi numarul de telefon</string>
+    <string name="tw_MAIL">E-MAIL:</string>
+    <string name="tw_mailService">Aici va fi mailul service-ului</string>
+    <string name="tw_ADRESA">ADRESA:</string>
+    <string name="tw_adresaService">Aici va fi adresa service-ului</string>
+    <string name="tw_PROPRIETAR">PROPRIETAR:</string>
+    <string name="tw_proprietarService">Aici va fi numele propietarului service-ului</string>
+    <string name="BTN_timiteCerere">Trimite cererea</string>
+    <string name="tw_listaServicii">Lista serviciilor disponibile</string>
+    <string name="tw_NumeService">NUMELE SERVICE-ULUI</string>
+
+    <string name="tw_dataCererii">DATA: </string>
+    <string name="tw_oraCererii">ORA: </string>
+    <string name="tw_serviciuCerere">Serviciul solicitat: </string>
+    <string name="et_detaliiSuplimentare">Detalii suplimentare </string>
+    <string name="btn_trimite">Trimite cererea </string>
+    <string name="tw_cerere">CERERE </string>
+
+
+    NAVIGATION DRAWER
+
+    <string name="it_search"></string>
+    <string name="it_istoricCereri"></string>
+    <string name="it_programari"></string>
+    <string name="it_reviews"></string>
+    <string name="it_settings"></string>
+    <string name="it_logout"></string>
+    <string name="it_serviceProfile"></string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    HOME SCREEN ACTIVITY
+
+    <string name="tw_searchService">Ce doresti sa repari?</string>
+    <string name="btn_search">Cauta</string>
+
+    <string name="google_maps_api_key">AIzaSyAn1_67MVfISqpaheMXQ3s5RQahQwJnzY8</string>
+
+    <string name="et_searchLocation">Enter Address</string>
+    AIzaSyAn1_67MVfISqpaheMXQ3s5RQahQwJnzY8
+    AIzaSyCYmx3rqyLHlZhFOC8JQgMwA2OMCYwxOGY
+
+    <string name="ic_search"></string>
+    <string name="relLay_searchLocation"></string>
+    <string name="ic_loc"></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="et_detaliiServiciu">Detalii</string>
+
+</resources>

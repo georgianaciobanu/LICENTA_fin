@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view_service">
+    <item android:id="@+id/it_serviceProfile" android:title="Service Profile" android:icon="@drawable/ic_action_service_profile"/>
+    <item android:id="@+id/it_serviceHis" android:title="Lista cereri" android:icon="@drawable/ic_action_history"/>
+    <item android:id="@+id/it_favorites" android:title="Programari" android:icon="@drawable/ic_action_favorite"/>
+    <item android:id="@+id/it_reviews" android:title="Reviews" android:icon="@drawable/ic_action_review"/>
+    <item android:id="@+id/it_settings" android:title="Settings" android:icon="@drawable/ic_action_settings"/>
+    <item android:id="@+id/it_logout" android:title="Logout" android:icon="@drawable/ic_action_logout"/>
+
+</menu>
