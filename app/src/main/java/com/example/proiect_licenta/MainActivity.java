@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.proiect_licenta.view.LoginActivity;
+import com.example.proiect_licenta.view.SearchLocationActivity;
 import com.example.proiect_licenta.view.SignUpClientActivity;
 import com.example.proiect_licenta.view.SignUpServiceActivity;
 
@@ -20,11 +21,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
-        logIn=(Button)findViewById(R.id.BTNlogin);
-        signUpClient=(Button)findViewById(R.id.BTNsignUpClient);
-        signUpService=(Button) findViewById(R.id.BTNsignUpService);
+        //TODO:
+        // delete this. Just for testing MAPS
+        Intent it = new Intent(this, SearchLocationActivity.class);
+        startActivity(it);
+
+        logIn = (Button) findViewById(R.id.BTNlogin);
+        signUpClient = (Button) findViewById(R.id.BTNsignUpClient);
+        signUpService = (Button) findViewById(R.id.BTNsignUpService);
 
 
         signUpService.setOnClickListener(new View.OnClickListener() {
@@ -50,13 +58,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void goToLogin() {
         Intent it = new Intent(this, LoginActivity.class);
         startActivity(it);
 
     }
-
 
     public void goToSIGNup() {
         Intent it = new Intent(this, SignUpClientActivity.class);

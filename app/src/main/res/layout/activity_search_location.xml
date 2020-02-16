@@ -34,7 +34,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="370dp"
             android:layout_marginEnd="1dp"
-            android:onClick="onClick"
+            android:onClick="onSearchClick"
             android:src="@drawable/ic_action_search" />
 
         <AutoCompleteTextView
