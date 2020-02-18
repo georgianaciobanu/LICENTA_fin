@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.ProductsItem;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TrimiteCerereActivity extends AppCompatActivity  implements TimePickerDialog.OnTimeSetListener {
+public class TrimiteCerereActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private ArrayList<ProductsItem> listaProduse;
     private ProductsAdaptor mAdapter;
     Spinner spinner;

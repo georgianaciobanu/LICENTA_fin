@@ -1,7 +1,9 @@
 package com.example.proiect_licenta.view;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.R;
 
