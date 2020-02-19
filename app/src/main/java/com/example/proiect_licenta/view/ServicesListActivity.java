@@ -55,7 +55,7 @@ public class ServicesListActivity extends AppCompatActivity {
         });
     }
 
-    class MyAdapter extends ArrayAdapter<String> {
+    public class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
         String rTitle[];

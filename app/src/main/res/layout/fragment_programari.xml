@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     tools:context=".view.BookingFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:text="Programari Fragment"
-        android:textSize="30sp" /> />
+    <ListView
+        android:id="@+id/list_booking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 </FrameLayout>

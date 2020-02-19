@@ -15,15 +15,14 @@
 
     <application
         android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
-        tools:replace="android:appComponentFactory"
-        android:appComponentFactory="androidx.core.app.CoreComponentFactory">
-        <activity android:name=".view.SearchedServiceActivity"></activity>
+        tools:replace="android:appComponentFactory">
+        <activity android:name=".view.SearchedServiceActivity" />
         <activity android:name=".presenter.TrimiteCerereActivity" />
         <activity android:name=".view.ServicesListActivity" />
         <activity android:name=".view.AboutServiceActivity" />

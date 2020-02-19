@@ -1,6 +1,6 @@
 package com.example.proiect_licenta.model;
 
-public class Client {
+public  class User  {
 
 
     String username;

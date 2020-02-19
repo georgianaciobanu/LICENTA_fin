@@ -80,6 +80,7 @@ public class SignUpServiceActivity extends AppCompatActivity implements View.OnF
         serviceNou.setPass(pass);
         serviceNou.setTelefon(telefon);
 
+
         if (serviceNou != null) {
             Toast.makeText(SignUpServiceActivity.this, "Info service 1: "
                     + serviceNou.getUsername() + " "

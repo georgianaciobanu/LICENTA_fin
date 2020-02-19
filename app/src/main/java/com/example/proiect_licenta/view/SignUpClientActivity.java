@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.proiect_licenta.model.Client;
+import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.R;
 
 import java.util.regex.Pattern;
@@ -146,7 +146,7 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
 
     public void inregistrareClient() {
 
-        Client clientNou = new Client();
+        User clientNou = new User();
         clientNou.setUsername(username.getText().toString());
         clientNou.setEmail(email.getText().toString());
         clientNou.setTelefon(telefon.getText().toString());

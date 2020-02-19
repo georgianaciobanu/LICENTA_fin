@@ -9,7 +9,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.proiect_licenta.model.Client;
+import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.view.LoginActivity;
 import com.example.proiect_licenta.view.SignUpClientActivity;
 import com.example.proiect_licenta.view.SignUpServiceActivity;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i(TAG,"connection Firebase");
 
-        Client c= new Client();
+        User c= new User();
         c.setEmail("mailClient@mail.ro");
         c.setUsername("clientusername");
         c.setPass("clientpass");
