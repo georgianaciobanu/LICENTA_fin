@@ -1,12 +1,13 @@
 package com.example.proiect_licenta.model;
 
+
 public  class User  {
 
 
-    String username;
-    String email;
-    String pass;
-    String telefon;
+   private String username;
+    private String email;
+    private String pass;
+    private String telefon;
 
 
     public String getUsername() {

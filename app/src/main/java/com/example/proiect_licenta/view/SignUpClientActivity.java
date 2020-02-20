@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.proiect_licenta.MainActivity;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.R;
 
@@ -151,6 +152,7 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
         clientNou.setEmail(email.getText().toString());
         clientNou.setTelefon(telefon.getText().toString());
         clientNou.setPass(pass.getText().toString());
+         //MainActivity.userRegisterFirebase(clientNou);
 
         if (clientNou != null) {
             Toast.makeText(SignUpClientActivity.this, "Client inregistrat: "
