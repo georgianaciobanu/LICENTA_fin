@@ -29,10 +29,10 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tw_programService"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.165">
+        app:layout_constraintVertical_bias="0.052">
 
     </TextView>
 
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/tw_CONTACT"
         android:textColor="@color/colorBlue"
         android:textSize="20dp"
@@ -148,16 +148,13 @@
         android:id="@+id/tw_PROPRIETAR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:text="@string/tw_PROPRIETAR"
         android:textColor="@color/colorBlue"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_CONTACT"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_descriereService"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/tw_descriereService">
 
     </TextView>
 
@@ -168,13 +165,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/tw_proprietarService"
         android:textColor="@color/colorBlue"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_programService"
+        app:layout_constraintBottom_toTopOf="@+id/tw_CONTACT"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toEndOf="@+id/tw_PROPRIETAR"
         app:layout_constraintTop_toBottomOf="@+id/tw_descriereService"
         app:layout_constraintVertical_bias="0.0">
@@ -185,7 +181,7 @@
         android:id="@+id/tw_listaServicii"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="144dp"
         android:text="@string/tw_listaServicii"

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/image_view_produs"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_toEndOf="@+id/image_view_produs"
@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/image_view_produs"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/image_view_produs"
         android:gravity="center"
@@ -43,7 +42,7 @@
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintEnd_toStartOf="@+id/tw_dataTrimiterii"
-        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tw_numeServiciu"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,6 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/image_view_produs"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:layout_toEndOf="@+id/image_view_produs"
         android:gravity="center"
@@ -61,7 +63,10 @@
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tw_serviciiSolicitate"
-        app:layout_constraintStart_toEndOf="@+id/image_produs" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/image_produs"
+        app:layout_constraintTop_toBottomOf="@+id/tw_numeServiciu"
+        app:layout_constraintVertical_bias="0.8" />
 
     <TextView
         android:id="@+id/tw_serviciiSolicitate"
@@ -69,8 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/image_view_produs"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="12dp"
         android:layout_toEndOf="@+id/image_view_produs"
         android:gravity="center"
         android:text=" servicii solicitate"
@@ -81,8 +86,8 @@
 
     <ImageView
         android:id="@+id/image_produs"
-        android:layout_width="100dp"
-        android:layout_height="41dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="12dp"
         android:src="@drawable/electrocasnice"
@@ -95,17 +100,17 @@
         android:id="@+id/tw_dataTrimiterii"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:text="azi"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/sunflower"
+        android:textColor="@color/white"
         android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/tw_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.989"
-        app:layout_constraintStart_toEndOf="@+id/tw_numeServiciu"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.26" />
 
     <TextView
         android:id="@+id/tw_status"
@@ -116,12 +121,14 @@
         android:layout_marginEnd="24dp"
         android:text="trimisa spre confirmare"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textColor="@color/sunflower"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toEndOf="@+id/image_produs"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.647" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

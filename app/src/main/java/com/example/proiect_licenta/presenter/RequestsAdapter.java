@@ -49,7 +49,7 @@ public class RequestsAdapter extends ArrayAdapter<Request> {
 
         if (currentItem != null) {
 
-            tw_numeServiciu.setText(currentItem.getServiciu().getDenumire());
+            tw_numeServiciu.setText(currentItem.getServicii().get(0).getDenumire());
             tw_status.setText(currentItem.getStatus());
             tw_dataTrimiterii.setText(currentItem.getDataTrimiterii().toString());
 

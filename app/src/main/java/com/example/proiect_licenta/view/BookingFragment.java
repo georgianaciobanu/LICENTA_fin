@@ -60,8 +60,10 @@ public class BookingFragment extends Fragment {
         req.setStatus("confirmata");
         req.setDetalii("detaliile cererii 1");
         req.setDataProgramare(new Date());
-
-        req.setServiciu(serv1);
+        ArrayList<Serviciu> servicii=new ArrayList<>();
+        servicii.add(serv1);
+        servicii.add(serv2);
+        req.setServicii(servicii);
         req.setDataTrimiterii(currentTime);
         bookingList.add(req);
 
@@ -74,7 +76,7 @@ public class BookingFragment extends Fragment {
         req2.setDetalii("detaliile cererii 2");
         req2.setDataProgramare(new Date());
         req2.setDataTrimiterii(currentTime);
-        req2.setServiciu(serv2);
+        req2.setServicii(servicii);
 
         bookingList.add(req2);
 

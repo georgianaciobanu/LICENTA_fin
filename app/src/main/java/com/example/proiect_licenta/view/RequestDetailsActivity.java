@@ -18,9 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Request;
+import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -66,7 +68,10 @@ public class RequestDetailsActivity extends AppCompatActivity {
         req.setDetalii("detalii acestei cereri sunt aici");
         req.setStatus("trimisa spre validare");
         req.setClient(user);
-        req.setServiciu(serv2);
+
+        ArrayList<Serviciu> servicii= new ArrayList<>();
+        servicii.add(serv2);
+        req.setServicii(servicii);
 
 
 

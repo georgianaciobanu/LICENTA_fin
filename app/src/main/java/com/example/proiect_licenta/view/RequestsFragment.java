@@ -52,7 +52,10 @@ public class RequestsFragment extends Fragment {
         req.setStatus("confirmata");
         req.setDetalii("detaliile cererii 1");
         req.setDataProgramare(new Date());
-        req.setServiciu(serv1);
+        ArrayList<Serviciu> servicii1= new ArrayList<>();
+        servicii1.add(serv1);
+        req.setServicii(servicii1);
+
         req.setDataTrimiterii(currentTime);
         requests.add(req);
 
@@ -65,7 +68,11 @@ public class RequestsFragment extends Fragment {
         req2.setDetalii("detaliile cererii 2");
         req2.setDataProgramare(new Date());
         req2.setDataTrimiterii(currentTime);
-        req2.setServiciu(serv2);
+
+        ArrayList<Serviciu> servicii2= new ArrayList<>();
+        servicii2.add(serv2);
+        req2.setServicii(servicii2);
+
 
         requests.add(req2);
 

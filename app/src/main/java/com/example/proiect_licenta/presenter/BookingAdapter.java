@@ -47,9 +47,9 @@ public class BookingAdapter extends ArrayAdapter<Request> {
             );
         }
 
-        ImageView image_produs = convertView.findViewById(R.id.image_produs);
+
+
        final TextView tw_status = convertView.findViewById(R.id.tw_status);
-        TextView tw_numeServiciu = convertView.findViewById(R.id.tw_numeServiciu);
         TextView tw_dataProgramarii = convertView.findViewById(R.id.tw_dataProgramarii);
         TextView tw_clientBD = convertView.findViewById(R.id.tw_clientBD);
         TextView tw_detalii = convertView.findViewById(R.id.tw_detalii);
@@ -62,12 +62,12 @@ public class BookingAdapter extends ArrayAdapter<Request> {
 
 
         MyAdapter adapterServ = new MyAdapter(getContext(), mTitle, mPrice, images);
-        listView_servicii.setAdapter(adapterServ);
+
 
         if (currentItem != null) {
 
 
-
+            listView_servicii.setAdapter(adapterServ);
             tw_status.setText(currentItem.getStatus());
             tw_dataProgramarii.setText(currentItem.getDataProgramare().toString());
             tw_clientBD.setText(currentItem.getClient().getUsername());

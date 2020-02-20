@@ -1,11 +1,12 @@
 package com.example.proiect_licenta.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Request {
 
 
-    private Serviciu serviciu;
+    private ArrayList<Serviciu> servicii;
     private Date dataProgramare;
     private String detalii;
     private User client;
@@ -46,12 +47,12 @@ public class Request {
         this.detalii = detalii;
     }
 
-    public Serviciu getServiciu() {
-        return serviciu;
+    public ArrayList<Serviciu> getServicii() {
+        return servicii;
     }
 
-    public void setServiciu(Serviciu serviciu) {
-        this.serviciu = serviciu;
+    public void setServicii(ArrayList<Serviciu> servicii) {
+        this.servicii = servicii;
     }
 
     public User getClient() {
