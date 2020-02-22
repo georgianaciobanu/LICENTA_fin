@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.proiect_licenta.model.PhysicalLocation;
+import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.view.HomeScreenClientActivity;
 import com.example.proiect_licenta.view.LoginActivity;
@@ -21,6 +24,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -73,32 +80,71 @@ public class MainActivity extends AppCompatActivity {
 
        User c= new User();
 
-        c.setEmail("mailClient@mail.ro");
+        c.setEmail("mailClient1@mail.ro");
         c.setUsername("clientusername");
-        c.setPass("clientpass");
+        c.setPass("clientpass1");
         c.setTelefon("0785699021");
 
         User c2= new User();
 
-        c2.setEmail("client@mail.ro");
+        c2.setEmail("client22@mail.ro");
         c2.setUsername("username");
-        c2.setPass("pass22");
+        c2.setPass("pass2222");
         c2.setTelefon("0785699021");
 
-        //userRegisterFirebase(c2);
+        userRegisterFirebase(c2);
 
          Service serv= new Service();
          serv.setUsername("serverUsername");
-         serv.setEmail("server@email.ro");
-         serv.setPass("serverPass");
+         serv.setEmail("server1151@email.ro");
+         serv.setPass("serverPass1511");
          serv.setTelefon("0789640032");
          serv.setDescriere("descrierea service-ului de masini");
          serv.setProgram("10-19");
          serv.setNumeService("service masini");
          serv.setProprietar("vasile masina");
 
+        ArrayList<Serviciu> servicii= new ArrayList<>();
+        Serviciu s1= new Serviciu();
+        s1.setProdus("TELEFON/TABLETA");
+        s1.setPret(55.8);
+        s1.setDetalii("marca iphone");
+        s1.setDenumire("Schimb display");
+
+        servicii.add(s1);
+
+        Serviciu s2= new Serviciu();
+        s1.setProdus("TELEFON/TABLETA");
+        s1.setPret(60.22);
+        s1.setDetalii("garantie inclusa");
+        s1.setDenumire("Reparatie touchscreen");
+
+        servicii.add(s2);
+
+        serv.setSevicii(servicii);
+
+        PhysicalLocation loc= new PhysicalLocation();
+        loc.setAdresa("Strada Traian Popovici 128A");
+        loc.setLogitudine(44.42283);
+        loc.setLatitudine(26.1334133);
+
+        serv.setLoc(loc);
 
         serviceRegisterFirebase(serv);
+
+
+        Request request= new Request();
+        request.setStatus("trimis spre validare");
+        request.setDetalii("2 zile disponibile");
+        request.setProdus("TELEFON/TABLETA");
+        request.setClient(c2);
+        request.setServicii(servicii);
+        Date currentTime = Calendar.getInstance().getTime();
+        request.setDataProgramare(currentTime);
+        request.setDataTrimiterii(currentTime);
+        request.setService(serv);
+
+        requestInsertFirebase(request);
     }
     @Override
     protected void onStart() {
@@ -138,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
                               Log.i(TAG,"user inserted");
                         }
                     });
+
+
+
+
                 }
                 else{
                     Log.i(TAG,"error user");
@@ -157,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseUser firebaseUser= fAuth.getCurrentUser();
                     String userid=firebaseUser.getUid();
 
-                    reference= FirebaseDatabase.getInstance().getReference("Service").child(userid);
+                    reference= FirebaseDatabase.getInstance().getReference("Service");//.child(userid);
 
                     HashMap<String,String> hashMap=new HashMap<>();
                     hashMap.put("id",userid);
@@ -171,15 +221,22 @@ public class MainActivity extends AppCompatActivity {
                     hashMap.put("name",service.getNumeService());
 
 
+reference.push().setValue(service);
 
+//                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful())
+//                                Log.i(TAG,"service inserted");
+//                        }
+//                    });
 
-                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful())
-                                Log.i(TAG,"service inserted");
-                        }
-                    });
+//                    HashMap<String,String> hashMapLoc=new HashMap<>();
+//                    hashMap.put("longitudine",service.getLoc().getLogitudine().toString());
+//                    hashMap. put("latitudine",service.getLoc().getLatitudine().toString());
+//                    hashMap.put("adresa",service.getLoc().getAdresa());
+//
+//                    reference.child("Locatie").setValue(hashMapLoc);
                 }
                 else{
                     Log.i(TAG,"error service");
@@ -188,6 +245,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void requestInsertFirebase(final Request request) {
+
+        reference= FirebaseDatabase.getInstance().getReference("Request");
+
+        reference.push().setValue(request);
+
+    }
+
 
     public void goToLogin() {
         Intent it = new Intent(this, LoginActivity.class);

@@ -1,6 +1,7 @@
 package com.example.proiect_licenta.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Service implements Serializable {
 
@@ -12,6 +13,24 @@ public class Service implements Serializable {
     String numeService;
     String descriere;
     String program;
+    PhysicalLocation loc;
+    ArrayList<Serviciu> sevicii;
+
+    public PhysicalLocation getLoc() {
+        return loc;
+    }
+
+    public void setLoc(PhysicalLocation loc) {
+        this.loc = loc;
+    }
+
+    public ArrayList<Serviciu> getSevicii() {
+        return sevicii;
+    }
+
+    public void setSevicii(ArrayList<Serviciu> sevicii) {
+        this.sevicii = sevicii;
+    }
 
     public String getUsername() {
         return username;

@@ -8,11 +8,21 @@ public class Request {
 
     private ArrayList<Serviciu> servicii;
     private Date dataProgramare;
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
     private String detalii;
     private User client;
     private String status;
     private String produs;
     private Date dataTrimiterii;
+    private Service service;
 
 
     public Date getDataTrimiterii() {
