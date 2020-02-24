@@ -23,6 +23,7 @@ public class Request {
     private String produs;
     private Date dataTrimiterii;
     private Service service;
+    private String requestId;
 
 
     public Date getDataTrimiterii() {
@@ -35,6 +36,14 @@ public class Request {
 
     public String getProdus() {
         return produs;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 
     public void setProdus(String produs) {

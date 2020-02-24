@@ -13,8 +13,27 @@ public class Service implements Serializable {
     String numeService;
     String descriere;
     String program;
+    String serviceId;
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public ArrayList<String> getProduse() {
+        return produse;
+    }
+
+    public void setProduse(ArrayList<String> produse) {
+        this.produse = produse;
+    }
+
     PhysicalLocation loc;
     ArrayList<Serviciu> sevicii;
+    ArrayList<String> produse;
 
     public PhysicalLocation getLoc() {
         return loc;

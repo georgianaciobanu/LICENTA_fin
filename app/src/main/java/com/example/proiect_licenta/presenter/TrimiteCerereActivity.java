@@ -22,6 +22,8 @@ import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.view.TimePickerFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +35,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     private ArrayList<ProductsItem> listaProduse;
     private ProductsAdaptor mAdapter;
     Spinner spinner;
+    DatabaseReference reference;
 
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -105,7 +108,10 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
                 try {
 
                     dataProgramare    = format.parse ( dateString );
+                    Date dataTrimitere=  Calendar.getInstance().getTime();
                     request.setDataProgramare(dataProgramare);
+                    request.setDataTrimiterii(dataTrimitere);
+                    request.setStatus("trimis spre validare");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -144,6 +150,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
         if(detalii.getText().toString()!=null){
             request.setDetalii(detalii.getText().toString());
         }
+        requestInsertFirebase(request);
         Toast.makeText(getApplicationContext(), request.getProdus()+ " "+ request.getDetalii()+ " "+ request.getDataProgramare(), Toast.LENGTH_LONG).show();
     }
 
@@ -151,5 +158,17 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
         mDisplayHour.setText(hourOfDay + ": " + minute);
+    }
+
+    public void requestInsertFirebase(final Request request) {
+
+        reference= FirebaseDatabase.getInstance().getReference("Request");
+        String key = reference.push().getKey();
+        request.setRequestId(key);
+        reference.child(request.getRequestId()).setValue(request);
+
+
+
+
     }
 }

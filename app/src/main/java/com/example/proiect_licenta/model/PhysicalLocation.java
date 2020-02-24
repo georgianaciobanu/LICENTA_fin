@@ -1,6 +1,8 @@
 package com.example.proiect_licenta.model;
 
-public class PhysicalLocation {
+import java.io.Serializable;
+
+public class PhysicalLocation implements Serializable {
 
     Integer id;
     Integer id_corespondent;

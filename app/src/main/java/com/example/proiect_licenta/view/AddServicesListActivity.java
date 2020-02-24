@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.presenter.ProductsAdaptor;
 import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.R;
@@ -30,9 +31,8 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
     EditText denumire;
     EditText detalii;
     String clickedProdus;
-    String currentService;
-    String adresa;
-    private Serviciu serv;
+    Service currentService;
+    ArrayList<Serviciu> servicii;
 
 
     @Override
@@ -40,9 +40,9 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_services_list);
 
-
+        servicii=new ArrayList<Serviciu>();
         Intent i = getIntent();
-        adresa = (String) i.getSerializableExtra("adresa");
+        currentService = (Service) i.getSerializableExtra("Service");
 
         initList();
         completeProfile = (Button) findViewById(R.id.BTNprofileRegisterService4);
@@ -81,6 +81,7 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         completeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentService.setSevicii(servicii);
                 goToLocationScreenService();
             }
         });
@@ -110,7 +111,7 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
     public void goToLocationScreenService() {
 
         Intent it = new Intent(this, SearchLocationActivity.class);
-        it.putExtra("adresa", adresa);
+        it.putExtra("Service", currentService);
         startActivity(it);
 
 
@@ -134,13 +135,10 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         serv.setProdus(produs);
 
 
-        if (serv != null)
-            Toast.makeText(AddServicesListActivity.this, "Serviciu: denumire "
-                    + serv.getDenumire()
-                    + " detalii: "
-                    + serv.getDetalii()
-                    + " pret: " + serv.getPret() + " produs: "
-                    + serv.getProdus(), Toast.LENGTH_LONG).show();
+        if (serv != null) {
+
+            servicii.add(serv);
+        }
         else
             Toast.makeText(AddServicesListActivity.this, "Seviciu nu a fost introdus", Toast.LENGTH_LONG).show();
 

@@ -30,6 +30,8 @@ import androidx.core.content.ContextCompat;
 
 import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Request;
+import com.example.proiect_licenta.model.Service;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,9 +46,15 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,7 +67,12 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
     ImageView clearIc;
     private LocationManager locationManager;
     String adresaService;
+    Service currentService;
     PhysicalLocation currentLocation;
+
+    FirebaseAuth fAuth;
+    DatabaseReference reference;
+    FirebaseUser firebaseUser;
 
     private String address = "";
     private static final String TAG = "SearchLocationActivity";
@@ -160,6 +173,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         address = getCompleteAddressString(latitude, longitude);
         Log.d(TAG, "onLocationChanged adress: " + address);
         mSearchText.setText(address);
+
     }
 
     @Override
@@ -208,10 +222,11 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_search_location);
-
+        currentService= new Service();
         currentLocation = new PhysicalLocation();
+
         Intent i = getIntent();
-        adresaService = (String) i.getSerializableExtra("adresa");
+        currentService = (Service) i.getSerializableExtra("Service");
 
         mSearchText = (AutoCompleteTextView) findViewById(R.id.et_searchLocation);
         mGps = (ImageView) findViewById(R.id.ic_loc);
@@ -225,6 +240,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
              */
             public void onClick(View v) {
                 setPhysicalLocationService();
+                serviceRegisterFirebase(currentService);
             }
         });
     }
@@ -420,17 +436,50 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
             currentLocation.setLatitudine(latitude);
             currentLocation.setLogitudine(longitude);
+            adresaService=mSearchText.getText().toString();
             currentLocation.setAdresa(adresaService);
-            if (currentLocation == null) {
-                Toast.makeText(SearchLocationActivity.this, "Nu exista locatie", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(SearchLocationActivity.this, "Locatia este " + address, Toast.LENGTH_LONG).show();
-//                Toast.makeText(SearchLocationActivity.this, "Locatia este: lat: "
-//                        + currentLocation.getLatitudine() + " long: "
-//                        + currentLocation.getLogitudine() + " adresa: "
-//                        + currentLocation.getAdresa(), Toast.LENGTH_LONG).show();
-                goToHomeScreen();
+
+            currentService.setLoc(currentLocation);
+
             }
         }
+
+
+
+    public void serviceRegisterFirebase(final Service service){
+        fAuth = FirebaseAuth.getInstance();
+
+        fAuth.createUserWithEmailAndPassword(service.getEmail(),service.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+
+
+                    reference= FirebaseDatabase.getInstance().getReference("Service");
+
+
+                    String key = reference.push().getKey();
+                    service.setServiceId(key);
+                    reference.child(service.getServiceId()).setValue(service);
+
+                    reference.push().setValue(service);
+
+                    goToHomeScreen();
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Emailul a fost deja utilizat",Toast.LENGTH_LONG ).show();
+                    Log.i(TAG,"error service");
+                }
+            }
+        });
+
     }
-}
+
+
+    }
+
+
+
+
+

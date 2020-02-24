@@ -66,30 +66,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_adresa"
-        android:layout_width="365dp"
-        android:layout_height="67dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="8dp"
-        android:background="#11000000"
-        android:ems="10"
-        android:hint="@string/et_adresa"
-        android:inputType="textMultiLine"
-        android:textColor="@color/colorBlue"
-        android:textColorHint="@color/colorBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_program" />
 
     <TextView
         android:id="@+id/TW_img"
         android:layout_width="370dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="@string/TW_img"
         android:textColor="@color/colorBlue"
@@ -97,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_adresa">
+        app:layout_constraintTop_toBottomOf="@+id/et_ownerName">
 
     </TextView>
 
@@ -106,18 +89,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/button_config"
         android:text="@string/BTN_upload"
         android:textColor="@color/colorBlue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TW_img">
 
     </Button>
-
 
     <EditText
         android:id="@+id/et_descriereService"

@@ -1,6 +1,8 @@
 package com.example.proiect_licenta.model;
 
-public class Serviciu {
+import java.io.Serializable;
+
+public class Serviciu implements Serializable {
 
 
     String produs;

@@ -3,7 +3,9 @@ package com.example.proiect_licenta.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,12 +16,32 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.proiect_licenta.MainActivity;
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Request;
+import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.User;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class HomeScreenClientActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
     DrawerLayout drawer;
+    String TAG="HomeScreenClientActivity";
+
+    TextView usernameClient;
+    TextView emailClient;
+
+    FirebaseAuth fAuth;
+    DatabaseReference reference;
+    FirebaseUser firebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +50,8 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        usernameClient=(TextView)findViewById(R.id.tw_usernameMenu) ;
+        emailClient=(TextView)findViewById(R.id.tw_emailMenu) ;
 
         drawer = findViewById(R.id.drawerLayoutclient);
         NavigationView navigationView = findViewById(R.id.nav_viewClient);
@@ -43,8 +67,42 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                     new SearchServiceFragment()).commit();
             navigationView.setCheckedItem(R.id.it_search);
         }
-    }
 
+        String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        readRequestsFirebase(currentUserEmail);
+
+    }
+    public void readRequestsFirebase(final String email){
+
+        DatabaseReference mDatabaseRef =FirebaseDatabase.getInstance().getReference("User");
+
+        Query query=mDatabaseRef.orderByChild("email").equalTo(email);
+        
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+              //  for (DataSnapshot data:dataSnapshot.getChildren()){
+
+
+                    //User models=data.getValue(User.class);
+                   // Log.i(TAG, "User details: " + models.getUsername());
+                   // usernameClient.setText(models.getUsername());
+                    //emailClient.setText(models.getEmail());
+
+              //  }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

@@ -11,13 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Service;
 
 import java.util.ArrayList;
 
 public class SignUpServiceProfile2Activity extends AppCompatActivity implements View.OnFocusChangeListener {
     Button completeProfile;
-    String adresaService;
-    String currentService;
+    Service currentService;
     CheckBox telefon, pc, electocasnice, masini;
     ArrayList<String> produse;
 
@@ -27,8 +27,8 @@ public class SignUpServiceProfile2Activity extends AppCompatActivity implements 
         setContentView(R.layout.activity_sign_up_service_profile2);
 
         Intent i = getIntent();
+        currentService = (Service) i.getSerializableExtra("Service");
 
-        adresaService = (String) i.getSerializableExtra("adresa");
 
         completeProfile = (Button) findViewById(R.id.BTNprofileRegisterService3);
         telefon = (CheckBox) findViewById(R.id.Cbox_Telefon);
@@ -44,9 +44,9 @@ public class SignUpServiceProfile2Activity extends AppCompatActivity implements 
     }
 
     public void goToAddServicesList() {
-        Intent itServ = new Intent(this, AddServicesListActivity.class);
-        itServ.putExtra("adresa", adresaService);
-        startActivity(itServ);
+        Intent it = new Intent(this, AddServicesListActivity.class);
+        it.putExtra("Service", currentService);
+        startActivity(it);
 
     }
 
@@ -83,10 +83,8 @@ public class SignUpServiceProfile2Activity extends AppCompatActivity implements 
         if (produse.size() == 0) {
             Toast.makeText(getApplicationContext(), "Completarea campurilor este obligatorie", Toast.LENGTH_LONG).show();
         } else {
-            for (String prod : produse) {
-                Toast.makeText(SignUpServiceProfile2Activity.this, prod + " ", Toast.LENGTH_LONG).show();
-            }
-            Toast.makeText(getApplicationContext(), "Adresa: " + adresaService, Toast.LENGTH_LONG).show();
+            currentService.setProduse(produse);
+
             goToAddServicesList();
         }
     }

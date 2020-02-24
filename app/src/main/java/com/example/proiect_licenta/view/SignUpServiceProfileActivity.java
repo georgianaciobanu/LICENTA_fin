@@ -20,7 +20,6 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
     EditText numeService;
     EditText descriere;
     EditText program;
-    EditText adresa;
     Button upload;
     int count = 0;
     Service currentService;
@@ -41,14 +40,13 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
         numeService = (EditText) findViewById(R.id.et_serviceName);
         descriere = (EditText) findViewById(R.id.et_descriereService);
         program = (EditText) findViewById(R.id.et_program);
-        adresa = (EditText) findViewById(R.id.et_adresa);
         upload = (Button) findViewById(R.id.BTN_upload);
 
         proprietar.setText("proprietar service");
         numeService.setText("nume service");
         descriere.setText("descrierea service-ului este aici");
         program.setText("program service");
-        adresa.setText("adresa service");
+
 
 
         upload.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +63,6 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
         numeService.setOnFocusChangeListener(this);
         descriere.setOnFocusChangeListener(this);
         program.setOnFocusChangeListener(this);
-        adresa.setOnFocusChangeListener(this);
 
         completeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,14 +72,14 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
                 String numeServiceS = numeService.getText().toString();
                 String descriereS = descriere.getText().toString();
                 String programS = program.getText().toString();
-                String adresaS = adresa.getText().toString();
 
 
-                if (proprietarS.isEmpty() || numeServiceS.isEmpty() || descriereS.isEmpty() || programS.isEmpty() || adresaS.isEmpty() || upload.isEnabled()) {
+
+                if (proprietarS.isEmpty() || numeServiceS.isEmpty() || descriereS.isEmpty() || programS.isEmpty() || upload.isEnabled()) {
                     Toast.makeText(getApplicationContext(), "Completarea campurilor este obligatorie", Toast.LENGTH_LONG).show();
                 } else {
 
-                    inregistreazaService(proprietarS, numeServiceS, descriereS, programS, adresaS);
+                    inregistreazaService(proprietarS, numeServiceS, descriereS, programS);
 
                 }
 
@@ -94,9 +91,9 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
     }
 
     public void goToServiceProfile() {
-        Intent itProd = new Intent(this, SignUpServiceProfile2Activity.class);
-        itProd.putExtra("adresa", adresaService);
-        startActivity(itProd);
+        Intent it = new Intent(this, SignUpServiceProfile2Activity.class);
+        it.putExtra("Service", currentService);
+        startActivity(it);
 
     }
 
@@ -114,14 +111,14 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
         }
     }
 
-    public void inregistreazaService(String proprietar, String numeService, String descriere, String program, String adresa) {
+    public void inregistreazaService(String proprietar, String numeService, String descriere, String program) {
 
         currentService.setProprietar(proprietar);
         currentService.setNumeService(numeService);
         currentService.setDescriere(descriere);
         currentService.setProgram(program);
 
-        adresaService = adresa;
+
 
         if (currentService != null) {
             Toast.makeText(SignUpServiceProfileActivity.this, "Info service 1: "

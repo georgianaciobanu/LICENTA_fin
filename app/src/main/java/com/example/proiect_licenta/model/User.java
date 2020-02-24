@@ -1,13 +1,15 @@
 package com.example.proiect_licenta.model;
 
 
-public  class User  {
+import java.io.Serializable;
 
+public  class User  implements Serializable {
 
+    private String id;
    private String username;
     private String email;
-    private String pass;
-    private String telefon;
+    private String password;
+    private String phoneNumber;
 
 
     public String getUsername() {
@@ -19,11 +21,19 @@ public  class User  {
     }
 
     public String getPass() {
-        return pass;
+        return password;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTelefon() {
-        return telefon;
+        return phoneNumber;
     }
 
 
@@ -37,10 +47,10 @@ public  class User  {
     }
 
     public void setPass(String pass) {
-        this.pass = pass;
+        this.password = pass;
     }
 
     public void setTelefon(String telefon) {
-        this.telefon = telefon;
+        this.phoneNumber = telefon;
     }
 }

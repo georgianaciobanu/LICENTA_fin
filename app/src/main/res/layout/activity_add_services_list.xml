@@ -86,7 +86,7 @@
         android:background="#11000000"
         android:ems="10"
         android:hint="@string/et_pretServiciu"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textColor="@color/colorBlue"
         android:textColorHint="@color/colorBlue"
         app:layout_constraintEnd_toEndOf="parent"

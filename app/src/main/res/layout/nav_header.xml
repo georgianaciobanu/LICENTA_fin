@@ -14,6 +14,7 @@
         android:src="@mipmap/ic_launcher_round" />
 
     <TextView
+        android:id="@+id/tw_usernameMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -21,6 +22,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
+        android:id="@+id/tw_emailMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="client@email.com" />

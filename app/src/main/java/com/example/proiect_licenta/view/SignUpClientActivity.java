@@ -2,18 +2,28 @@ package com.example.proiect_licenta.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.MainActivity;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class SignUpClientActivity extends AppCompatActivity implements View.OnFocusChangeListener {
@@ -23,6 +33,12 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
     EditText telefon;
     EditText pass;
     EditText comfirmedPass;
+
+    FirebaseAuth fAuth;
+    DatabaseReference reference;
+    FirebaseUser firebaseUser;
+
+    String TAG="SignUpClientActivity";
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -60,7 +76,13 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
             @Override
             public void onClick(View v) {
                 if (validateUsername() && validateEmail() && validateTelefon() && validatePassword()) {
-                    inregistrareClient();
+                    User clientNou = new User();
+                    clientNou.setUsername(username.getText().toString());
+                    clientNou.setEmail(email.getText().toString());
+                    clientNou.setTelefon(telefon.getText().toString());
+                    clientNou.setPass(pass.getText().toString());
+                    userRegisterFirebase(clientNou);
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Completarea campurilor este obligatorie", Toast.LENGTH_LONG).show();
                 }
@@ -145,23 +167,45 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
     }
 
 
-    public void inregistrareClient() {
+    public void userRegisterFirebase(final User user){
+        fAuth = FirebaseAuth.getInstance();
 
-        User clientNou = new User();
-        clientNou.setUsername(username.getText().toString());
-        clientNou.setEmail(email.getText().toString());
-        clientNou.setTelefon(telefon.getText().toString());
-        clientNou.setPass(pass.getText().toString());
-         //MainActivity.userRegisterFirebase(clientNou);
+        fAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    FirebaseUser firebaseUser= fAuth.getCurrentUser();
+                    String userid=firebaseUser.getUid();
 
-        if (clientNou != null) {
-            Toast.makeText(SignUpClientActivity.this, "Client inregistrat: "
-                    + clientNou.getUsername() + " "
-                    + clientNou.getEmail() + " "
-                    + clientNou.getTelefon() + " "
-                    + clientNou.getPass(), Toast.LENGTH_LONG).show();
-            goToHomeScreenClient();
-        }
+                    reference= FirebaseDatabase.getInstance().getReference("User").child(userid);
+
+                    HashMap<String,String> hashMap=new HashMap<>();
+                    hashMap.put("id",userid);
+                    hashMap. put("username",user.getUsername());
+                    hashMap.put("phoneNumber",user.getTelefon());
+                    hashMap.put("email",user.getEmail());
+                    hashMap.put("password",user.getPass());
+
+
+
+                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                                Log.i(TAG,"user inserted");
+                            goToHomeScreenClient();
+                        }
+                    });
+
+                }
+                else{
+                    Log.i(TAG,"error user");
+                }
+            }
+        });
+
     }
+
+
 
 }
