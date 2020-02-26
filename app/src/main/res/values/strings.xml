@@ -76,6 +76,7 @@
     <string name="BTN_timiteCerere">Trimite cererea</string>
     <string name="tw_listaServicii">Lista serviciilor disponibile</string>
     <string name="tw_NumeService">NUMELE SERVICE-ULUI</string>
+    <string name="tw_adaugaServicii">Adauga servicii</string>
 
     <string name="tw_dataCererii">DATA: </string>
     <string name="tw_oraCererii">ORA: </string>

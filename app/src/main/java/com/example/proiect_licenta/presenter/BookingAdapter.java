@@ -21,9 +21,7 @@ import androidx.annotation.Nullable;
 
 public class BookingAdapter extends ArrayAdapter<Request> {
 
-    String mTitle[] = {"Electrocasnice serviciu ", "Telefon/Tableta serviciu", "Masina serviciu", "PC/Laprop serviciu"};
-    Float mPrice[] = {21f, 56f, 80f, 70.6f};
-    int images[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
+
 
     public BookingAdapter(Context context, ArrayList<Request> bookingList) {
         super(context, 0, bookingList);
@@ -61,7 +59,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
 
 
 
-        MyAdapter adapterServ = new MyAdapter(getContext(), mTitle, mPrice, images);
+        ServicesListAdapter adapterServ = new ServicesListAdapter(getContext(),currentItem.getServicii() );
 
 
         if (currentItem != null) {
@@ -82,35 +80,6 @@ public class BookingAdapter extends ArrayAdapter<Request> {
         return convertView;
     }
 
-    public class MyAdapter extends ArrayAdapter<String> {
 
-        Context context;
-        String rTitle[];
-        Float mPrice[];
-        int rImgs[];
-
-        MyAdapter(Context c, String title[], Float mPrice[], int imgs[]) {
-            super(c, R.layout.row, R.id.textView1, title);
-            this.context = c;
-            this.rTitle = title;
-            this.mPrice = mPrice;
-            this.rImgs = imgs;
-
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row, parent, false);
-            ImageView images = row.findViewById(R.id.image);
-            TextView myTitle = row.findViewById(R.id.textView1);
-            TextView myDescription = row.findViewById(R.id.textView2);
-            images.setImageResource(rImgs[position]);
-            myTitle.setText(rTitle[position]);
-            myDescription.setText(mPrice[position].toString());
-            return row;
-        }
-    }
 
 }

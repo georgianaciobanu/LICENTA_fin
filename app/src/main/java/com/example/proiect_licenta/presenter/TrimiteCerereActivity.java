@@ -2,9 +2,11 @@ package com.example.proiect_licenta.presenter;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,9 +23,19 @@ import androidx.fragment.app.DialogFragment;
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.model.Request;
+import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.Serviciu;
+import com.example.proiect_licenta.model.User;
+import com.example.proiect_licenta.view.ChooseServicesActivity;
+import com.example.proiect_licenta.view.RequestDetailsActivity;
 import com.example.proiect_licenta.view.TimePickerFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +56,13 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     EditText detalii;
     Date dataProgramare;
     Request request;
+    TextView servicii;
+    Service currentService;
+   ArrayList<Serviciu> serviciiSelectate= new ArrayList<Serviciu>();
+    FirebaseAuth fAuth;
+    FirebaseUser firebaseUser;
+    User cUser;
+
 
 
     @Override
@@ -51,6 +70,13 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trimite_cerere);
         initList();
+        currentService= new Service();
+
+        Intent i = getIntent();
+        serviciiSelectate = (ArrayList<Serviciu>) i.getSerializableExtra("ListaServicii");
+
+        currentService = (Service) i.getSerializableExtra("CurrentService");
+
         spinner = findViewById(R.id.spinnerCategorii);
         mAdapter = new ProductsAdaptor(this, listaProduse);
         spinner.setAdapter(mAdapter);
@@ -59,9 +85,18 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
         request = new Request();
         trimiteCerere= (Button)findViewById(R.id.btn_trimite);
         detalii= (EditText) findViewById(R.id.et_detaliiSuplimentare);
+        servicii=(TextView)findViewById(R.id.tw_adaugaServicii);
        final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 
+        servicii.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent itReq = new Intent(getApplicationContext(), ChooseServicesActivity.class);
+                itReq.putExtra("ListaServicii",serviciiSelectate);
+                startActivity(itReq);
+            }
+        });
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -111,7 +146,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
                     Date dataTrimitere=  Calendar.getInstance().getTime();
                     request.setDataProgramare(dataProgramare);
                     request.setDataTrimiterii(dataTrimitere);
-                    request.setStatus("trimis spre validare");
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -145,11 +180,35 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
         listaProduse.add(new ProductsItem("PC/Laptop", R.drawable.pc));
     }
 
-    private void trimiteCererea(Request request){
+    private void trimiteCererea(final Request request){
 
         if(detalii.getText().toString()!=null){
             request.setDetalii(detalii.getText().toString());
         }
+        request.setServicii(serviciiSelectate);
+        request.setService(currentService);
+        request.setStatus("trimis spre validare");
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        reference= FirebaseDatabase.getInstance().getReference();
+        if(firebaseUser!=null) {
+            String userKey = firebaseUser.getUid();
+
+            reference.child("User").child(userKey).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                   cUser = dataSnapshot.getValue(User.class);
+                   if(cUser!=null) {
+                       request.setClient(cUser);
+                   }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
+        }
+
+
+
         requestInsertFirebase(request);
         Toast.makeText(getApplicationContext(), request.getProdus()+ " "+ request.getDetalii()+ " "+ request.getDataProgramare(), Toast.LENGTH_LONG).show();
     }

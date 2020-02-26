@@ -17,72 +17,73 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.Serviciu;
+import com.example.proiect_licenta.presenter.RequestsAdapter;
+import com.example.proiect_licenta.presenter.ServicesListAdapter;
+
+import java.util.ArrayList;
 
 public class ServicesListActivity extends AppCompatActivity {
 
+   ArrayList<Serviciu> servicii= new ArrayList<>();
+
     ListView listView;
-    String mTitle[] = {"Electrocasnice serviciu ", "Telefon/Tableta serviciu", "Masina serviciu", "PC/Laprop serviciu"};
-    Float mPrice[] = {21f, 56f, 80f, 70.6f};
-    int images[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
+   ServicesListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_servicii);
 
+        Serviciu serv= new Serviciu();
+        serv.setDenumire("Reparatie display telefon");
+        serv.setDetalii("samsung s9 - 3 zile");
+        serv.setPret(67.5);
+        serv.setProdus("TELEFON/TABLETA");
+
+        Serviciu serv2= new Serviciu();
+        serv2.setDenumire("Schimb cuva masina de spalat");
+        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
+        serv2.setPret(145.6);
+        serv2.setProdus("ELECTROCASNICE");
+
+        Serviciu serv3= new Serviciu();
+        serv3.setDenumire("Reparatie touchscreen tableta");
+        serv3.setDetalii("lenovo - 2 zile");
+        serv3.setPret(44.7);
+        serv3.setProdus("TELEFON/TABLETA");
+
+        Serviciu serv4= new Serviciu();
+        serv4.setDenumire("Distributie");
+        serv4.setDetalii("schimb ulei, placute");
+        serv4.setPret(168d);
+        serv4.setProdus("MASINA");
+
+        Serviciu serv5= new Serviciu();
+        serv5.setDenumire("Montare placa video");
+        serv5.setDetalii("nvidia geforce 940mx");
+        serv5.setPret(98.3);
+        serv5.setProdus("PC/LAPTOP");
+
+        servicii.add(serv);
+        servicii.add(serv2);
+        servicii.add(serv3);
+        servicii.add(serv4);
+        servicii.add(serv5);
+
+
         listView = findViewById(R.id.listView);
 
-        MyAdapter adapter = new MyAdapter(this, mTitle, mPrice, images);
+
+        adapter = new ServicesListAdapter(getApplicationContext(), servicii);
+
         listView.setAdapter(adapter);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    Toast.makeText(ServicesListActivity.this, "21f", Toast.LENGTH_SHORT).show();
-                }
-                if (position == 0) {
-                    Toast.makeText(ServicesListActivity.this, "56f", Toast.LENGTH_SHORT).show();
-                }
-                if (position == 0) {
-                    Toast.makeText(ServicesListActivity.this, "80f", Toast.LENGTH_SHORT).show();
-                }
-                if (position == 0) {
-                    Toast.makeText(ServicesListActivity.this, "70.6f", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
-    public class MyAdapter extends ArrayAdapter<String> {
-
-        Context context;
-        String rTitle[];
-        Float mPrice[];
-        int rImgs[];
-
-        MyAdapter(Context c, String title[], Float mPrice[], int imgs[]) {
-            super(c, R.layout.row, R.id.textView1, title);
-            this.context = c;
-            this.rTitle = title;
-            this.mPrice = mPrice;
-            this.rImgs = imgs;
-
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row, parent, false);
-            ImageView images = row.findViewById(R.id.image);
-            TextView myTitle = row.findViewById(R.id.textView1);
-            TextView myDescription = row.findViewById(R.id.textView2);
-            images.setImageResource(rImgs[position]);
-            myTitle.setText(rTitle[position]);
-            myDescription.setText(mPrice[position].toString());
-            return row;
-        }
     }
 }
+
+
+

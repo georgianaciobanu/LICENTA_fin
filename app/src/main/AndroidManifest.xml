@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".view.ChooseServicesActivity"></activity>
         <activity android:name=".view.SearchedServiceActivity" />
         <activity android:name=".presenter.TrimiteCerereActivity" />
         <activity android:name=".view.ServicesListActivity" />

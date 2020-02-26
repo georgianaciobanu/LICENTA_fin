@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
+
+import java.util.ArrayList;
 
 public class AboutServiceActivity extends AppCompatActivity {
     Button cerere;
@@ -24,6 +27,8 @@ public class AboutServiceActivity extends AppCompatActivity {
     TextView email;
     TextView descriere;
     TextView nume;
+    Service currentService;
+    ArrayList<Serviciu> servicii= new ArrayList<>();
 
 
     @Override
@@ -41,7 +46,44 @@ public class AboutServiceActivity extends AppCompatActivity {
         listaServicii = (TextView) findViewById(R.id.tw_listaServicii);
         btnAdresa = (TextView) findViewById(R.id.tw_adresaService);
 
-        Service currentService = new Service();
+        Serviciu serv= new Serviciu();
+        serv.setDenumire("Reparatie display telefon");
+        serv.setDetalii("samsung s9 - 3 zile");
+        serv.setPret(67.5);
+        serv.setProdus("TELEFON/TABLETA");
+
+        Serviciu serv2= new Serviciu();
+        serv2.setDenumire("Schimb cuva masina de spalat");
+        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
+        serv2.setPret(145.6);
+        serv2.setProdus("ELECTROCASNICE");
+
+        Serviciu serv3= new Serviciu();
+        serv3.setDenumire("Reparatie touchscreen tableta");
+        serv3.setDetalii("lenovo - 2 zile");
+        serv3.setPret(44.7);
+        serv3.setProdus("TELEFON/TABLETA");
+
+        Serviciu serv4= new Serviciu();
+        serv4.setDenumire("Distributie");
+        serv4.setDetalii("schimb ulei, placute");
+        serv4.setPret(168d);
+        serv4.setProdus("MASINA");
+
+        Serviciu serv5= new Serviciu();
+        serv5.setDenumire("Montare placa video");
+        serv5.setDetalii("nvidia geforce 940mx");
+        serv5.setPret(98.3);
+        serv5.setProdus("PC/LAPTOP");
+
+        servicii.add(serv);
+        servicii.add(serv2);
+        servicii.add(serv3);
+        servicii.add(serv4);
+        servicii.add(serv5);
+
+
+         currentService = new Service();
 
         currentService.setDescriere("Service GSM.info promoveaza servicii si solutii de intretinere, reparatie si reconditionare, pentru dizpozitivele smartphone, telefoane GSM, tablete GPS-uri si alte echipamente mobile.");
         currentService.setEmail("servicegsm@gmil.com");
@@ -51,6 +93,7 @@ public class AboutServiceActivity extends AppCompatActivity {
         currentService.setProgram("luni-vineri: 10-18");
         currentService.setTelefon("0723.50.30.50");
         currentService.setUsername("servicegsm");
+        currentService.setSevicii(servicii);
 
         final PhysicalLocation serviceLocation = new PhysicalLocation();
 
@@ -89,11 +132,20 @@ public class AboutServiceActivity extends AppCompatActivity {
                         serviceLocation.getLogitudine());
             }
         });
+        ArrayList<String> prod =new ArrayList<>();
+        prod.add("MASINA");
+        prod.add("ELECTROCASNICE");
+        currentService.setLoc(serviceLocation);
+        currentService.setProduse(prod);
+
     }
 
     public void goToCerere() {
-        Intent it = new Intent(this, TrimiteCerereActivity.class);
-        startActivity(it);
+        Intent itReq = new Intent(getApplicationContext(), TrimiteCerereActivity.class);
+        itReq.putExtra("CurrentService",currentService);
+        startActivity(itReq);
+
+
 
     }
 

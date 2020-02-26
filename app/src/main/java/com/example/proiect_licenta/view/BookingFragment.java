@@ -20,7 +20,7 @@ import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.presenter.BookingAdapter;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
-import com.example.proiect_licenta.view.ServicesListActivity.MyAdapter;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +32,7 @@ public class BookingFragment extends Fragment {
     ArrayList<Request> bookingList;
     ListView listView;
     private  BookingAdapter adapter;
+    ArrayList<Serviciu> servicii= new ArrayList<>();
 
 
     @Nullable
@@ -46,11 +47,42 @@ public class BookingFragment extends Fragment {
         bookingList = new ArrayList<>();
         listView = (ListView)view.findViewById(R.id.list_booking);
 
-        Serviciu serv1= new Serviciu();
-        serv1.setDenumire("Reparatii aragaz");
+        Serviciu serv= new Serviciu();
+        serv.setDenumire("Reparatie display telefon");
+        serv.setDetalii("samsung s9 - 3 zile");
+        serv.setPret(67.5);
+        serv.setProdus("TELEFON/TABLETA");
 
         Serviciu serv2= new Serviciu();
-        serv2.setDenumire("Schimb display iphone");
+        serv2.setDenumire("Schimb cuva masina de spalat");
+        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
+        serv2.setPret(145.6);
+        serv2.setProdus("ELECTROCASNICE");
+
+        Serviciu serv3= new Serviciu();
+        serv3.setDenumire("Reparatie touchscreen tableta");
+        serv3.setDetalii("lenovo - 2 zile");
+        serv3.setPret(44.7);
+        serv3.setProdus("TELEFON/TABLETA");
+
+        Serviciu serv4= new Serviciu();
+        serv4.setDenumire("Distributie");
+        serv4.setDetalii("schimb ulei, placute");
+        serv4.setPret(168d);
+        serv4.setProdus("MASINA");
+
+        Serviciu serv5= new Serviciu();
+        serv5.setDenumire("Montare placa video");
+        serv5.setDetalii("nvidia geforce 940mx");
+        serv5.setPret(98.3);
+        serv5.setProdus("PC/LAPTOP");
+
+        servicii.add(serv);
+        servicii.add(serv2);
+        servicii.add(serv3);
+        servicii.add(serv4);
+        servicii.add(serv5);
+
 
         User user= new User();
         user.setEmail("clientul1@email.ro");
@@ -60,9 +92,7 @@ public class BookingFragment extends Fragment {
         req.setStatus("confirmata");
         req.setDetalii("detaliile cererii 1");
         req.setDataProgramare(new Date());
-        ArrayList<Serviciu> servicii=new ArrayList<>();
-        servicii.add(serv1);
-        servicii.add(serv2);
+
         req.setServicii(servicii);
         req.setDataTrimiterii(currentTime);
         bookingList.add(req);

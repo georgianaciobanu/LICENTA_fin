@@ -30,8 +30,10 @@
 
     <ListView
         android:id="@+id/listView_servicii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="394dp"
+        android:layout_height="365dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ListView>
 
@@ -39,14 +41,16 @@
         android:id="@+id/tw_dataProgramarii"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="184dp"
+        android:layout_marginBottom="144dp"
         android:text="azi"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/tw_status"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView_servicii" />
 
     <TextView
         android:id="@+id/tw_status"
@@ -74,24 +78,20 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/tw_client"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView_servicii"
-        app:layout_constraintVertical_bias="0.821" />
+        app:layout_constraintTop_toBottomOf="@+id/listView_servicii" />
 
     <TextView
         android:id="@+id/tw_pretTotalCalc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="1000 "
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/tw_clientBD"
-        app:layout_constraintStart_toEndOf="@+id/tw_pretTotal"
-        app:layout_constraintTop_toBottomOf="@+id/listView_servicii"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintStart_toEndOf="@+id/tw_pretTotal" />
 
     <TextView
         android:id="@+id/tw_client"

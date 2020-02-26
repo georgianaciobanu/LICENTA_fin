@@ -1,10 +1,14 @@
 package com.example.proiect_licenta.view;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,12 +50,20 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen_client);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        usernameClient=(TextView)findViewById(R.id.tw_usernameMenu) ;
-        emailClient=(TextView)findViewById(R.id.tw_emailMenu) ;
+
+        LinearLayout rl = (LinearLayout) findViewById(R.id.menu_layout);
+        View vi = inflater.inflate(R.layout.nav_header, null);
+        usernameClient=(TextView)vi.findViewById(R.id.tw_usernameMenu) ;
+        emailClient=(TextView)vi.findViewById(R.id.tw_emailMenu) ;
+
+
+
+
 
         drawer = findViewById(R.id.drawerLayoutclient);
         NavigationView navigationView = findViewById(R.id.nav_viewClient);
@@ -69,29 +81,31 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         }
 
         String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        readRequestsFirebase(currentUserEmail);
+        readUserFirebase(currentUserEmail);
 
     }
-    public void readRequestsFirebase(final String email){
+    public void readUserFirebase(final String email){
 
         DatabaseReference mDatabaseRef =FirebaseDatabase.getInstance().getReference("User");
 
         Query query=mDatabaseRef.orderByChild("email").equalTo(email);
-        
+
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-              //  for (DataSnapshot data:dataSnapshot.getChildren()){
+                for (DataSnapshot data:dataSnapshot.getChildren()){
 
 
-                    //User models=data.getValue(User.class);
-                   // Log.i(TAG, "User details: " + models.getUsername());
-                   // usernameClient.setText(models.getUsername());
-                    //emailClient.setText(models.getEmail());
+                    User models=data.getValue(User.class);
+                    Log.i(TAG, "User details: " + models.getUsername());
+                    usernameClient.setText(models.getUsername());
+                    emailClient.setText(models.getEmail());
 
-              //  }
+
+
+                }
 
             }
 
