@@ -52,7 +52,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
         TextView tw_clientBD = convertView.findViewById(R.id.tw_clientBD);
         TextView tw_detalii = convertView.findViewById(R.id.tw_detalii);
         Button btn_anulare=convertView.findViewById(R.id.btn_anulareProg);
-        ListView listView_servicii=convertView.findViewById(R.id.listView_servicii);
+        ListView listView_serviciiBook=convertView.findViewById(R.id.listView_serviciiBook);
 
 
         Request currentItem = getItem(position);
@@ -65,7 +65,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
         if (currentItem != null) {
 
 
-            listView_servicii.setAdapter(adapterServ);
+            listView_serviciiBook.setAdapter(adapterServ);
             tw_status.setText(currentItem.getStatus());
             tw_dataProgramarii.setText(currentItem.getDataProgramare().toString());
             tw_clientBD.setText(currentItem.getClient().getUsername());

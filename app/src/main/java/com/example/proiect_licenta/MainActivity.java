@@ -83,74 +83,76 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//       User c= new User();
+       User c= new User();
+
+        c.setEmail("mailClient1@mail.ro");
+        c.setUsername("clientusername");
+        c.setPass("clientpass1");
+        c.setTelefon("0785699021");
+
+        User c2= new User();
+
+        c2.setEmail("client22@mail.ro");
+        c2.setUsername("username");
+        c2.setPass("pass2222");
+        c2.setTelefon("0785699021");
+
+
+
+         Service serv= new Service();
+         serv.setUsername("serverUsername");
+         serv.setEmail("server1151@email.ro");
+         serv.setPass("serverPass1511");
+         serv.setTelefon("0789640032");
+         serv.setDescriere("descrierea service-ului de masini");
+         serv.setProgram("10-19");
+         serv.setNumeService("service masini");
+         serv.setProprietar("vasile masina");
+
+        ArrayList<Serviciu> servicii= new ArrayList<>();
+        Serviciu s1= new Serviciu();
+        s1.setProdus("TELEFON/TABLETA");
+        s1.setPret(55.8);
+        s1.setDetalii("marca iphone");
+        s1.setDenumire("Schimb display");
+
+        servicii.add(s1);
+
+        Serviciu s2= new Serviciu();
+        s1.setProdus("TELEFON/TABLETA");
+        s1.setPret(60.22);
+        s1.setDetalii("garantie inclusa");
+        s1.setDenumire("Reparatie touchscreen");
+
+        servicii.add(s2);
+
+        serv.setSevicii(servicii);
+
+        PhysicalLocation loc= new PhysicalLocation();
+        loc.setAdresa("Strada Traian Popovici 128A");
+        loc.setLogitudine(44.42283);
+        loc.setLatitudine(26.1334133);
+
+        serv.setLoc(loc);
+
+       // serviceRegisterFirebase(serv);
+
+      //  readRequestsFirebase(serv);
+
+
+        Request request= new Request();
+        request.setStatus("trimis spre validare");
+        request.setDetalii("4 zile disponibile");
+        request.setProdus("TELEFON/TABLETA");
+        request.setClient(c2);
+        request.setRequestId("blabla13");
+        request.setServicii(servicii);
+        Date currentTime = Calendar.getInstance().getTime();
+        request.setDataProgramare(currentTime);
+        request.setDataTrimiterii(currentTime);
+        request.setService(serv);
 //
-//        c.setEmail("mailClient1@mail.ro");
-//        c.setUsername("clientusername");
-//        c.setPass("clientpass1");
-//        c.setTelefon("0785699021");
-//
-//        User c2= new User();
-//
-//        c2.setEmail("client22@mail.ro");
-//        c2.setUsername("username");
-//        c2.setPass("pass2222");
-//        c2.setTelefon("0785699021");
-//
-//        userRegisterFirebase(c2);
-//
-//         Service serv= new Service();
-//         serv.setUsername("serverUsername");
-//         serv.setEmail("server1151@email.ro");
-//         serv.setPass("serverPass1511");
-//         serv.setTelefon("0789640032");
-//         serv.setDescriere("descrierea service-ului de masini");
-//         serv.setProgram("10-19");
-//         serv.setNumeService("service masini");
-//         serv.setProprietar("vasile masina");
-//
-//        ArrayList<Serviciu> servicii= new ArrayList<>();
-//        Serviciu s1= new Serviciu();
-//        s1.setProdus("TELEFON/TABLETA");
-//        s1.setPret(55.8);
-//        s1.setDetalii("marca iphone");
-//        s1.setDenumire("Schimb display");
-//
-//        servicii.add(s1);
-//
-//        Serviciu s2= new Serviciu();
-//        s1.setProdus("TELEFON/TABLETA");
-//        s1.setPret(60.22);
-//        s1.setDetalii("garantie inclusa");
-//        s1.setDenumire("Reparatie touchscreen");
-//
-//        servicii.add(s2);
-//
-//        serv.setSevicii(servicii);
-//
-//        PhysicalLocation loc= new PhysicalLocation();
-//        loc.setAdresa("Strada Traian Popovici 128A");
-//        loc.setLogitudine(44.42283);
-//        loc.setLatitudine(26.1334133);
-//
-//        serv.setLoc(loc);
-//
-//        serviceRegisterFirebase(serv);
-//
-//
-//        Request request= new Request();
-//        request.setStatus("trimis spre validare");
-//        request.setDetalii("4 zile disponibile");
-//        request.setProdus("TELEFON/TABLETA");
-//        request.setClient(c2);
-//        request.setRequestId("blabla13");
-//        request.setServicii(servicii);
-//        Date currentTime = Calendar.getInstance().getTime();
-//        request.setDataProgramare(currentTime);
-//        request.setDataTrimiterii(currentTime);
-//        request.setService(serv);
-//
-//       // requestInsertFirebase(request);
+// requestInsertFirebase(request);
 //
 //       // updateRequest(request,"validat");
 //
@@ -168,71 +170,71 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
 //    }
-    public void userRegisterFirebase(final User user){
-        fAuth = FirebaseAuth.getInstance();
+//    public void userRegisterFirebase(final User user){
+//        fAuth = FirebaseAuth.getInstance();
+//
+//        fAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful()) {
+//                    FirebaseUser firebaseUser= fAuth.getCurrentUser();
+//                    String userid=firebaseUser.getUid();
+//
+//                    reference= FirebaseDatabase.getInstance().getReference("User").child(userid);
+//
+//                    HashMap<String,String> hashMap=new HashMap<>();
+//                    hashMap.put("id",userid);
+//                    hashMap. put("username",user.getUsername());
+//                    hashMap.put("phoneNumber",user.getTelefon());
+//                    hashMap.put("email",user.getEmail());
+//                    hashMap.put("password",user.getPass());
+//
+//
+//
+//                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful())
+//                              Log.i(TAG,"user inserted");
+//                        }
+//                    });
+//
+//
+//
+//
+//                }
+//                else{
+//                    Log.i(TAG,"error user");
+//                }
+//            }
+//        });
+//
+//    }
 
-        fAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    FirebaseUser firebaseUser= fAuth.getCurrentUser();
-                    String userid=firebaseUser.getUid();
-
-                    reference= FirebaseDatabase.getInstance().getReference("User").child(userid);
-
-                    HashMap<String,String> hashMap=new HashMap<>();
-                    hashMap.put("id",userid);
-                    hashMap. put("username",user.getUsername());
-                    hashMap.put("phoneNumber",user.getTelefon());
-                    hashMap.put("email",user.getEmail());
-                    hashMap.put("password",user.getPass());
-
-
-
-                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful())
-                              Log.i(TAG,"user inserted");
-                        }
-                    });
-
-
-
-
-                }
-                else{
-                    Log.i(TAG,"error user");
-                }
-            }
-        });
-
-    }
-
-    public void readRequestsFirebase(final Service service){
-
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference myRef = database.child("Request");
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-
-                    Request request = ds.getValue(Request.class);
-                    if(request.getService().getEmail().equals(service.getEmail())) {
-                        Log.i(TAG, "Request details: " + request.getDetalii());
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-
-        });
-    }
+//    public void readRequestsFirebase(final Service service){
+//
+//        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+//        DatabaseReference myRef = database.child("Request");
+//
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//
+//                    Request request = ds.getValue(Request.class);
+//                    if(request.getService().getEmail().equals(service.getEmail())) {
+//                        Log.i(TAG, "Request details: " + request.getDetalii());
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {}
+//
+//        });
+//    }
 
     public void serviceRegisterFirebase(final Service service){
         fAuth = FirebaseAuth.getInstance();

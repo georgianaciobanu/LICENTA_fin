@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.proiect_licenta.MainActivity;
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.User;
@@ -33,18 +35,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 public class HomeScreenClientActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
     DrawerLayout drawer;
     String TAG="HomeScreenClientActivity";
 
+    OnGetDataListener listener;
     TextView usernameClient;
     TextView emailClient;
 
     FirebaseAuth fAuth;
     DatabaseReference reference;
     FirebaseUser firebaseUser;
+    User currentUser;
+    ArrayList<User> users= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +59,47 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         setContentView(R.layout.activity_home_screen_client);
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
         LinearLayout rl = (LinearLayout) findViewById(R.id.menu_layout);
         View vi = inflater.inflate(R.layout.nav_header, null);
         usernameClient=(TextView)vi.findViewById(R.id.tw_usernameMenu) ;
         emailClient=(TextView)vi.findViewById(R.id.tw_emailMenu) ;
+        usernameClient.setText("blabla");
+        emailClient.setText("emailbla");
+        listener=new OnGetDataListener() {
+            @Override
+            public void onStartFirebaseRequest() {
+                Toast.makeText(getApplicationContext(),"Loading...",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                for(DataSnapshot singleSnapshot : data.getChildren()){
+                    currentUser = singleSnapshot.getValue(User.class);
+                    if(currentUser!=null){
+                        users.add(currentUser);
+                        if(currentUser.getEmail().equals(currentUserEmail)){
+                            usernameClient.setText(currentUser.getUsername());
+                            emailClient.setText(currentUser.getEmail());
+                        }
+                    }
+                }
+
+                Log.i(TAG,users.size()+ " users" );
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),databaseError.toString(),Toast.LENGTH_LONG).show();
+            }
+        };
+
+        currentUser=new User();
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+
 
 
 
@@ -80,43 +120,30 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
             navigationView.setCheckedItem(R.id.it_search);
         }
 
-        String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        readUserFirebase(currentUserEmail);
+
+        readUserFirebase("User",listener);
 
     }
-    public void readUserFirebase(final String email){
+    public void readUserFirebase(String child, final OnGetDataListener listener){
 
-        DatabaseReference mDatabaseRef =FirebaseDatabase.getInstance().getReference("User");
+        listener.onStartFirebaseRequest();
 
-        Query query=mDatabaseRef.orderByChild("email").equalTo(email);
+        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent( new ValueEventListener() { @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            listener.onSuccess(dataSnapshot);
+        }
 
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            listener.onFailed(databaseError);
+        }
+    });
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot data:dataSnapshot.getChildren()){
-
-
-                    User models=data.getValue(User.class);
-                    Log.i(TAG, "User details: " + models.getUsername());
-                    usernameClient.setText(models.getUsername());
-                    emailClient.setText(models.getEmail());
+}
 
 
 
-                }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -161,5 +188,6 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
             super.onBackPressed();
         }
     }
+
 
 }

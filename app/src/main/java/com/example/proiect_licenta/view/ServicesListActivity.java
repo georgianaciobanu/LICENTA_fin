@@ -1,6 +1,7 @@
 package com.example.proiect_licenta.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,48 +37,11 @@ public class ServicesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_servicii);
 
-        Serviciu serv= new Serviciu();
-        serv.setDenumire("Reparatie display telefon");
-        serv.setDetalii("samsung s9 - 3 zile");
-        serv.setPret(67.5);
-        serv.setProdus("TELEFON/TABLETA");
-
-        Serviciu serv2= new Serviciu();
-        serv2.setDenumire("Schimb cuva masina de spalat");
-        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
-        serv2.setPret(145.6);
-        serv2.setProdus("ELECTROCASNICE");
-
-        Serviciu serv3= new Serviciu();
-        serv3.setDenumire("Reparatie touchscreen tableta");
-        serv3.setDetalii("lenovo - 2 zile");
-        serv3.setPret(44.7);
-        serv3.setProdus("TELEFON/TABLETA");
-
-        Serviciu serv4= new Serviciu();
-        serv4.setDenumire("Distributie");
-        serv4.setDetalii("schimb ulei, placute");
-        serv4.setPret(168d);
-        serv4.setProdus("MASINA");
-
-        Serviciu serv5= new Serviciu();
-        serv5.setDenumire("Montare placa video");
-        serv5.setDetalii("nvidia geforce 940mx");
-        serv5.setPret(98.3);
-        serv5.setProdus("PC/LAPTOP");
-
-        servicii.add(serv);
-        servicii.add(serv2);
-        servicii.add(serv3);
-        servicii.add(serv4);
-        servicii.add(serv5);
-
+        Intent i= getIntent();
+        servicii = (ArrayList<Serviciu>) i.getSerializableExtra("Servicii");
 
         listView = findViewById(R.id.listView);
-
-
         adapter = new ServicesListAdapter(getApplicationContext(), servicii);
-
         listView.setAdapter(adapter);
 
 

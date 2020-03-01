@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Product;
 import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
@@ -55,6 +56,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     Button trimiteCerere;
     EditText detalii;
     Date dataProgramare;
+    Date dataTrimitere;
     Request request;
     TextView servicii;
     Service currentService;
@@ -69,14 +71,13 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trimite_cerere);
-        initList();
+
         currentService= new Service();
 
-        Intent i = getIntent();
-        serviciiSelectate = (ArrayList<Serviciu>) i.getSerializableExtra("ListaServicii");
-
+        Intent i=getIntent();
         currentService = (Service) i.getSerializableExtra("CurrentService");
 
+        initList();
         spinner = findViewById(R.id.spinnerCategorii);
         mAdapter = new ProductsAdaptor(this, listaProduse);
         spinner.setAdapter(mAdapter);
@@ -93,7 +94,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
             @Override
             public void onClick(View v) {
                 Intent itReq = new Intent(getApplicationContext(), ChooseServicesActivity.class);
-                itReq.putExtra("ListaServicii",serviciiSelectate);
+                itReq.putExtra("ListaServicii",currentService.getSevicii());
                 startActivity(itReq);
             }
         });
@@ -143,9 +144,10 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
                 try {
 
                     dataProgramare    = format.parse ( dateString );
-                    Date dataTrimitere=  Calendar.getInstance().getTime();
-                    request.setDataProgramare(dataProgramare);
-                    request.setDataTrimiterii(dataTrimitere);
+                     dataTrimitere=  Calendar.getInstance().getTime();
+
+
+                   // TODO: add timepicker hour to dataProgramare
 
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -174,10 +176,20 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
 
     private void initList() {
         listaProduse = new ArrayList<>();
-        listaProduse.add(new ProductsItem("Electrocasnice", R.drawable.electrocasnice));
-        listaProduse.add(new ProductsItem("Telefon/Tableta", R.drawable.telefon));
-        listaProduse.add(new ProductsItem("Masina", R.drawable.masina));
-        listaProduse.add(new ProductsItem("PC/Laptop", R.drawable.pc));
+        int img=0;
+        for(String p :currentService.getProduse()){
+            if (p == "ELECTROCASNICE")
+                img=R.drawable.electrocasnice;
+            if (p == "TELEFON/TABLETA")
+                img= R.drawable.telefon;
+            if (p == "MASINA")
+                img= R.drawable.masina;
+            if (p == "PC/LAPTOP")
+                img= R.drawable.pc;
+
+            listaProduse.add(new ProductsItem(p, img));
+        }
+
     }
 
     private void trimiteCererea(final Request request){
@@ -207,7 +219,8 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
             });
         }
 
-
+        request.setDataProgramare(dataProgramare);
+        request.setDataTrimiterii(dataTrimitere);
 
         requestInsertFirebase(request);
         Toast.makeText(getApplicationContext(), request.getProdus()+ " "+ request.getDetalii()+ " "+ request.getDataProgramare(), Toast.LENGTH_LONG).show();

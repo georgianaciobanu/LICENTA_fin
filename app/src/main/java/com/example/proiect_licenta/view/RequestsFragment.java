@@ -2,16 +2,20 @@ package com.example.proiect_licenta.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.ServiceDataModel;
@@ -19,6 +23,13 @@ import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
 import com.example.proiect_licenta.presenter.ServiceAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,98 +38,155 @@ import java.util.Date;
 
 public class RequestsFragment extends Fragment {
     ArrayList<Request> requests;
-    ArrayList<Serviciu> servicii= new ArrayList<>();
     ListView listView;
     private static RequestsAdapter adapter;
+    String TAG = "RequestFragmentActivity";
+    Service currentService;
+    OnGetDataListener listenerService;
+    OnGetDataListener listenerRequest;
+    Request request = new Request();
+    Boolean ok = false;
+    View view;
+    ArrayList<Service> services;//services = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cereri, container, false);
-
-        Date currentTime = Calendar.getInstance().getTime();
+        view = inflater.inflate(R.layout.fragment_cereri, container, false);
+        currentService = new Service();
+        services = new ArrayList<>();
         requests = new ArrayList<>();
-        listView = (ListView)view.findViewById(R.id.list_requests);
 
-        Serviciu serv= new Serviciu();
-        serv.setDenumire("Reparatie display telefon");
-        serv.setDetalii("samsung s9 - 3 zile");
-        serv.setPret(67.5);
-        serv.setProdus("TELEFON/TABLETA");
+        listView = (ListView) view.findViewById(R.id.list_requests);
 
-        Serviciu serv2= new Serviciu();
-        serv2.setDenumire("Schimb cuva masina de spalat");
-        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
-        serv2.setPret(145.6);
-        serv2.setProdus("ELECTROCASNICE");
-
-        Serviciu serv3= new Serviciu();
-        serv3.setDenumire("Reparatie touchscreen tableta");
-        serv3.setDetalii("lenovo - 2 zile");
-        serv3.setPret(44.7);
-        serv3.setProdus("TELEFON/TABLETA");
-
-        Serviciu serv4= new Serviciu();
-        serv4.setDenumire("Distributie");
-        serv4.setDetalii("schimb ulei, placute");
-        serv4.setPret(168d);
-        serv4.setProdus("MASINA");
-
-        Serviciu serv5= new Serviciu();
-        serv5.setDenumire("Montare placa video");
-        serv5.setDetalii("nvidia geforce 940mx");
-        serv5.setPret(98.3);
-        serv5.setProdus("PC/LAPTOP");
-
-        servicii.add(serv);
-        servicii.add(serv2);
-        servicii.add(serv3);
-        servicii.add(serv4);
-        servicii.add(serv5);
-
-        User user= new User();
-        user.setEmail("clientul1@email.ro");
-        user.setUsername("Clientul 1");
-        Request req = new Request();
-        req.setClient(user);
-        req.setStatus("confirmata");
-        req.setDetalii("detaliile cererii 1");
-        req.setDataProgramare(new Date());
-
-        req.setServicii(servicii);
-
-        req.setDataTrimiterii(currentTime);
-        requests.add(req);
-
-        User user2= new User();
-        user2.setEmail("clientu21@email.ro");
-        user2.setUsername("Clientul 2");
-        Request req2 = new Request();
-        req2.setClient(user2);
-        req2.setStatus("respinsa");
-        req2.setDetalii("detaliile cererii 2");
-        req2.setDataProgramare(new Date());
-        req2.setDataTrimiterii(currentTime);
-
-
-        req2.setServicii(servicii);
-
-
-        requests.add(req2);
-
-        adapter = new RequestsAdapter(view.getContext(), requests);
-
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listenerRequest = new OnGetDataListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent itReq = new Intent(view.getContext(),RequestDetailsActivity.class);
-                startActivity(itReq);
+            public void onStartFirebaseRequest() {
+                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
+
             }
 
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                for (DataSnapshot singleSnapshot : data.getChildren()) {
+                    request = singleSnapshot.getValue(Request.class);
+                    if (request != null) {
+                        try {
+                            requests.add(request);
+                        } catch (Exception e) {
+                            Log.i(TAG, "Exception add request:" + e.toString());
+                        }
+                    }
+                }
+                if (requests.size() > 0 && ok) {
+                    adapter = new RequestsAdapter(view.getContext(), requests);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
+                            startActivity(itReq);
+                        }
+                    });
+                } else if (ok == false) {
+                    ok = true;
+                } else {
+                    Log.i(TAG, "Err updatin");
+                }
 
-        });
+                Log.i(TAG, requests.size() + " requests");
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+            }
+        };
+        listenerService = new
+
+                OnGetDataListener() {
+                    @Override
+                    public void onStartFirebaseRequest() {
+                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onSuccess(DataSnapshot data) {
+                        for (DataSnapshot singleSnapshot : data.getChildren()) {
+                            currentService = singleSnapshot.getValue(Service.class);
+                            if (currentService != null) {
+                                services.add(currentService);
+                            }
+                        }
+
+                        if (services.size() > 0 && ok) {
+                            adapter = new RequestsAdapter(view.getContext(), requests);
+                            listView.setAdapter(adapter);
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
+                                    startActivity(itReq);
+                                }
+                            });
+                        } else if (ok == false) {
+                            ok = true;
+                        } else {
+                            Log.i(TAG, "Err updatin");
+                        }
+
+                        Log.i(TAG, services.size() + " services");
+                    }
+
+                    @Override
+                    public void onFailed(DatabaseError databaseError) {
+                        Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+        ;
+
+        findService("Service", listenerService);
+
+        readRequestsFirebase("Request", listenerRequest);
+
 
         return view;
+    }
+
+    public void readRequestsFirebase(String child, final OnGetDataListener listener) {
+
+        listenerRequest.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i(TAG, "readRequests ->" + dataSnapshot.toString());
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
+
+    public void findService(String child, final OnGetDataListener listener) {
+
+        listenerService.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i(TAG, "findService ->" + dataSnapshot.toString());
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
     }
 }

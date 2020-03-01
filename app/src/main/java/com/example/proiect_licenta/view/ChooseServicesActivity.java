@@ -20,7 +20,7 @@ import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
 import java.util.ArrayList;
 
 public class ChooseServicesActivity extends AppCompatActivity {
-    ArrayList<Serviciu> servicii= new ArrayList<>();
+    //ArrayList<Serviciu> servicii= new ArrayList<>();
     ArrayList<Serviciu> listaServicii= new ArrayList<Serviciu>();
     ListView listView;
     ServicesListAdapter adapter;
@@ -46,47 +46,13 @@ public class ChooseServicesActivity extends AppCompatActivity {
                 startActivity(itReq);
             }
         });
-        Serviciu serv= new Serviciu();
-        serv.setDenumire("Reparatie display telefon");
-        serv.setDetalii("samsung s9 - 3 zile");
-        serv.setPret(67.5);
-        serv.setProdus("TELEFON/TABLETA");
 
-        Serviciu serv2= new Serviciu();
-        serv2.setDenumire("Schimb cuva masina de spalat");
-        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
-        serv2.setPret(145.6);
-        serv2.setProdus("ELECTROCASNICE");
-
-        Serviciu serv3= new Serviciu();
-        serv3.setDenumire("Reparatie touchscreen tableta");
-        serv3.setDetalii("lenovo - 2 zile");
-        serv3.setPret(44.7);
-        serv3.setProdus("TELEFON/TABLETA");
-
-        Serviciu serv4= new Serviciu();
-        serv4.setDenumire("Distributie");
-        serv4.setDetalii("schimb ulei, placute");
-        serv4.setPret(168d);
-        serv4.setProdus("MASINA");
-
-        Serviciu serv5= new Serviciu();
-        serv5.setDenumire("Montare placa video");
-        serv5.setDetalii("nvidia geforce 940mx");
-        serv5.setPret(98.3);
-        serv5.setProdus("PC/LAPTOP");
-
-        servicii.add(serv);
-        servicii.add(serv2);
-        servicii.add(serv3);
-        servicii.add(serv4);
-        servicii.add(serv5);
 
 
         listView = findViewById(R.id.listView);
 
 
-        adapter = new ServicesListAdapter(getApplicationContext(), servicii);
+        adapter = new ServicesListAdapter(getApplicationContext(), listaServicii);
 
         listView.setAdapter(adapter);
 
@@ -96,7 +62,7 @@ public class ChooseServicesActivity extends AppCompatActivity {
         else {
 
             for (int s = 0; s < listView.getChildCount(); s++) {
-                final Serviciu selectedValue = servicii.get(s);
+                final Serviciu selectedValue = listaServicii.get(s);
                 if (listaServicii.contains(selectedValue)) {
                     listView.getChildAt(s).setBackgroundColor(Color.BLUE);
                 }
@@ -118,7 +84,7 @@ public class ChooseServicesActivity extends AppCompatActivity {
 
                 if (viewColor == null) {
                     vw.setBackgroundColor(desiredBackgroundColor);
-                    final Serviciu selectedValue = servicii.get(position);
+                    final Serviciu selectedValue = listaServicii.get(position);
                     listaServicii.add(selectedValue);
                     return;
                 }
@@ -127,11 +93,11 @@ public class ChooseServicesActivity extends AppCompatActivity {
 
                 if (currentColorId == desiredBackgroundColor) {
                     vw.setBackgroundColor(Color.TRANSPARENT);
-                    final Serviciu selectedValue = servicii.get(position);
+                    final Serviciu selectedValue = listaServicii.get(position);
                     listaServicii.remove(selectedValue);
                 } else {
                     vw.setBackgroundColor(desiredBackgroundColor);
-                    final Serviciu selectedValue = servicii.get(position);
+                    final Serviciu selectedValue = listaServicii.get(position);
                     listaServicii.add(selectedValue);
 
                 }
