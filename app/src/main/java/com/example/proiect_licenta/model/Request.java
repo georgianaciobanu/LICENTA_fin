@@ -1,9 +1,10 @@
 package com.example.proiect_licenta.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Request {
+public class Request implements Serializable {
 
 
     private ArrayList<Serviciu> servicii;

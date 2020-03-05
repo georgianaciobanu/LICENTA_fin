@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.presenter.ServicesListAdapter;
 import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
@@ -20,19 +21,25 @@ import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
 import java.util.ArrayList;
 
 public class ChooseServicesActivity extends AppCompatActivity {
-    //ArrayList<Serviciu> servicii= new ArrayList<>();
+    ArrayList<Serviciu> serviciiSelectate= new ArrayList<>();
+    ArrayList<Serviciu> serviciiSelectateCerere= new ArrayList<>();
     ArrayList<Serviciu> listaServicii= new ArrayList<Serviciu>();
     ListView listView;
     ServicesListAdapter adapter;
     Button btnBack;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_services);
-
         Intent i = getIntent();
+
+        serviciiSelectateCerere=(ArrayList<Serviciu>)i.getSerializableExtra("ListaServiciiSelectate");
+        if(serviciiSelectateCerere!=null){
+            serviciiSelectate=serviciiSelectateCerere;
+        }
         listaServicii = (ArrayList<Serviciu>) i.getSerializableExtra("ListaServicii");
 
 
@@ -41,9 +48,10 @@ public class ChooseServicesActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent itReq = new Intent(getApplicationContext(), TrimiteCerereActivity.class);
-                itReq.putExtra("ListaServicii",listaServicii);
-                startActivity(itReq);
+                itReq.putExtra("ListaServiciiSelectate",serviciiSelectate);
+                startActivityForResult(itReq,0);
             }
         });
 
@@ -56,18 +64,8 @@ public class ChooseServicesActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-        if (listaServicii == null) {
-            listaServicii = new ArrayList<Serviciu>();
-        }
-        else {
 
-            for (int s = 0; s < listView.getChildCount(); s++) {
-                final Serviciu selectedValue = listaServicii.get(s);
-                if (listaServicii.contains(selectedValue)) {
-                    listView.getChildAt(s).setBackgroundColor(Color.BLUE);
-                }
-            }
-        }
+
 
 
 
@@ -85,7 +83,7 @@ public class ChooseServicesActivity extends AppCompatActivity {
                 if (viewColor == null) {
                     vw.setBackgroundColor(desiredBackgroundColor);
                     final Serviciu selectedValue = listaServicii.get(position);
-                    listaServicii.add(selectedValue);
+                    serviciiSelectate.add(selectedValue);
                     return;
                 }
 
@@ -94,11 +92,11 @@ public class ChooseServicesActivity extends AppCompatActivity {
                 if (currentColorId == desiredBackgroundColor) {
                     vw.setBackgroundColor(Color.TRANSPARENT);
                     final Serviciu selectedValue = listaServicii.get(position);
-                    listaServicii.remove(selectedValue);
+                    serviciiSelectate.remove(selectedValue);
                 } else {
                     vw.setBackgroundColor(desiredBackgroundColor);
                     final Serviciu selectedValue = listaServicii.get(position);
-                    listaServicii.add(selectedValue);
+                    serviciiSelectate.add(selectedValue);
 
                 }
 

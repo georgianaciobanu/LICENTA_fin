@@ -15,6 +15,7 @@ import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
 import com.example.proiect_licenta.presenter.ServiceAdapter;
 import com.example.proiect_licenta.model.ServiceDataModel;
@@ -31,7 +32,9 @@ public class SearchedServiceActivity extends AppCompatActivity {
     ListView listView;
     private static ServiceAdapter adapter;
     OnGetDataListener listenerService;
+    OnGetDataListener listenerServiceToSend;
     Service service;
+    Service serviceToSend= new Service();
     ArrayList<Service> services= new ArrayList<>();
     Boolean ok=false;
     String TAG="SearchedServiceActivity";
@@ -44,6 +47,32 @@ public class SearchedServiceActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_searchedService);
 
         dataModels = new ArrayList<>();
+        listenerServiceToSend = new
+
+                OnGetDataListener() {
+                    @Override
+                    public void onStartFirebaseRequest() {
+                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onSuccess(DataSnapshot data) {
+                        for (DataSnapshot singleSnapshot : data.getChildren()) {
+                            serviceToSend = singleSnapshot.getValue(Service.class);
+
+                        }
+
+                        if(serviceToSend!=null){
+                            goToAboutService();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailed(DatabaseError databaseError) {
+                        Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+                    }
+                };
 
 
         listenerService = new
@@ -70,8 +99,9 @@ public class SearchedServiceActivity extends AppCompatActivity {
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Intent itServ = new Intent(getApplicationContext(), AboutServiceActivity.class);
-                                    startActivity(itServ);
+                                   ServiceDataModel serviceDataModel= dataModels.get(position);
+                                   FirebaseFunctions.getServiceFirebase("numeService",serviceDataModel.getName(),listenerServiceToSend);
+
                                 }
 
 
@@ -88,47 +118,15 @@ public class SearchedServiceActivity extends AppCompatActivity {
 
 
 
-        findService("Service",listenerService);
+        FirebaseFunctions.getServicesFirebase(listenerService);
 
-//        Service currentService = new Service();
-//
-//        currentService.setDescriere("Service GSM.info promoveaza servicii si solutii de intretinere, reparatie si reconditionare, pentru dizpozitivele smartphone, telefoane GSM, tablete GPS-uri si alte echipamente mobile.");
-//        currentService.setEmail("servicegsm@gmil.com");
-//        currentService.setNumeService("Service GSM.info");
-//        currentService.setPass("passgsm1234");
-//        currentService.setProprietar("Vasile Mircea");
-//        currentService.setProgram("luni-vineri: 10-18");
-//        currentService.setTelefon("0723.50.30.50");
-//        currentService.setUsername("servicegsm");
-//
-//        final PhysicalLocation serviceLocation = new PhysicalLocation();
-//
-//        serviceLocation.setAdresa("Bulevardul Regina Elisabeta Nr.35, Ap.6, Et.1, Interfon 006, Sector 5, Bucuresti");
-//        serviceLocation.setLatitudine(44.434744);
-//        serviceLocation.setLogitudine(26.0954323);
-
-
-
-
+        //TODO: HARTA + get current client location
     }
 
-    public void findService(String child, final OnGetDataListener listener) {
-
-        listenerService.onStartFirebaseRequest();
-
-        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                listener.onSuccess(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailed(databaseError);
-            }
-        });
-    }
-
+public void goToAboutService(){
+    Intent itServ = new Intent(getApplicationContext(), AboutServiceActivity.class);
+    itServ.putExtra("CurrentService",serviceToSend);
+    startActivity(itServ);
+}
 
 }

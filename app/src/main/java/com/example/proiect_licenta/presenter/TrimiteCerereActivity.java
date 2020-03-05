@@ -56,14 +56,18 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     Button trimiteCerere;
     EditText detalii;
     Date dataProgramare;
+    Request requestServicii;
     Date dataTrimitere;
     Request request;
     TextView servicii;
-    Service currentService;
+    Service currentService=new Service();
+    Service currentServiceFromDB;
    ArrayList<Serviciu> serviciiSelectate= new ArrayList<Serviciu>();
     FirebaseAuth fAuth;
     FirebaseUser firebaseUser;
     User cUser;
+    String TAG="TrimiteCerereActivity";
+
 
 
 
@@ -72,10 +76,26 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trimite_cerere);
 
-        currentService= new Service();
-
+        requestServicii=new Request();
+        currentServiceFromDB= new Service();
+        request = new Request();
         Intent i=getIntent();
-        currentService = (Service) i.getSerializableExtra("CurrentService");
+
+//if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.view.AboutServiceActivity")){
+    currentServiceFromDB = (Service) i.getSerializableExtra("CurrentService");
+  if(currentServiceFromDB!=null){
+      currentService=currentServiceFromDB;
+      request.setService(currentService);
+  }
+//}
+//else if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.view.ChooseServicesActivity")){
+    serviciiSelectate=(ArrayList<Serviciu>)i.getSerializableExtra("ListaServiciiSelectate");
+//}
+
+
+
+
+
 
         initList();
         spinner = findViewById(R.id.spinnerCategorii);
@@ -83,7 +103,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
         spinner.setAdapter(mAdapter);
         mDisplayDate = (TextView) findViewById(R.id.tw_alegeData);
         mDisplayHour=(TextView)findViewById(R.id.tw_alegeOra);
-        request = new Request();
+
         trimiteCerere= (Button)findViewById(R.id.btn_trimite);
         detalii= (EditText) findViewById(R.id.et_detaliiSuplimentare);
         servicii=(TextView)findViewById(R.id.tw_adaugaServicii);
@@ -94,7 +114,8 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
             @Override
             public void onClick(View v) {
                 Intent itReq = new Intent(getApplicationContext(), ChooseServicesActivity.class);
-                itReq.putExtra("ListaServicii",currentService.getSevicii());
+                itReq.putExtra("ListaServiciiSelectate",serviciiSelectate);
+                itReq.putExtra("ListaServicii",request.getService().getSevicii());
                 startActivity(itReq);
             }
         });
@@ -104,7 +125,9 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ProductsItem clickedItem = (ProductsItem) parent.getItemAtPosition(position);
                 String clickedProdus = clickedItem.getProdus();
-                request.setProdus(clickedProdus);
+                if(clickedProdus!=null) {
+                    request.setProdus(clickedProdus);
+                }
 
             }
 
@@ -177,7 +200,7 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
     private void initList() {
         listaProduse = new ArrayList<>();
         int img=0;
-        for(String p :currentService.getProduse()){
+        for(String p :request.getService().getProduse()){
             if (p == "ELECTROCASNICE")
                 img=R.drawable.electrocasnice;
             if (p == "TELEFON/TABLETA")
@@ -194,11 +217,12 @@ public class TrimiteCerereActivity extends AppCompatActivity implements TimePick
 
     private void trimiteCererea(final Request request){
 
+        //TODO: BUG LISTA SERVICII SOLICITATE
+
         if(detalii.getText().toString()!=null){
             request.setDetalii(detalii.getText().toString());
         }
-        request.setServicii(serviciiSelectate);
-        request.setService(currentService);
+       // request.setServicii(serviciiSelectate);
         request.setStatus("trimis spre validare");
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         reference= FirebaseDatabase.getInstance().getReference();

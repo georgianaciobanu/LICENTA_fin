@@ -26,6 +26,7 @@ import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
 import com.example.proiect_licenta.presenter.ServicesListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -58,40 +59,12 @@ public class RequestDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalii_cerere);
-        listenerReqest = new
 
-                OnGetDataListener() {
-                    @Override
-                    public void onStartFirebaseRequest() {
-                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
-                    }
+        readRequest=new Request();
+        Intent i = getIntent();
 
-                    @Override
-                    public void onSuccess(DataSnapshot data) {
-                        for (DataSnapshot singleSnapshot : data.getChildren()) {
-                            readRequest = singleSnapshot.getValue(Request.class);
+        readRequest=(Request) i.getSerializableExtra("currentReq");
 
-                        }
-
-                        if(readRequest!=null){
-                            tw_dataProgramarii.setText(readRequest.getDataProgramare().toString());
-                            tw_status.setText(readRequest.getStatus());
-                            tw_clientBD.setText(readRequest.getClient().getUsername());
-                            tw_detalii.setText(readRequest.getDetalii());
-
-                            ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(),readRequest.getServicii());
-                            listView_servicii.setAdapter(adapterServ);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailed(DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-        ;
 
 
         listView_servicii=(ListView)findViewById(R.id.listView_servicii);
@@ -104,10 +77,18 @@ public class RequestDetailsActivity extends AppCompatActivity {
         tw_detalii=(TextView)findViewById(R.id.tw_detalii);
 
 
-        readRequest=new Request();
-        readRequest("Request",listenerReqest);
 
 
+
+        if(readRequest!=null){
+                            tw_dataProgramarii.setText(readRequest.getDataProgramare().toString());
+                            tw_status.setText(readRequest.getStatus());
+                            tw_clientBD.setText(readRequest.getClient().getUsername());
+                            tw_detalii.setText(readRequest.getDetalii());
+
+                            ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(),readRequest.getServicii());
+                            listView_servicii.setAdapter(adapterServ);
+                        }
 
         btn_Resping.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,25 +104,10 @@ public class RequestDetailsActivity extends AppCompatActivity {
             }
         });
     }
+// TODO: update requests db
 
 
 
-    public void readRequest(String child, final OnGetDataListener listener) {
-
-        listenerReqest.onStartFirebaseRequest();
-
-        FirebaseDatabase.getInstance().getReference().child(child).orderByChild("requestId").equalTo("-M0nFBg1cckdaSl6Qj9O").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailed(databaseError);
-            }
-        });
-    }
 
 
 }

@@ -1,25 +1,38 @@
 package com.example.proiect_licenta.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
+import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.presenter.BookingAdapter;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
@@ -32,7 +45,16 @@ public class BookingFragment extends Fragment {
     ArrayList<Request> bookingList;
     ListView listView;
     private  BookingAdapter adapter;
-    ArrayList<Serviciu> servicii= new ArrayList<>();
+    Boolean ok = true;
+    String TAG = "BookingFragmentActivity";
+    Service currentService;
+    OnGetDataListener listenerService;
+    OnGetDataListener listenerRequest;
+    Request request = new Request();
+    View view;
+    ArrayList<Service> services;
+    User user;
+    FirebaseUser firebaseUser;
 
 
     @Nullable
@@ -40,81 +62,116 @@ public class BookingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_programari, container, false);
+         view = inflater.inflate(R.layout.fragment_programari, container, false);
 
 
-        Date currentTime = Calendar.getInstance().getTime();
+        currentService = new Service();
+        services = new ArrayList<>();
         bookingList = new ArrayList<>();
-        listView = (ListView)view.findViewById(R.id.list_booking);
+        user=new User();
+        final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        Serviciu serv= new Serviciu();
-        serv.setDenumire("Reparatie display telefon");
-        serv.setDetalii("samsung s9 - 3 zile");
-        serv.setPret(67.5);
-        serv.setProdus("TELEFON/TABLETA");
+        listView = (ListView) view.findViewById(R.id.list_booking);
 
-        Serviciu serv2= new Serviciu();
-        serv2.setDenumire("Schimb cuva masina de spalat");
-        serv2.setDetalii("marca bosh - 2 zile - deplasare la domiciliu");
-        serv2.setPret(145.6);
-        serv2.setProdus("ELECTROCASNICE");
+        listenerRequest = new OnGetDataListener() {
+            @Override
+            public void onStartFirebaseRequest() {
+                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
 
-        Serviciu serv3= new Serviciu();
-        serv3.setDenumire("Reparatie touchscreen tableta");
-        serv3.setDetalii("lenovo - 2 zile");
-        serv3.setPret(44.7);
-        serv3.setProdus("TELEFON/TABLETA");
+            }
 
-        Serviciu serv4= new Serviciu();
-        serv4.setDenumire("Distributie");
-        serv4.setDetalii("schimb ulei, placute");
-        serv4.setPret(168d);
-        serv4.setProdus("MASINA");
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                for (DataSnapshot singleSnapshot : data.getChildren()) {
+                    request = singleSnapshot.getValue(Request.class);
+                    if (request != null && request.getClient().getEmail().equals(currentUserEmail)) {
+                        try {
+                            bookingList.add(request);
+                        } catch (Exception e) {
+                            Log.i(TAG, "Exception add request:" + e.toString());
+                        }
+                    }
+                }
+                if (bookingList.size() > 0){ //&& ok) {
+                    adapter = new BookingAdapter(view.getContext(), bookingList);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
+                            startActivity(itReq);
+                        }
+                    });
+               // } else if (ok == false) {
+                   // ok = true;
+                } else {
+                    Log.i(TAG, "Err updatin");
+                }
 
-        Serviciu serv5= new Serviciu();
-        serv5.setDenumire("Montare placa video");
-        serv5.setDetalii("nvidia geforce 940mx");
-        serv5.setPret(98.3);
-        serv5.setProdus("PC/LAPTOP");
+                Log.i(TAG, bookingList.size() + " requests");
+            }
 
-        servicii.add(serv);
-        servicii.add(serv2);
-        servicii.add(serv3);
-        servicii.add(serv4);
-        servicii.add(serv5);
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+            }
+        };
+//        listenerService = new
+//
+//                OnGetDataListener() {
+//                    @Override
+//                    public void onStartFirebaseRequest() {
+//                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(DataSnapshot data) {
+//                        for (DataSnapshot singleSnapshot : data.getChildren()) {
+//                            currentService = singleSnapshot.getValue(Service.class);
+//                            if (currentService != null) {
+//                                services.add(currentService);
+//                            }
+//                        }
+//
+//                        if (services.size() > 0 && ok) {
+//                            adapter = new BookingAdapter (view.getContext(), bookingList);
+//                            listView.setAdapter(adapter);
+//                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                    Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
+//                                    startActivity(itReq);
+//                                }
+//                            });
+//                        } else if (ok == false) {
+//                            ok = true;
+//                        } else {
+//                            Log.i(TAG, "Err updatin");
+//                        }
+//
+//                        Log.i(TAG, services.size() + " services");
+//                    }
+//
+//                    @Override
+//                    public void onFailed(DatabaseError databaseError) {
+//                        Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+//                    }
+//                };
 
+        //FirebaseFunctions.findService("Service", listenerService);
 
-        User user= new User();
-        user.setEmail("clientul1@email.ro");
-        user.setUsername("Clientul 1");
-        Request req = new Request();
-        req.setClient(user);
-        req.setStatus("confirmata");
-        req.setDetalii("detaliile cererii 1");
-        req.setDataProgramare(new Date());
+        FirebaseFunctions.getBookingFirebase(listenerRequest);
 
-        req.setServicii(servicii);
-        req.setDataTrimiterii(currentTime);
-        bookingList.add(req);
-
-        User user2= new User();
-        user2.setEmail("clientu21@email.ro");
-        user2.setUsername("Clientul 2");
-        Request req2 = new Request();
-        req2.setClient(user2);
-        req2.setStatus("respinsa");
-        req2.setDetalii("detaliile cererii 2");
-        req2.setDataProgramare(new Date());
-        req2.setDataTrimiterii(currentTime);
-        req2.setServicii(servicii);
-
-        bookingList.add(req2);
-
-        adapter = new BookingAdapter(view.getContext(), bookingList);
-        listView.setAdapter(adapter);
 
         return view;
+
+
+
     }
+
+
+
+
 
 
 }

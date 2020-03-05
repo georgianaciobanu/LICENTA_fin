@@ -37,6 +37,9 @@ public class SearchServiceFragment extends Fragment {
         return view;
     }
 
+    //TODO: cauta in functie de produse si distanta
+
+
     public void goToServicesList() {
         Intent it = new Intent(getActivity(), SearchedServiceActivity.class);
         startActivity(it);

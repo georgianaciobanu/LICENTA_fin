@@ -15,6 +15,8 @@ import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.view.ServicesListActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +24,7 @@ import androidx.annotation.Nullable;
 public class BookingAdapter extends ArrayAdapter<Request> {
 
 
-
+    Date currentTime = Calendar.getInstance().getTime();
     public BookingAdapter(Context context, ArrayList<Request> bookingList) {
         super(context, 0, bookingList);
     }
@@ -66,7 +68,15 @@ public class BookingAdapter extends ArrayAdapter<Request> {
 
 
             listView_serviciiBook.setAdapter(adapterServ);
-            tw_status.setText(currentItem.getStatus());
+            if (System.currentTimeMillis() > currentItem.getDataProgramare().getTime()){
+                tw_status.setText("EFECTUATA");
+        }
+           else if(System.currentTimeMillis() < currentItem.getDataProgramare().getTime()){
+                tw_status.setText("IN PROGRES");
+            }
+            else if(currentItem.getStatus().equals("ANULATA")){
+                tw_status.setText("ANULATA");
+            }
             tw_dataProgramarii.setText(currentItem.getDataProgramare().toString());
             tw_clientBD.setText(currentItem.getClient().getUsername());
             tw_detalii.setText(currentItem.getDetalii());

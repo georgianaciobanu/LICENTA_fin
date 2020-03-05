@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.proiect_licenta.MainActivity;
 import com.example.proiect_licenta.R;
@@ -25,6 +26,7 @@ import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.User;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,15 +45,24 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
     DrawerLayout drawer;
     String TAG="HomeScreenClientActivity";
 
-    OnGetDataListener listener;
+    OnGetDataListener listenerService;
+    OnGetDataListener listenerClient;
     TextView usernameClient;
     TextView emailClient;
+    ActionBarDrawerToggle toggle;
+    Boolean okServ=false;
+    Boolean okUser=false;
 
     FirebaseAuth fAuth;
     DatabaseReference reference;
     FirebaseUser firebaseUser;
+    Fragment fragmentServ;
+    Fragment fragmentClient;
     User currentUser;
     ArrayList<User> users= new ArrayList<>();
+
+    Service currentService;
+    ArrayList<Service> services= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +75,13 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         View vi = inflater.inflate(R.layout.nav_header, null);
         usernameClient=(TextView)vi.findViewById(R.id.tw_usernameMenu) ;
         emailClient=(TextView)vi.findViewById(R.id.tw_emailMenu) ;
+
+        //TODO: AFISEAZA IN MENIU INFO USERULUI/SERVICE
+
         usernameClient.setText("blabla");
         emailClient.setText("emailbla");
-        listener=new OnGetDataListener() {
+
+        listenerClient=new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {
                 Toast.makeText(getApplicationContext(),"Loading...",Toast.LENGTH_LONG).show();
@@ -74,18 +89,24 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                for(DataSnapshot singleSnapshot : data.getChildren()){
+                for(DataSnapshot singleSnapshot : data.getChildren()) {
                     currentUser = singleSnapshot.getValue(User.class);
-                    if(currentUser!=null){
-                        users.add(currentUser);
-                        if(currentUser.getEmail().equals(currentUserEmail)){
+                }
+                    if(currentUser!=null && okUser ) {
+                        fragmentClient = RequestsFragment.newInstanceClient(currentUser);
+                        if (currentUser.getEmail().equals(currentUserEmail)) {
                             usernameClient.setText(currentUser.getUsername());
                             emailClient.setText(currentUser.getEmail());
-                        }
-                    }
-                }
 
-                Log.i(TAG,users.size()+ " users" );
+                        }
+                    }else if(currentUser!=null && okUser==false){
+                        okUser=true;
+                    }
+                    else if(currentUser==null && okUser){
+                        FirebaseFunctions.getServiceFirebase("email",currentUserEmail,listenerService);
+                    }
+
+
             }
 
             @Override
@@ -94,7 +115,40 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
             }
         };
 
-        currentUser=new User();
+        listenerService=new OnGetDataListener() {
+            @Override
+            public void onStartFirebaseRequest() {
+                Toast.makeText(getApplicationContext(),"Loading...",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                for(DataSnapshot singleSnapshot : data.getChildren()){
+                    currentService = singleSnapshot.getValue(Service.class);
+                    if(currentService!=null && okServ){
+                        if(currentService.getEmail().equals(currentUserEmail)){
+                            usernameClient.setText(currentService.getUsername());
+                            emailClient.setText(currentService.getEmail());
+
+                             fragmentServ = RequestsFragment.newInstanceServ(currentService);
+                        }
+
+                }else if(currentService!=null && okServ==false){
+                    okServ=true;
+                }
+                }
+
+
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),databaseError.toString(),Toast.LENGTH_LONG).show();
+            }
+        };
+
+        FirebaseFunctions.getUserFirebase(listenerClient, currentUserEmail);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -105,41 +159,50 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
 
 
-        drawer = findViewById(R.id.drawerLayoutclient);
-        NavigationView navigationView = findViewById(R.id.nav_viewClient);
-        navigationView.setNavigationItemSelectedListener(this);
+        drawer = findViewById(R.id.drawerLayoutHomeScreen);
+        NavigationView navigationView = findViewById(R.id.nav_viewhomescreen);
+        if(currentService==null && okServ) {
+            navigationView.inflateMenu(R.menu.drawermenu);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new SearchServiceFragment()).commit();
-            navigationView.setCheckedItem(R.id.it_search);
+            navigationView.setNavigationItemSelectedListener(this);
+
+             toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                    R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new SearchServiceFragment()).commit();
+                navigationView.setCheckedItem(R.id.it_search);
+            }
+        }
+        else   {
+            navigationView.inflateMenu(R.menu.drawermenuservice);
+            navigationView.setNavigationItemSelectedListener(this);
+
+             toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                    R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ServiceProfileFragment()).commit();
+                navigationView.setCheckedItem(R.id.it_serviceProfile);
+        }
         }
 
 
-        readUserFirebase("User",listener);
+
+
+
+
+
 
     }
-    public void readUserFirebase(String child, final OnGetDataListener listener){
 
-        listener.onStartFirebaseRequest();
-
-        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent( new ValueEventListener() { @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            listener.onSuccess(dataSnapshot);
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            listener.onFailed(databaseError);
-        }
-    });
-
-}
 
 
 
@@ -148,13 +211,19 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.it_istoricCereri:
+                if(currentService!=null){
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new RequestsFragment()).commit();
+                        fragmentServ).commit();}
+                else if(currentUser!=null){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            fragmentClient).commit();
+                }
                 break;
             case R.id.it_programari:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new BookingFragment()).commit();
                 break;
+                //TODO: FRAGMENT BOOKING
             case R.id.it_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SetariFragment()).commit();
@@ -163,9 +232,14 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ReviewsFragment()).commit();
                 break;
+
             case R.id.it_search:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SearchServiceFragment()).commit();
+                break;
+            case R.id.it_serviceProfile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ServiceProfileFragment()).commit();
                 break;
             case R.id.it_logout:
                 goToMainPage();

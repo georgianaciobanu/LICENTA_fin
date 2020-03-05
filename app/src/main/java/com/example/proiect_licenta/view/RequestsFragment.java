@@ -21,8 +21,10 @@ import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.ServiceDataModel;
 import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
 import com.example.proiect_licenta.presenter.ServiceAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,9 +47,27 @@ public class RequestsFragment extends Fragment {
     OnGetDataListener listenerService;
     OnGetDataListener listenerRequest;
     Request request = new Request();
-    Boolean ok = false;
     View view;
+    User currentClient;
     ArrayList<Service> services;//services = new ArrayList<>();
+
+    public static RequestsFragment newInstanceServ(Service serv) {
+        RequestsFragment fragment = new RequestsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Service", serv);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
+
+    public static RequestsFragment newInstanceClient(User client) {
+        RequestsFragment fragment = new RequestsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Client", client);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -57,7 +77,17 @@ public class RequestsFragment extends Fragment {
         services = new ArrayList<>();
         requests = new ArrayList<>();
 
+
+
         listView = (ListView) view.findViewById(R.id.list_requests);
+        final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        currentService = (Service) getArguments().getSerializable(
+                "Service");
+        if(currentService==null) {
+           currentClient = (User) getArguments().getSerializable(
+            "Client");
+           }
 
         listenerRequest = new OnGetDataListener() {
             @Override
@@ -70,26 +100,38 @@ public class RequestsFragment extends Fragment {
             public void onSuccess(DataSnapshot data) {
                 for (DataSnapshot singleSnapshot : data.getChildren()) {
                     request = singleSnapshot.getValue(Request.class);
-                    if (request != null) {
-                        try {
-                            requests.add(request);
-                        } catch (Exception e) {
-                            Log.i(TAG, "Exception add request:" + e.toString());
+                    if (currentService == null) {
+                        if (request != null && request.getClient().getEmail().equals(currentUserEmail)) {
+                            try {
+                                requests.add(request);
+                            } catch (Exception e) {
+                                Log.i(TAG, "Exception add request:" + e.toString());
+                            }
+                        }
+                    } else if (currentClient == null) {
+                        if (request != null && request.getService().getEmail().equals(currentUserEmail)) {
+                            try {
+                                requests.add(request);
+                            } catch (Exception e) {
+                                Log.i(TAG, "Exception add request:" + e.toString());
+                            }
                         }
                     }
                 }
-                if (requests.size() > 0 && ok) {
+                if (requests.size() > 0){ //&& ok) {
                     adapter = new RequestsAdapter(view.getContext(), requests);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Request req= requests.get(position);
                             Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
+                            itReq.putExtra("currentReq",req);
                             startActivity(itReq);
                         }
                     });
-                } else if (ok == false) {
-                    ok = true;
+               // } else if (ok == false) {
+                 //   ok = true;
                 } else {
                     Log.i(TAG, "Err updatin");
                 }
@@ -102,91 +144,13 @@ public class RequestsFragment extends Fragment {
                 Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
             }
         };
-        listenerService = new
 
-                OnGetDataListener() {
-                    @Override
-                    public void onStartFirebaseRequest() {
-                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
-                    }
 
-                    @Override
-                    public void onSuccess(DataSnapshot data) {
-                        for (DataSnapshot singleSnapshot : data.getChildren()) {
-                            currentService = singleSnapshot.getValue(Service.class);
-                            if (currentService != null) {
-                                services.add(currentService);
-                            }
-                        }
-
-                        if (services.size() > 0 && ok) {
-                            adapter = new RequestsAdapter(view.getContext(), requests);
-                            listView.setAdapter(adapter);
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
-                                    startActivity(itReq);
-                                }
-                            });
-                        } else if (ok == false) {
-                            ok = true;
-                        } else {
-                            Log.i(TAG, "Err updatin");
-                        }
-
-                        Log.i(TAG, services.size() + " services");
-                    }
-
-                    @Override
-                    public void onFailed(DatabaseError databaseError) {
-                        Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-        ;
-
-        findService("Service", listenerService);
-
-        readRequestsFirebase("Request", listenerRequest);
+        FirebaseFunctions.getRequestsFirebase( listenerRequest );
 
 
         return view;
     }
 
-    public void readRequestsFirebase(String child, final OnGetDataListener listener) {
 
-        listenerRequest.onStartFirebaseRequest();
-
-        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i(TAG, "readRequests ->" + dataSnapshot.toString());
-                listener.onSuccess(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailed(databaseError);
-            }
-        });
-    }
-
-    public void findService(String child, final OnGetDataListener listener) {
-
-        listenerService.onStartFirebaseRequest();
-
-        FirebaseDatabase.getInstance().getReference().child(child).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i(TAG, "findService ->" + dataSnapshot.toString());
-                listener.onSuccess(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailed(databaseError);
-            }
-        });
-    }
 }

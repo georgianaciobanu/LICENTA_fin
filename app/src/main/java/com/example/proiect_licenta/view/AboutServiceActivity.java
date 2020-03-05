@@ -16,6 +16,7 @@ import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.Serviciu;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.ServicesListAdapter;
 import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +43,10 @@ public class AboutServiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_service);
+
+        Intent i = getIntent();
+
+        currentService=(Service) i.getSerializableExtra("CurrentService");
         cerere = (Button) findViewById(R.id.BTN_timiteCerere);
         proprietar = (TextView) findViewById(R.id.tw_proprietarService);
         program = (TextView) findViewById(R.id.tw_programService);
@@ -59,20 +64,6 @@ public class AboutServiceActivity extends AppCompatActivity {
 
 
 
-        listenerService = new
-
-                OnGetDataListener() {
-                    @Override
-                    public void onStartFirebaseRequest() {
-                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onSuccess(DataSnapshot data) {
-                        for (DataSnapshot singleSnapshot : data.getChildren()) {
-                            currentService = singleSnapshot.getValue(Service.class);
-
-                        }
 
                         if(currentService!=null){
                            setInfoService(currentService);
@@ -105,24 +96,13 @@ public class AboutServiceActivity extends AppCompatActivity {
 
                     }
 
-                    @Override
-                    public void onFailed(DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-        ;
-
-        readRequest("Service",listenerService);
 
 
-
-    }
 
     public void goToCerere() {
         Intent itReq = new Intent(getApplicationContext(), TrimiteCerereActivity.class);
         itReq.putExtra("CurrentService",currentService);
-        startActivity(itReq);
+        startActivityForResult(itReq,0);
 
 
 
@@ -155,20 +135,5 @@ public class AboutServiceActivity extends AppCompatActivity {
     }
 
 
-    public void readRequest(String child, final OnGetDataListener listener) {
 
-        listenerService.onStartFirebaseRequest();
-
-        FirebaseDatabase.getInstance().getReference().child(child).orderByChild("email").equalTo("servicegeo@mail.com").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailed(databaseError);
-            }
-        });
-    }
 }
