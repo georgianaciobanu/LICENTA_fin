@@ -49,6 +49,8 @@ public class RequestsFragment extends Fragment {
     Request request = new Request();
     View view;
     User currentClient;
+    Integer userOrService=2;
+    // 1- user 2- service
     ArrayList<Service> services;//services = new ArrayList<>();
 
     public static RequestsFragment newInstanceServ(Service serv) {
@@ -87,6 +89,7 @@ public class RequestsFragment extends Fragment {
         if(currentService==null) {
            currentClient = (User) getArguments().getSerializable(
             "Client");
+           userOrService=1;
            }
 
         listenerRequest = new OnGetDataListener() {
@@ -118,7 +121,7 @@ public class RequestsFragment extends Fragment {
                         }
                     }
                 }
-                if (requests.size() > 0){ //&& ok) {
+                if (requests.size() > 0) {
                     adapter = new RequestsAdapter(view.getContext(), requests);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,11 +130,11 @@ public class RequestsFragment extends Fragment {
                             Request req= requests.get(position);
                             Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
                             itReq.putExtra("currentReq",req);
+                            itReq.putExtra("userOrService",userOrService);
                             startActivity(itReq);
                         }
                     });
-               // } else if (ok == false) {
-                 //   ok = true;
+
                 } else {
                     Log.i(TAG, "Err updatin");
                 }

@@ -1,6 +1,7 @@
 package com.example.proiect_licenta.view;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,25 +52,28 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
     TextView usernameClient;
     TextView emailClient;
     ActionBarDrawerToggle toggle;
-    Boolean okServ=false;
-    Boolean okUser=false;
+
 
     FirebaseAuth fAuth;
     DatabaseReference reference;
     FirebaseUser firebaseUser;
     Fragment fragmentServ;
     Fragment fragmentClient;
+    Fragment fragmentServBook;
+    Fragment fragmentClientBook;
     User currentUser;
+    Context context;
     ArrayList<User> users= new ArrayList<>();
-
     Service currentService;
+    ProgressDialog sProgressDialog;
     ArrayList<Service> services= new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen_client);
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        context=this;
 
         final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
         LinearLayout rl = (LinearLayout) findViewById(R.id.menu_layout);
@@ -84,27 +89,84 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         listenerClient=new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {
-                Toast.makeText(getApplicationContext(),"Loading...",Toast.LENGTH_LONG).show();
+
+                if (sProgressDialog == null) {
+                    sProgressDialog = new ProgressDialog(context);
+                    sProgressDialog.setMessage("Loading");
+                    sProgressDialog.setIndeterminate(true);
+                }
+
+                sProgressDialog.show();
             }
 
             @Override
             public void onSuccess(DataSnapshot data) {
+                drawer = findViewById(R.id.drawerLayoutHomeScreen);
+                NavigationView navigationView = findViewById(R.id.nav_viewhomescreen);
+
                 for(DataSnapshot singleSnapshot : data.getChildren()) {
                     currentUser = singleSnapshot.getValue(User.class);
+
                 }
-                    if(currentUser!=null && okUser ) {
+                    if(currentUser!=null ) {
+
                         fragmentClient = RequestsFragment.newInstanceClient(currentUser);
+                        fragmentClientBook = BookingFragment.newInstanceClient(currentUser);
                         if (currentUser.getEmail().equals(currentUserEmail)) {
                             usernameClient.setText(currentUser.getUsername());
                             emailClient.setText(currentUser.getEmail());
 
                         }
-                    }else if(currentUser!=null && okUser==false){
-                        okUser=true;
-                    }
-                    else if(currentUser==null && okUser){
+
+                        if (sProgressDialog != null && sProgressDialog.isShowing()) {
+                            sProgressDialog.dismiss();
+                        }
+
+                        navigationView.inflateMenu(R.menu.drawermenu);
+
+
+                        navigationView.setNavigationItemSelectedListener(HomeScreenClientActivity.this);
+
+                        toggle = new ActionBarDrawerToggle(HomeScreenClientActivity.this, drawer, toolbar,
+                                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                        drawer.addDrawerListener(toggle);
+                        toggle.syncState();
+                        if (savedInstanceState == null) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    new SearchServiceFragment()).commit();
+                            navigationView.setCheckedItem(R.id.it_search);
+                        }
+
+
+
+                    }  else  {
+                        navigationView.inflateMenu(R.menu.drawermenuservice);
+                        navigationView.setNavigationItemSelectedListener(HomeScreenClientActivity.this);
+
+                        toggle = new ActionBarDrawerToggle(HomeScreenClientActivity.this, drawer, toolbar,
+                                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                        drawer.addDrawerListener(toggle);
+                        toggle.syncState();
+                        if (savedInstanceState == null) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    new ServiceProfileFragment()).commit();
+                            navigationView.setCheckedItem(R.id.it_serviceProfile);
+                        }
+
                         FirebaseFunctions.getServiceFirebase("email",currentUserEmail,listenerService);
                     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             }
@@ -118,25 +180,40 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         listenerService=new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {
-                Toast.makeText(getApplicationContext(),"Loading...",Toast.LENGTH_LONG).show();
+
+
             }
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                for(DataSnapshot singleSnapshot : data.getChildren()){
+
+                for(DataSnapshot singleSnapshot : data.getChildren()) {
                     currentService = singleSnapshot.getValue(Service.class);
-                    if(currentService!=null && okServ){
-                        if(currentService.getEmail().equals(currentUserEmail)){
+                }
+
+                if (currentService != null ) {
+                        fragmentServ = RequestsFragment.newInstanceServ(currentService);
+                        fragmentServBook = BookingFragment.newInstanceServ(currentService);
+
+
+                        if (currentService.getEmail().equals(currentUserEmail)) {
                             usernameClient.setText(currentService.getUsername());
                             emailClient.setText(currentService.getEmail());
 
-                             fragmentServ = RequestsFragment.newInstanceServ(currentService);
+
                         }
 
-                }else if(currentService!=null && okServ==false){
-                    okServ=true;
+
+
+                    }
+
+
+
+
+                if (sProgressDialog != null && sProgressDialog.isShowing()) {
+                    sProgressDialog.dismiss();
                 }
-                }
+
 
 
             }
@@ -155,44 +232,6 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
 
 
-
-
-
-
-        drawer = findViewById(R.id.drawerLayoutHomeScreen);
-        NavigationView navigationView = findViewById(R.id.nav_viewhomescreen);
-        if(currentService==null && okServ) {
-            navigationView.inflateMenu(R.menu.drawermenu);
-
-
-            navigationView.setNavigationItemSelectedListener(this);
-
-             toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                    R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-
-            if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new SearchServiceFragment()).commit();
-                navigationView.setCheckedItem(R.id.it_search);
-            }
-        }
-        else   {
-            navigationView.inflateMenu(R.menu.drawermenuservice);
-            navigationView.setNavigationItemSelectedListener(this);
-
-             toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                    R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-
-            if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ServiceProfileFragment()).commit();
-                navigationView.setCheckedItem(R.id.it_serviceProfile);
-        }
-        }
 
 
 
@@ -220,8 +259,16 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                 }
                 break;
             case R.id.it_programari:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new BookingFragment()).commit();
+
+                if(currentService!=null){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            fragmentServBook).commit();}
+                else if(currentUser!=null){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            fragmentClientBook).commit();
+                }
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new BookingFragment()).commit();
                 break;
                 //TODO: FRAGMENT BOOKING
             case R.id.it_settings:

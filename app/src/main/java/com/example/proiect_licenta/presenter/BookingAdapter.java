@@ -1,12 +1,14 @@
 package com.example.proiect_licenta.presenter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 public class BookingAdapter extends ArrayAdapter<Request> {
 
@@ -57,7 +60,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
         ListView listView_serviciiBook=convertView.findViewById(R.id.listView_serviciiBook);
 
 
-        Request currentItem = getItem(position);
+        final Request currentItem = getItem(position);
 
 
 
@@ -81,12 +84,44 @@ public class BookingAdapter extends ArrayAdapter<Request> {
             tw_clientBD.setText(currentItem.getClient().getUsername());
             tw_detalii.setText(currentItem.getDetalii());
         }
+
+
+
         btn_anulare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tw_status.setText("Anulata");
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        getContext());
+
+                // set title
+                alertDialogBuilder.setTitle("Urmeaza sa anulati rezervarea. Continuati?");
+
+                // set dialog message
+                alertDialogBuilder
+
+                        .setCancelable(false)
+                        .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                FirebaseFunctions.updateRequest(currentItem, "anulata");
+                                tw_status.setText("anulata");
+                            }
+                        })
+                        .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
             }
         });
+
+
         return convertView;
     }
 

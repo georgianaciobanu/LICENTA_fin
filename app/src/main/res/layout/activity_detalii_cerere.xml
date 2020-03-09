@@ -180,4 +180,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tw_alteDetalii"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/btn_Anulare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/button_config"
+        android:text="Anuleaza"
+        android:textColor="@color/colorBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_Resping"
+        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintStart_toEndOf="@+id/btn_Confirma" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

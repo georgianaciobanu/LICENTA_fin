@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,7 @@ public class ServiceAdapter extends ArrayAdapter<ServiceDataModel> {
         ImageView imageViewService = convertView.findViewById(R.id.item_info);
         ImageView loc = convertView.findViewById(R.id.loc_info);
         TextView textViewName = convertView.findViewById(R.id.servicename);
-        TextView adresa = convertView.findViewById(R.id.adresa_bd);
+        MultiAutoCompleteTextView adresa = convertView.findViewById(R.id.adresa_bd);
         ServiceDataModel currentItem = getItem(position);
 
         if (currentItem != null) {

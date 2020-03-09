@@ -28,7 +28,6 @@
         <activity android:name=".view.ServicesListActivity" />
         <activity android:name=".view.AboutServiceActivity" />
         <activity android:name=".view.RequestDetailsActivity" />
-        <activity android:name=".view.HomeScreenServiceActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -34,8 +34,12 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.et_login_mail);
         password = (EditText) findViewById(R.id.et_login_pass);
 
-        email.setText("server1151@email.ro");
-        password.setText("serverPass1511");
+//       email.setText("server1151@email.ro");
+//       password.setText("serverPass1511");
+
+
+        email.setText("client22@mail.ro");
+        password.setText("pass2222");
         mFirebaseAuth = FirebaseAuth.getInstance();
 
 
@@ -125,9 +129,5 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(it);
     }
 
-    public void goToHomeScreenService() {
-        Intent it = new Intent(this, HomeScreenServiceActivity.class);
-        startActivity(it);
 
-    }
 }

@@ -284,11 +284,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         }
     }
 
-    public void goToHomeScreen() {
-        Log.d(TAG, "goToHomeScreen");
-        Intent it = new Intent(this, HomeScreenServiceActivity.class);
-        startActivity(it);
-    }
+
 
     private void init() {
         Log.d(TAG, "init");
@@ -464,7 +460,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
                     reference.push().setValue(service);
 
-                    goToHomeScreen();
+
 
                 }
                 else{

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.proiect_licenta.model.OnGetDataListener;
+import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -73,7 +74,7 @@ public class FirebaseFunctions {
             }
         });
     }
-    public static void readRequest(String child, final OnGetDataListener listener) {
+    public static void readRequestService(String child, final OnGetDataListener listener) {
 
         listener.onStartFirebaseRequest();
 
@@ -110,7 +111,7 @@ public class FirebaseFunctions {
 
         listener.onStartFirebaseRequest();
 
-        FirebaseDatabase.getInstance().getReference().child("Request").orderByChild("status").equalTo("validat").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Request").orderByChild("status").equalTo("trimis spre validare").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listener.onSuccess(dataSnapshot);
@@ -140,5 +141,16 @@ public class FirebaseFunctions {
             }
         });
     }
+
+
+    public static void updateRequest (Request request, String status){
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Request").child(request.getRequestId());
+        databaseReference.child("status").setValue(status);
+        request.setStatus(status);
+
+
+
+    }
+
 
 }

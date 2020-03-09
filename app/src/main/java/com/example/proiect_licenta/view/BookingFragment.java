@@ -1,6 +1,7 @@
 package com.example.proiect_licenta.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,13 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.proiect_licenta.R;
@@ -53,9 +57,29 @@ public class BookingFragment extends Fragment {
     Request request = new Request();
     View view;
     ArrayList<Service> services;
-    User user;
-    FirebaseUser firebaseUser;
 
+    User currentClient;
+    FirebaseUser firebaseUser;
+    View view2;
+
+
+    public static BookingFragment newInstanceServ(Service serv) {
+        BookingFragment fragment = new BookingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Service", serv);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
+
+    public static BookingFragment newInstanceClient(User client) {
+        BookingFragment fragment = new BookingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Client", client);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -63,12 +87,20 @@ public class BookingFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.fragment_programari, container, false);
+        view2 = inflater.inflate(R.layout.booking_item_list, container, false);
+
+        currentService = (Service) getArguments().getSerializable(
+                "Service");
+        if(currentService==null) {
+            currentClient = (User) getArguments().getSerializable(
+                    "Client");
+        }
 
 
-        currentService = new Service();
+
         services = new ArrayList<>();
         bookingList = new ArrayList<>();
-        user=new User();
+
         final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         listView = (ListView) view.findViewById(R.id.list_booking);
@@ -84,31 +116,36 @@ public class BookingFragment extends Fragment {
             public void onSuccess(DataSnapshot data) {
                 for (DataSnapshot singleSnapshot : data.getChildren()) {
                     request = singleSnapshot.getValue(Request.class);
-                    if (request != null && request.getClient().getEmail().equals(currentUserEmail)) {
-                        try {
-                            bookingList.add(request);
-                        } catch (Exception e) {
-                            Log.i(TAG, "Exception add request:" + e.toString());
+                    if (currentClient == null) {
+                        if (request != null && request.getService().getEmail().equals(currentUserEmail)) {
+                            try {
+                                bookingList.add(request);
+                            } catch (Exception e) {
+                                Log.i(TAG, "Exception add request:" + e.toString());
+                            }
+                        }
+                    }
+                    else{
+                        if (request != null && request.getClient().getEmail().equals(currentUserEmail)) {
+                            try {
+                                bookingList.add(request);
+                            } catch (Exception e) {
+                                Log.i(TAG, "Exception add request:" + e.toString());
+                            }
                         }
                     }
                 }
-                if (bookingList.size() > 0){ //&& ok) {
+                if (bookingList.size() > 0){
                     adapter = new BookingAdapter(view.getContext(), bookingList);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
-                            startActivity(itReq);
+
                         }
                     });
-               // } else if (ok == false) {
-                   // ok = true;
-                } else {
-                    Log.i(TAG, "Err updatin");
-                }
 
-                Log.i(TAG, bookingList.size() + " requests");
+                }
             }
 
             @Override
@@ -116,51 +153,11 @@ public class BookingFragment extends Fragment {
                 Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
             }
         };
-//        listenerService = new
-//
-//                OnGetDataListener() {
-//                    @Override
-//                    public void onStartFirebaseRequest() {
-//                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(DataSnapshot data) {
-//                        for (DataSnapshot singleSnapshot : data.getChildren()) {
-//                            currentService = singleSnapshot.getValue(Service.class);
-//                            if (currentService != null) {
-//                                services.add(currentService);
-//                            }
-//                        }
-//
-//                        if (services.size() > 0 && ok) {
-//                            adapter = new BookingAdapter (view.getContext(), bookingList);
-//                            listView.setAdapter(adapter);
-//                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                @Override
-//                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                    Intent itReq = new Intent(view.getContext(), RequestDetailsActivity.class);
-//                                    startActivity(itReq);
-//                                }
-//                            });
-//                        } else if (ok == false) {
-//                            ok = true;
-//                        } else {
-//                            Log.i(TAG, "Err updatin");
-//                        }
-//
-//                        Log.i(TAG, services.size() + " services");
-//                    }
-//
-//                    @Override
-//                    public void onFailed(DatabaseError databaseError) {
-//                        Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
-//                    }
-//                };
-
-        //FirebaseFunctions.findService("Service", listenerService);
 
         FirebaseFunctions.getBookingFirebase(listenerRequest);
+
+
+
 
 
         return view;
@@ -168,6 +165,8 @@ public class BookingFragment extends Fragment {
 
 
     }
+
+
 
 
 
