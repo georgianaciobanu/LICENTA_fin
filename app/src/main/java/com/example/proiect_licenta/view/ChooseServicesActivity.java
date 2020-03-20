@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,12 +22,15 @@ import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
 import java.util.ArrayList;
 
 public class ChooseServicesActivity extends AppCompatActivity {
+    ArrayList<Serviciu> serviciiSelectateNou= new ArrayList<>();
     ArrayList<Serviciu> serviciiSelectate= new ArrayList<>();
-    ArrayList<Serviciu> serviciiSelectateCerere= new ArrayList<>();
-    ArrayList<Serviciu> listaServicii= new ArrayList<Serviciu>();
+    ArrayList<Serviciu> listaServiciiService= new ArrayList<Serviciu>();
     ListView listView;
+    Request currentRequest;
     ServicesListAdapter adapter;
     Button btnBack;
+    String TAG="ChooseServicesActivity";
+
 
 
 
@@ -36,12 +40,7 @@ public class ChooseServicesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_services);
         Intent i = getIntent();
 
-        serviciiSelectateCerere=(ArrayList<Serviciu>)i.getSerializableExtra("ListaServiciiSelectate");
-        if(serviciiSelectateCerere!=null){
-            serviciiSelectate=serviciiSelectateCerere;
-        }
-        listaServicii = (ArrayList<Serviciu>) i.getSerializableExtra("ListaServicii");
-
+        currentRequest = (Request) i.getSerializableExtra("request");
 
         btnBack=(Button)findViewById(R.id.btn_chooseServicesList);
 
@@ -50,21 +49,24 @@ public class ChooseServicesActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent itReq = new Intent(getApplicationContext(), TrimiteCerereActivity.class);
-                itReq.putExtra("ListaServiciiSelectate",serviciiSelectate);
+                currentRequest.setServicii(serviciiSelectate);
+                itReq.putExtra("requestBack",currentRequest);
+                Log.i(TAG," DIN CHOOSE SPRE TRIMITE : "+currentRequest.getServicii().size());
                 startActivityForResult(itReq,0);
             }
         });
 
 
-
+        listaServiciiService=currentRequest.getService().getSevicii();
+        if(currentRequest.getServicii()!=null) {
+            serviciiSelectate = currentRequest.getServicii();
+        }
         listView = findViewById(R.id.listView);
-
-
-        adapter = new ServicesListAdapter(getApplicationContext(), listaServicii);
-
+        adapter = new ServicesListAdapter(getApplicationContext(), listaServiciiService,serviciiSelectate);
         listView.setAdapter(adapter);
 
 
+        int desiredBackgroundColor = Color.BLUE;
 
 
 
@@ -82,7 +84,7 @@ public class ChooseServicesActivity extends AppCompatActivity {
 
                 if (viewColor == null) {
                     vw.setBackgroundColor(desiredBackgroundColor);
-                    final Serviciu selectedValue = listaServicii.get(position);
+                    final Serviciu selectedValue = listaServiciiService.get(position);
                     serviciiSelectate.add(selectedValue);
                     return;
                 }
@@ -91,11 +93,11 @@ public class ChooseServicesActivity extends AppCompatActivity {
 
                 if (currentColorId == desiredBackgroundColor) {
                     vw.setBackgroundColor(Color.TRANSPARENT);
-                    final Serviciu selectedValue = listaServicii.get(position);
+                    final Serviciu selectedValue = listaServiciiService.get(position);
                     serviciiSelectate.remove(selectedValue);
                 } else {
                     vw.setBackgroundColor(desiredBackgroundColor);
-                    final Serviciu selectedValue = listaServicii.get(position);
+                    final Serviciu selectedValue = listaServiciiService.get(position);
                     serviciiSelectate.add(selectedValue);
 
                 }

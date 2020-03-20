@@ -87,7 +87,7 @@ public class RequestDetailsActivity extends AppCompatActivity  {
             tw_clientBD.setText(readRequest.getClient().getUsername());
             tw_detalii.setText(readRequest.getDetalii());
 
-            ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(), readRequest.getServicii());
+            ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(), readRequest.getServicii(),null);
             listView_servicii.setAdapter(adapterServ);
         }
 

@@ -64,7 +64,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
 
 
 
-        ServicesListAdapter adapterServ = new ServicesListAdapter(getContext(),currentItem.getServicii() );
+        ServicesListAdapter adapterServ = new ServicesListAdapter(getContext(),currentItem.getServicii(),null );
 
 
         if (currentItem != null) {

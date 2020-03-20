@@ -35,9 +35,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.protobuf.DescriptorProtos;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchedServiceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -45,35 +51,47 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
     ListView listView;
     private static ServiceAdapter adapter;
     OnGetDataListener listenerService;
-    OnGetDataListener listenerServiceToSend;
     Service service;
-    Service serviceToSend = new Service();
     ArrayList<Service> services = new ArrayList<>();
+    ArrayList<Service> servicesToAdapter = new ArrayList<>();
     GoogleMap mGoogleMap;
     String TAG = "SearchedServiceActivity";
     SupportMapFragment mapFragment;
-    LatLng currentLocation;
+    Double distance;
+   Double Latitude;
+   Double Longitude;
+    LatLng deviceLoc;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Boolean mLocationPermissionsGranted = true;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     ArrayList<String> produseSelectate;
+    Map< Double,Service> servicesTolist ;
 
-
+    Comparator<Double> comp = new Comparator<Double>() {
+        @Override
+        public int compare(Double a, Double b) {
+            return a.compareTo(b);
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searched_service);
-
+        servicesTolist = new HashMap<>();
         Intent i=getIntent();
         produseSelectate=(ArrayList<String>)i.getSerializableExtra("produseSelectate");
-
+        Latitude=(Double) i.getSerializableExtra("currentLocationLat");
+        Longitude=(Double) i.getSerializableExtra("currentLocationLong");
+        deviceLoc=new LatLng(Latitude,Longitude);
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapClient);
         mapFragment.getMapAsync(this);
 
-        getDeviceLocation();
+
+
+
 
 
         service = new Service();
@@ -81,32 +99,12 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
 
         dataModels = new ArrayList<>();
 
-        listenerServiceToSend = new
 
-                OnGetDataListener() {
-                    @Override
-                    public void onStartFirebaseRequest() {
-                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
-                    }
 
-                    @Override
-                    public void onSuccess(DataSnapshot data) {
-                        for (DataSnapshot singleSnapshot : data.getChildren()) {
-                            serviceToSend = singleSnapshot.getValue(Service.class);
 
-                        }
 
-                        if (serviceToSend != null) {
-                            goToAboutService();
-                        }
 
-                    }
 
-                    @Override
-                    public void onFailed(DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
-                    }
-                };
 
 
         listenerService = new
@@ -132,41 +130,49 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                                     if(ok) {
 
                                         services.add(service);
-                                        dataModels.add(new ServiceDataModel(service.getNumeService(), service.getLoc().getAdresa()));
+
                                     }
                                 }
                             }
+
+
+
                         }
-                        if (dataModels.size() > 0) {
-                            adapter = new ServiceAdapter(getApplicationContext(), dataModels);
 
-                            listView.setAdapter(adapter);
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    ServiceDataModel serviceDataModel = dataModels.get(position);
-                                    FirebaseFunctions.getServiceFirebase("numeService", serviceDataModel.getName(), listenerServiceToSend);
+                        if (services.size() > 0) {
+                            mGoogleMap.addMarker(new MarkerOptions().position(deviceLoc).title("current location"));
+                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(deviceLoc));
+
+                            for (Service s : services) {
+                                LatLng serviceMarker = new LatLng(s.getLoc().getLatitudine(), s.getLoc().getLogitudine());
+                                if (deviceLoc != null) {
+                                    distance = CalculationByDistance(deviceLoc, serviceMarker);
+                                    servicesTolist.put(distance,s);
 
                                 }
+                                mGoogleMap.addMarker(new MarkerOptions().position(serviceMarker)
+                                        .title(s.getLoc().getAdresa()));
 
+                            }
+                            ArrayList<Double> sortedDistance=new ArrayList<Double>(servicesTolist.keySet());
+                            Collections.sort(sortedDistance,comp);
 
-                            });
-
-
-                            if (services.size() > 0) {
-
-                                for (Service s : services) {
-                                    LatLng serviceMarker = new LatLng(s.getLoc().getLatitudine(), s.getLoc().getLogitudine());
-                                    mGoogleMap.addMarker(new MarkerOptions().position(serviceMarker)
-                                            .title(s.getLoc().getAdresa()));
-                                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(serviceMarker));
-                                }
-
+                            for(double d: sortedDistance){
+                                Log.i(TAG, " distance "+ " " +d);
+                                servicesToAdapter.add(servicesTolist.get(d));
+                                dataModels.add(new ServiceDataModel(servicesTolist.get(d).getNumeService(), servicesTolist.get(d).getLoc().getAdresa()));
+                            }
+                            if (dataModels.size() > 0) {
+                                adapter = new ServiceAdapter(getApplicationContext(), dataModels);
+                                listView.setAdapter(adapter);
 
 
                             }
 
+
+
                         }
+
 
 
 
@@ -179,16 +185,14 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                 };
 
 
+
         FirebaseFunctions.getServicesFirebase(listenerService);
 
-        //TODO: HARTA + get current client location
+
+
     }
 
-    public void goToAboutService() {
-        Intent itServ = new Intent(getApplicationContext(), AboutServiceActivity.class);
-        itServ.putExtra("CurrentService", serviceToSend);
-        startActivity(itServ);
-    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -197,59 +201,58 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
 
     }
 
-    private void getDeviceLocation() {
-        /*
-            getting the device current location
-         */
-        Log.d(TAG, "getDeviceLocation");
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        Log.d(TAG, "onRequestPermissionsResult");
+//        mLocationPermissionsGranted = false;
+//
+//        switch (requestCode) {
+//            case LOCATION_PERMISSION_REQUEST_CODE: {
+//                if (grantResults.length > 0) {
+//                    for (int i = 0; i < grantResults.length; i++) {
+//                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+//                            mLocationPermissionsGranted = false;
+//                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+//                            return;
+//                        }
+//                    }
+//                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+//                    mLocationPermissionsGranted = true;
+//                    // map initialisation
+//                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+//                    mapFragment.getMapAsync(SearchedServiceActivity.this);
+//                }
+//            }
+//        }
+//    }
 
-        try {
-            if (mLocationPermissionsGranted) {
 
-                final Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "onComplete: found location!");
-                            Location currentLoc = (Location) task.getResult();
-                            currentLocation=new LatLng(currentLoc.getLatitude(),currentLoc.getLongitude());
-                            mGoogleMap.addMarker(new MarkerOptions().position(currentLocation)
-                                    .title("current location"));
 
-                        }
-                    }
-                });
-            }
-        } catch (SecurityException e) {
-            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
-        }
+    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return Radius * c;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult");
-        mLocationPermissionsGranted = false;
 
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionsGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
-                            return;
-                        }
-                    }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
-                    mLocationPermissionsGranted = true;
-                    // map initialisation
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(SearchedServiceActivity.this);
-                }
-            }
-        }
-    }
 }

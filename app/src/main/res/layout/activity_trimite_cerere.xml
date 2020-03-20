@@ -105,17 +105,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_adaugaServicii"></TextView>
 
-    <TextView
-        android:id="@+id/tw_alegeOra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="36dp"
-        android:text="@string/tw_alegeOra"
-        android:textColor="@color/colorBlue"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_alegeData"></TextView>
+<!--    <TextView-->
+<!--        android:id="@+id/tw_alegeOra"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="28dp"-->
+<!--        android:layout_marginEnd="36dp"-->
+<!--        android:text="@string/tw_alegeOra"-->
+<!--        android:textColor="@color/colorBlue"-->
+<!--        android:textSize="18dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tw_alegeData"></TextView>-->
+
+
 
     <EditText
         android:id="@+id/et_detaliiSuplimentare"

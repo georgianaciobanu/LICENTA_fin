@@ -1,6 +1,7 @@
 package com.example.proiect_licenta.presenter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,15 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
 
     int rImages[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
 
-
-    public ServicesListAdapter(Context context, ArrayList<Serviciu> servicesList) {
+    ArrayList<Serviciu> serviciiSelectate= new ArrayList<>();
+    ArrayList<Serviciu> serviciiService= new ArrayList<>();
+    public ServicesListAdapter(Context context, ArrayList<Serviciu> servicesList,ArrayList<Serviciu> servicesListSelected) {
         super(context, 0, servicesList);
+        if(servicesList!=null)
+        serviciiService=servicesList;
+        if(servicesListSelected!=null)
+            serviciiSelectate = servicesListSelected;
+
     }
 
     @NonNull
@@ -52,6 +59,17 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
         TextView myDescription = convertView.findViewById(R.id.textView2);
         TextView myDetails = convertView.findViewById(R.id.textView3);
         Serviciu currentItem = getItem(position);
+
+
+        int desiredBackgroundColor = Color.BLUE;
+
+
+            if(serviciiSelectate.contains(currentItem)){
+
+                convertView.setBackgroundColor(desiredBackgroundColor);
+
+            }
+
 
         if (currentItem != null) {
 

@@ -41,7 +41,7 @@ public class ServicesListActivity extends AppCompatActivity {
         servicii = (ArrayList<Serviciu>) i.getSerializableExtra("Servicii");
 
         listView = findViewById(R.id.listView);
-        adapter = new ServicesListAdapter(getApplicationContext(), servicii);
+        adapter = new ServicesListAdapter(getApplicationContext(), servicii,null);
         listView.setAdapter(adapter);
 
 
