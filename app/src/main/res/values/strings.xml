@@ -11,7 +11,7 @@
     <string name="TWforgetpass">Forgot password?</string>
     <string name="CardView_btnlogin"></string>
     <string name="TWlogin">LOGIN</string>
-
+    <string name="checkbox_remember">Remember me</string>
     SIGN UP ACTIVITY
     <string name="TWsignUp">Register now</string>
     <string name="et_username"></string>

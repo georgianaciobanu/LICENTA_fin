@@ -83,6 +83,14 @@ public class BookingAdapter extends ArrayAdapter<Request> {
             tw_dataProgramarii.setText(currentItem.getDataProgramare().toString());
             tw_clientBD.setText(currentItem.getClient().getUsername());
             tw_detalii.setText(currentItem.getDetalii());
+
+            if(tw_status.getText()=="EFECTUATA"){
+                btn_anulare.setEnabled(false);
+                btn_anulare.setClickable(false);
+            }else{
+                btn_anulare.setEnabled(true);
+                btn_anulare.setClickable(true);
+            }
         }
 
 

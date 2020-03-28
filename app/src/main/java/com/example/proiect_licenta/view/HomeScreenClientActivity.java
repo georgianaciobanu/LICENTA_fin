@@ -49,8 +49,6 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
     OnGetDataListener listenerService;
     OnGetDataListener listenerClient;
-    TextView usernameClient;
-    TextView emailClient;
     ActionBarDrawerToggle toggle;
 
 
@@ -66,6 +64,9 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
     ArrayList<User> users= new ArrayList<>();
     Service currentService;
     ProgressDialog sProgressDialog;
+    View mHeaderView;
+    TextView textViewUsername;
+    TextView textViewEmail;
     ArrayList<Service> services= new ArrayList<>();
 
     @Override
@@ -78,13 +79,11 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
         LinearLayout rl = (LinearLayout) findViewById(R.id.menu_layout);
         View vi = inflater.inflate(R.layout.nav_header, null);
-        usernameClient=(TextView)vi.findViewById(R.id.tw_usernameMenu) ;
-        emailClient=(TextView)vi.findViewById(R.id.tw_emailMenu) ;
+
 
         //TODO: AFISEAZA IN MENIU INFO USERULUI/SERVICE
 
-        usernameClient.setText("blabla");
-        emailClient.setText("emailbla");
+
 
         listenerClient=new OnGetDataListener() {
             @Override
@@ -103,6 +102,11 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
             public void onSuccess(DataSnapshot data) {
                 drawer = findViewById(R.id.drawerLayoutHomeScreen);
                 NavigationView navigationView = findViewById(R.id.nav_viewhomescreen);
+                mHeaderView =  navigationView.getHeaderView(0);
+                textViewUsername = (TextView) mHeaderView.findViewById(R.id.tw_usernameMenu);
+                textViewEmail= (TextView) mHeaderView.findViewById(R.id.tw_emailMenu);
+
+
 
                 for(DataSnapshot singleSnapshot : data.getChildren()) {
                     currentUser = singleSnapshot.getValue(User.class);
@@ -113,8 +117,8 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                         fragmentClient = RequestsFragment.newInstanceClient(currentUser);
                         fragmentClientBook = BookingFragment.newInstanceClient(currentUser);
                         if (currentUser.getEmail().equals(currentUserEmail)) {
-                            usernameClient.setText(currentUser.getUsername());
-                            emailClient.setText(currentUser.getEmail());
+                            textViewUsername.setText(currentUser.getUsername());
+                            textViewEmail.setText(currentUser.getEmail());
 
                         }
 
@@ -197,9 +201,8 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
 
                         if (currentService.getEmail().equals(currentUserEmail)) {
-                            usernameClient.setText(currentService.getUsername());
-                            emailClient.setText(currentService.getEmail());
-
+                            textViewUsername.setText(currentService.getUsername());
+                            textViewEmail.setText(currentService.getEmail());
 
                         }
 

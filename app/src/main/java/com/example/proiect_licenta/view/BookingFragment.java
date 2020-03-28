@@ -117,7 +117,7 @@ public class BookingFragment extends Fragment {
                 for (DataSnapshot singleSnapshot : data.getChildren()) {
                     request = singleSnapshot.getValue(Request.class);
                     if (currentClient == null) {
-                        if (request != null && request.getService().getEmail().equals(currentUserEmail)) {
+                        if (request != null && request.getService().getEmail().equals(currentUserEmail)){
                             try {
                                 bookingList.add(request);
                             } catch (Exception e) {
@@ -126,7 +126,7 @@ public class BookingFragment extends Fragment {
                         }
                     }
                     else{
-                        if (request != null && request.getClient().getEmail().equals(currentUserEmail)) {
+                        if (request != null && request.getClient().getEmail().equals(currentUserEmail)){
                             try {
                                 bookingList.add(request);
                             } catch (Exception e) {

@@ -3,9 +3,14 @@ package com.example.proiect_licenta.presenter;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.User;
+import com.example.proiect_licenta.view.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -111,7 +116,7 @@ public class FirebaseFunctions {
 
         listener.onStartFirebaseRequest();
 
-        FirebaseDatabase.getInstance().getReference().child("Request").orderByChild("status").equalTo("trimis spre validare").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Request").orderByChild("status").equalTo("confirmata").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listener.onSuccess(dataSnapshot);
@@ -152,5 +157,21 @@ public class FirebaseFunctions {
 
     }
 
+
+
+    public static void forgetPass(String email){
+
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("FirebaseFunctions", "Email sent.");
+                        }
+                    }
+                });
+
+
+    }
 
 }

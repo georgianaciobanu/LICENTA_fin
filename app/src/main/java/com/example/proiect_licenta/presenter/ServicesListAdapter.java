@@ -76,13 +76,13 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
             myTitle.setText(currentItem.getDenumire());
             myDescription.setText(currentItem.getPret().toString());
             myDetails.setText(currentItem.getDetalii());
-            if (currentItem.getProdus() == "ELECTROCASNICE")
+            if (currentItem.getProdus().equals("ELECTROCASNICE") )
                 images.setImageResource(rImages[0]);
-            if (currentItem.getProdus() == "TELEFON/TABLETA")
+            if (currentItem.getProdus().equals("TELEFON/TABLETA") )
                 images.setImageResource(rImages[1]);
-            if (currentItem.getProdus() == "MASINA")
+            if (currentItem.getProdus().equals("MASINA"))
                 images.setImageResource(rImages[2]);
-            if (currentItem.getProdus() == "PC/LAPTOP")
+            if (currentItem.getProdus().equals("PC/LAPTOP"))
                 images.setImageResource(rImages[3]);
         }
 

@@ -44,7 +44,6 @@ public class RequestsFragment extends Fragment {
     private static RequestsAdapter adapter;
     String TAG = "RequestFragmentActivity";
     Service currentService;
-    OnGetDataListener listenerService;
     OnGetDataListener listenerRequest;
     Request request = new Request();
     View view;

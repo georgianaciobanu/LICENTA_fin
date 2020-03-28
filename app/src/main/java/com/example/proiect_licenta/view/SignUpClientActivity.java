@@ -199,7 +199,10 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
 
                 }
                 else{
-                    Log.i(TAG,"error user");
+                    task.getException().printStackTrace();
+
+                    Toast.makeText(SignUpClientActivity.this,"Regestration error",Toast.LENGTH_LONG).show();
+
                 }
             }
         });

@@ -177,13 +177,13 @@ else if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.
         listaProduse = new ArrayList<>();
         int img=0;
         for(String p :request.getService().getProduse()){
-            if (p == "ELECTROCASNICE")
+            if (p.equals("ELECTROCASNICE") )
                 img=R.drawable.electrocasnice;
-            if (p == "TELEFON/TABLETA")
+            if (p.equals("TELEFON/TABLETA"))
                 img= R.drawable.telefon;
-            if (p == "MASINA")
+            if (p.equals("MASINA"))
                 img= R.drawable.masina;
-            if (p == "PC/LAPTOP")
+            if (p.equals("PC/LAPTOP"))
                 img= R.drawable.pc;
 
             listaProduse.add(new ProductsItem(p, img));

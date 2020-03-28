@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 
 public class RequestsAdapter extends ArrayAdapter<Request> {
 
+    int rImages[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
+
     public RequestsAdapter(Context context, ArrayList<Request> requestsList) {
         super(context, 0, requestsList);
     }
@@ -41,7 +43,7 @@ public class RequestsAdapter extends ArrayAdapter<Request> {
             );
         }
 
-        ImageView image_produs = convertView.findViewById(R.id.image_produs);
+
         TextView tw_status = (TextView)convertView.findViewById(R.id.tw_status);
         TextView tw_numeServiciu = (TextView)convertView.findViewById(R.id.tw_numeServiciu);
         TextView tw_dataTrimiterii = (TextView)convertView.findViewById(R.id.tw_dataTrimiterii);

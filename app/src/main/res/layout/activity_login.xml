@@ -43,6 +43,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_login_mail" />
 
+
+
     <TextView
         android:id="@+id/TWforgetpass"
         android:layout_width="wrap_content"
@@ -57,6 +59,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.335"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkbox_remember"
+        android:textColor="@color/colorBlue"
+        app:layout_constraintBottom_toTopOf="@+id/CardView_btnlogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_login_pass"
+        app:layout_constraintVertical_bias="0.384" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/CardView_btnlogin"

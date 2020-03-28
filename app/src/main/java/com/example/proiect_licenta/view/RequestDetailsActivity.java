@@ -87,6 +87,21 @@ public class RequestDetailsActivity extends AppCompatActivity  {
             tw_clientBD.setText(readRequest.getClient().getUsername());
             tw_detalii.setText(readRequest.getDetalii());
 
+            if(readRequest.getStatus().equals("validat")){
+                btn_Confirma.setEnabled(false);
+                btn_Confirma.setClickable(false);
+            } else{
+                btn_Confirma.setEnabled(true);
+                btn_Confirma.setClickable(true);
+            }
+            if(readRequest.getStatus().equals("anulata")){
+                btn_Resping.setEnabled(false);
+                btn_Resping.setClickable(false);
+            }else{
+                btn_Resping.setEnabled(true);
+                btn_Resping.setClickable(true);
+            }
+
             ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(), readRequest.getServicii(),null);
             listView_servicii.setAdapter(adapterServ);
         }
