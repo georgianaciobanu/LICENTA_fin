@@ -220,11 +220,10 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/ic_location_on_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_listaServicii" />
-
 
     <TextView
         android:id="@+id/tw_adresaService"
@@ -233,7 +232,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="aceasta e adresa"
         android:textAppearance="?android:attr/textAppearanceButton"
         android:textColor="@color/colorBlue"
@@ -241,11 +239,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/BTN_timiteCerere"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toEndOf="@+id/loc_info"
         app:layout_constraintTop_toBottomOf="@+id/tw_listaServicii"
-        app:layout_constraintVertical_bias="0.287" />
-
+        app:layout_constraintVertical_bias="0.069" />
 
     <Button
         android:id="@+id/BTN_timiteCerere"
@@ -261,4 +258,36 @@
         app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tw_listaServicii" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_rating"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:backgroundTint="@android:color/holo_blue_bright"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tw_adresaService"
+        app:srcCompat="@drawable/ic_star_black" />
+
+    <RatingBar
+        android:id="@+id/ratingbar"
+        android:layout_width="242dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:isIndicator="true"
+        android:max="5"
+        android:rating="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_rating"
+        app:layout_constraintVertical_bias="1.0">
+
+    </RatingBar>
 </androidx.constraintlayout.widget.ConstraintLayout>
