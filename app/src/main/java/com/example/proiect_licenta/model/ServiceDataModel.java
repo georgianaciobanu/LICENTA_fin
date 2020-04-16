@@ -6,10 +6,15 @@ import android.widget.ImageView;
 public class ServiceDataModel {
     String name;
     String adresa;
+    String program;
+    PhysicalLocation locatie;
 
-    public ServiceDataModel(String name, String adresa) {
+    public ServiceDataModel(String name, String adresa, String program,PhysicalLocation locatie) {
         this.name = name;
         this.adresa = adresa;
+        this.program= program;
+        this.locatie=locatie;
+
 
     }
 
@@ -19,5 +24,13 @@ public class ServiceDataModel {
 
     public String getAdresa() {
         return adresa;
+    }
+
+    public String getProgram() {
+        return program;
+    }
+
+    public PhysicalLocation getLocatie() {
+        return locatie;
     }
 }

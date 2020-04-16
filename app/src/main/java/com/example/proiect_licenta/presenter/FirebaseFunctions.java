@@ -167,6 +167,23 @@ public class FirebaseFunctions {
         });
     }
 
+    public static void getLocationFirebase(String child, String value,final OnGetDataListener listener) {
+
+        listener.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child("Location").orderByChild(child).equalTo(value).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
 
 
     public static void updateRequest (Request request, String status){

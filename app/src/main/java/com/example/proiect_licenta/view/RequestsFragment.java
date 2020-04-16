@@ -23,7 +23,6 @@ import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
-import com.example.proiect_licenta.presenter.ServiceAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

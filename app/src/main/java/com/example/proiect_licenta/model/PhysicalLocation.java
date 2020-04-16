@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class PhysicalLocation implements Serializable {
 
     Integer id;
-    Integer id_corespondent;
+    String id_corespondent;
     String adresa;
     Double logitudine;
     Double latitudine;
@@ -18,11 +18,11 @@ public class PhysicalLocation implements Serializable {
         this.id = id;
     }
 
-    public Integer getId_corespondent() {
+    public String getId_corespondent() {
         return id_corespondent;
     }
 
-    public void setId_corespondent(Integer id_corespondent) {
+    public void setId_corespondent(String id_corespondent) {
         this.id_corespondent = id_corespondent;
     }
 

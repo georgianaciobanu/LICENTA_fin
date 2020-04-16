@@ -6,7 +6,7 @@
     <color name="colorBlue">#B0E0E6</color>
 
     <color name="Silver">#dcdcdc</color>
-
+    <color name="Transparent">#80000000</color>
     <color name="primaryDrawer">#795548 </color>
     <color name="primaryDarkDrawer">#5D4037</color>
     <color name="whiteDrawer">#ffffff</color>

@@ -48,6 +48,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     TextView proprietar;
     TextView program;
     TextView telefon;
+    OnGetDataListener listenerLocation;
     TextView email;
     TextView descriere;
     TextView nume;
@@ -56,7 +57,8 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     OnGetDataListener listenerReview;
     Review rating;
 
-
+    PhysicalLocation deviceLocationNow;
+PhysicalLocation currentLocation;
     RatingBar ratingBar;
     DatabaseReference reference;
     String currentuser;
@@ -73,6 +75,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
          currentuser= firebaseUser.getEmail();
+         final String currentUserId = firebaseUser.getUid();
         currentReview=new Review();
         currentService=(Service) i.getSerializableExtra("CurrentService");
         cerere = (Button) findViewById(R.id.BTN_timiteCerere);
@@ -88,6 +91,40 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
         listaServicii = (TextView) findViewById(R.id.tw_listaServicii);
         btnAdresa = (TextView) findViewById(R.id.tw_adresaService);
+
+
+        listenerLocation=new OnGetDataListener() {
+            @Override
+            public void onStartFirebaseRequest() {
+
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+
+                for(DataSnapshot singleSnapshot : data.getChildren()) {
+                    currentLocation = singleSnapshot.getValue(PhysicalLocation.class);
+                    if(currentLocation.getId_corespondent().equals(currentUserId)){
+                        deviceLocationNow=currentLocation;
+                    }
+
+
+                }
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),databaseError.toString(),Toast.LENGTH_LONG).show();
+            }
+        };
+
+        FirebaseFunctions.getLocationFirebase("id_corespondent",currentUserId,listenerLocation);
 
         listenerCurrentReview=new OnGetDataListener() {
             @Override
@@ -155,11 +192,11 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
             }
         };
 
-        //TODO: set current location
-        final PhysicalLocation adresaMea= new PhysicalLocation();
-        adresaMea.setAdresa("Bloc 37, Strada Lerești, București");
-        adresaMea.setLatitudine(44.403052);
-        adresaMea.setLogitudine(26.0531606);
+
+//        final PhysicalLocation adresaMea= new PhysicalLocation();
+//        adresaMea.setAdresa("Bloc 37, Strada Lerești, București");
+//        adresaMea.setLatitudine(44.403052);
+//        adresaMea.setLogitudine(26.0531606);
 
 
 
@@ -180,16 +217,20 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                                     goToListaServicii();
                                 }
                             });
+
                             btnAdresa.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // goToMaps(22.304634,73.161070,23.022242,72.548844);
-                                    goToMaps(adresaMea.getLatitudine(),
-                                            adresaMea.getLogitudine(),
-                                            currentService.getLoc().getLatitudine(),
-                                            currentService.getLoc().getLogitudine());
+                                    if(deviceLocationNow!=null) {
+                                        goToMaps(deviceLocationNow.getLatitudine(),
+                                                deviceLocationNow.getLogitudine(),
+                                                currentService.getLoc().getLatitudine(),
+                                                currentService.getLoc().getLogitudine());
+                                    }
                                 }
                             });
+
 
                         }
 
