@@ -7,16 +7,6 @@
     tools:context=".view.SearchedServiceActivity">
 
 
-        <!--        <ListView-->
-<!--            android:id="@+id/list_searchedService"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/map"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            />-->
-
         <fragment
             android:id="@+id/mapClient"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -27,8 +17,21 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
+        <ImageButton
+            android:id="@+id/imageButtonCurrentLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.909"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_my_location_black_24dp" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
@@ -41,6 +44,8 @@
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></androidx.viewpager.widget.ViewPager>
+            app:layout_constraintStart_toStartOf="parent">
+
+        </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

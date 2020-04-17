@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +65,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SearchedServiceActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SearchedServiceActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     ArrayList<ServiceDataModel> dataModels;
     ViewPager viewPager;
@@ -73,13 +75,16 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
     ArrayList<Service> services = new ArrayList<>();
     ArrayList<Service> servicesToAdapter = new ArrayList<>();
     GoogleMap mGoogleMap;
+    Marker myMarker;
     String TAG = "SearchedServiceActivity";
     SupportMapFragment mapFragment;
     Double distance;
     PhysicalLocation currentLocation;
    Double Latitude;
    Double Longitude;
+    MarkerOptions markerOption;
     OnGetDataListener listenerLocation;
+    ImageButton imageButtonCurrentLoc;
     LatLng deviceLoc;
     DatabaseReference reference;
     Integer[] colors = null;
@@ -107,7 +112,7 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
         produseSelectate = (ArrayList<String>) i.getSerializableExtra("produseSelectate");
         Latitude = (Double) i.getSerializableExtra("currentLocationLat");
         Longitude = (Double) i.getSerializableExtra("currentLocationLong");
-
+        imageButtonCurrentLoc=(ImageButton)findViewById(R.id.imageButtonCurrentLoc);
         final PhysicalLocation deviceLocattion=new PhysicalLocation();
         deviceLocattion.setAdresa("Your Location");
         deviceLocattion.setLatitudine(Latitude);
@@ -115,7 +120,7 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
 
         final String currentUserId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         deviceLocattion.setId_corespondent(currentUserId);
-        //locationInsertFirebase(deviceLocattion);
+
 
         listenerLocation=new OnGetDataListener() {
             @Override
@@ -240,8 +245,6 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                         }
 
                         if (services.size() > 0) {
-                            mGoogleMap.addMarker(new MarkerOptions().position(deviceLoc).title("current location").icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1)));
-                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(deviceLoc));
 
                             for (Service s : services) {
                                 LatLng serviceMarker = new LatLng(s.getLoc().getLatitudine(), s.getLoc().getLogitudine());
@@ -250,10 +253,15 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                                     servicesTolist.put(distance, s);
 
                                 }
-                                mGoogleMap.addMarker(new MarkerOptions().position(serviceMarker)
-                                        .title(s.getLoc().getAdresa()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1)));
+                                markerOption=new MarkerOptions().position(serviceMarker)
+                                        .title(s.getNumeService()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1));
+                                myMarker=mGoogleMap.addMarker(markerOption);
 
                             }
+
+
+
+
                             ArrayList<Double> sortedDistance = new ArrayList<Double>(servicesTolist.keySet());
                             Collections.sort(sortedDistance, comp);
 
@@ -269,8 +277,8 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                                 PhysicalLocation s = dataModels.get(viewPager.getCurrentItem()).getLocatie();
                                 LatLng curentServiceLoc = new LatLng(s.getLatitudine(), s.getLogitudine());
 
-                                mGoogleMap.addMarker(new MarkerOptions().position(curentServiceLoc)
-                                        .title(s.getAdresa()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1)));
+                                myMarker=mGoogleMap.addMarker(new MarkerOptions().position(curentServiceLoc)
+                                        .title(dataModels.get(viewPager.getCurrentItem()).getName()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1)));
                                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(curentServiceLoc));
 
 
@@ -290,6 +298,14 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
 
 
         FirebaseFunctions.getServicesFirebase(listenerService);
+        imageButtonCurrentLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGoogleMap.addMarker(new MarkerOptions().position(deviceLoc).title("current location").icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_person_pin_circle_black_24dp)));
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(deviceLoc));
+
+            }
+        });
 
 viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
     @Override
@@ -299,15 +315,17 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
         MarkerOptions nou=new MarkerOptions()
                 .position(curentServiceLoc)
-                .title(s.getAdresa())
+                .title(dataModels.get(viewPager.getCurrentItem()).getName())
                 .snippet("Population: 4,627,300")
                 .icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_map_2));
 
-        mGoogleMap.addMarker(nou);
+        myMarker=mGoogleMap.addMarker(nou);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(curentServiceLoc));
         float zoomLevel = (float) 15.0;
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curentServiceLoc, zoomLevel));
     }
+
+
 
     @Override
     public void onPageSelected(int position) {
@@ -323,7 +341,7 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-
+        mGoogleMap.setOnMarkerClickListener(this);
 
     }
 
@@ -376,4 +394,19 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+          int index=-1;
+        for(ServiceDataModel s:dataModels){
+            if(s.getName().equals(marker.getTitle())){
+             index=dataModels.indexOf(s);
+            }
+        }
+              if(index!=-1) {
+
+           viewPager.setCurrentItem(index);
+
+}
+        return false;
+    }
 }
