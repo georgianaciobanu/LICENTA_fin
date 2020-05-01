@@ -170,47 +170,10 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
 
         viewPager.setPadding(50, 0, 100, 0);
 
-        Integer[] colors_temp = {
-                getResources().getColor(R.color.aquamarine),
-                getResources().getColor(R.color.colorPrimary),
-                getResources().getColor(R.color.colorBlue),
-                getResources().getColor(R.color.colorAccent)
-        };
-
-        colors = colors_temp;
 
         viewPager.setBackgroundColor(getResources().getColor(R.color.Transparent));
 
-//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//                if (position < (adapter.getCount() -1) && position < (colors.length - 1)) {
-//                    viewPager.setBackgroundColor(
-//
-//                            (Integer) argbEvaluator.evaluate(
-//                                    positionOffset,
-//                                    colors[position],
-//                                    colors[position + 1]
-//                            )
-//                    );
-//                }
-//
-//                else {
-//                    viewPager.setBackgroundColor(colors[colors.length - 1]);
-//                }
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+
 
 
         listenerService = new
@@ -316,7 +279,6 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
         MarkerOptions nou=new MarkerOptions()
                 .position(curentServiceLoc)
                 .title(dataModels.get(viewPager.getCurrentItem()).getName())
-                .snippet("Population: 4,627,300")
                 .icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_map_2));
 
         myMarker=mGoogleMap.addMarker(nou);
@@ -344,8 +306,6 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
         mGoogleMap.setOnMarkerClickListener(this);
 
     }
-
-
 
 
     public double CalculationByDistance(LatLng StartP, LatLng EndP) {

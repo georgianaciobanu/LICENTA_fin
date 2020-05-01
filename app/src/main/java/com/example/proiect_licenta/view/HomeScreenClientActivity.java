@@ -81,7 +81,7 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         View vi = inflater.inflate(R.layout.nav_header, null);
 
 
-        //TODO: AFISEAZA IN MENIU INFO USERULUI/SERVICE
+
 
 
 

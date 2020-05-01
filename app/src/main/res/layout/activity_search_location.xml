@@ -99,7 +99,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="-69dp"
         android:background="@drawable/button_config"
-        android:text="@string/BTN_finish_service_register"
+        android:text="NEXT"
         android:textColor="@color/colorBlue" />
 
 

@@ -67,39 +67,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/TW_img"
-        android:layout_width="370dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/TW_img"
-        android:textColor="@color/colorBlue"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_ownerName">
 
-    </TextView>
-
-    <Button
-        android:id="@+id/BTN_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button_config"
-        android:text="@string/BTN_upload"
-        android:textColor="@color/colorBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TW_img">
-
-    </Button>
 
     <EditText
         android:id="@+id/et_descriereService"
@@ -138,5 +106,12 @@
         app:layout_constraintVertical_bias="0.897">
 
     </Button>
+
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

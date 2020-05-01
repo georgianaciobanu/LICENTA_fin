@@ -124,7 +124,6 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady");
         mMap = googleMap;
 
@@ -241,6 +240,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
             public void onClick(View v) {
                 setPhysicalLocationService();
                 serviceRegisterFirebase(currentService);
+
             }
         });
     }
@@ -460,7 +460,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
                     reference.push().setValue(service);
 
-
+                    goToImageUpload();
 
                 }
                 else{
@@ -471,7 +471,12 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         });
 
     }
+  public void  goToImageUpload(){
+      Intent it = new Intent(this, UploadImageActivity.class);
+      it.putExtra("ServiceEmail", currentService.getEmail());
+      startActivity(it);
 
+  }
 
     }
 

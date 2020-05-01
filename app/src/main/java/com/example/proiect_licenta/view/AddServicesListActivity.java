@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.proiect_licenta.model.Product;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.presenter.ProductsAdaptor;
 import com.example.proiect_licenta.model.ProductsItem;
@@ -119,10 +120,22 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
 
     private void initList() {
         listaProduse = new ArrayList<>();
-        listaProduse.add(new ProductsItem("ELECTROCASNICE", R.drawable.electrocasnice));
-        listaProduse.add(new ProductsItem("TELEFON/TABLETA", R.drawable.telefon));
-        listaProduse.add(new ProductsItem("MASINA", R.drawable.masina));
-        listaProduse.add(new ProductsItem("PC/LAPTOP", R.drawable.pc));
+        for(String produs :currentService.getProduse()){
+            if(produs.equals("ELECTROCASNICE")) {
+                listaProduse.add(new ProductsItem("ELECTROCASNICE", R.drawable.electrocasnice));
+            }
+
+            if(produs.equals("TELEFON/TABLETA")) {
+                listaProduse.add(new ProductsItem("TELEFON/TABLETA", R.drawable.telefon));
+            }
+            if(produs.equals("MASINA")) {
+                listaProduse.add(new ProductsItem("MASINA", R.drawable.masina));
+            }
+            if(produs.equals("PC/LAPTOP")) {
+                listaProduse.add(new ProductsItem("PC/LAPTOP", R.drawable.pc));
+            }
+        }
+
     }
 
     public void setServicesList(String denumire, String pret, String detalii, String produs) {

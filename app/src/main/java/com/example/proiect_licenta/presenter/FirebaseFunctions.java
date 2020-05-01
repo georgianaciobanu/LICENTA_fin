@@ -1,5 +1,6 @@
 package com.example.proiect_licenta.presenter;
 
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,7 +11,9 @@ import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Review;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.view.LoginActivity;
+import com.example.proiect_licenta.view.UploadImageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -154,6 +159,25 @@ public class FirebaseFunctions {
         listener.onStartFirebaseRequest();
 
         FirebaseDatabase.getInstance().getReference().child("Review").orderByChild(child).equalTo(value).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
+
+    public static void getImageFire(String child, String value,final OnGetDataListener listener) {
+
+        listener.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child("Image").orderByChild(child).equalTo(value)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

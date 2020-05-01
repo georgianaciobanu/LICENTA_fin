@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".view.DateTimePickerActivity"></activity>
+        <activity android:name=".view.ServiceDetailsActivity"></activity>
+        <activity android:name=".view.UploadImageActivity" />
+        <activity android:name=".view.DateTimePickerActivity" />
         <activity android:name=".view.ChooseServicesActivity" />
         <activity android:name=".view.SearchedServiceActivity" />
         <activity android:name=".presenter.TrimiteCerereActivity" />

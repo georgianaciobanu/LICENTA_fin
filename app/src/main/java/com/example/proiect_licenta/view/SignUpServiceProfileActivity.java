@@ -1,17 +1,19 @@
 package com.example.proiect_licenta.view;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Service;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+
 
 public class SignUpServiceProfileActivity extends AppCompatActivity implements View.OnFocusChangeListener {
 
@@ -20,11 +22,7 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
     EditText numeService;
     EditText descriere;
     EditText program;
-    Button upload;
-    int count = 0;
     Service currentService;
-    String adresaService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +38,6 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
         numeService = (EditText) findViewById(R.id.et_serviceName);
         descriere = (EditText) findViewById(R.id.et_descriereService);
         program = (EditText) findViewById(R.id.et_program);
-        upload = (Button) findViewById(R.id.BTN_upload);
-
         proprietar.setText("proprietar service");
         numeService.setText("nume service");
         descriere.setText("descrierea service-ului este aici");
@@ -49,14 +45,7 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
 
 
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                count++;
-                upload.setEnabled(count < 2);
 
-            }
-        });
 
 
         proprietar.setOnFocusChangeListener(this);
@@ -75,7 +64,7 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
 
 
 
-                if (proprietarS.isEmpty() || numeServiceS.isEmpty() || descriereS.isEmpty() || programS.isEmpty() || upload.isEnabled()) {
+                if (proprietarS.isEmpty() || numeServiceS.isEmpty() || descriereS.isEmpty() || programS.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Completarea campurilor este obligatorie", Toast.LENGTH_LONG).show();
                 } else {
 
@@ -133,4 +122,7 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
             goToServiceProfile();
         }
     }
+
+
+
 }

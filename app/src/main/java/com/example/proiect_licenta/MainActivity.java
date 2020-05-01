@@ -14,8 +14,10 @@ import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.view.HomeScreenClientActivity;
 import com.example.proiect_licenta.view.LoginActivity;
+import com.example.proiect_licenta.view.ServiceDetailsActivity;
 import com.example.proiect_licenta.view.SignUpClientActivity;
 import com.example.proiect_licenta.view.SignUpServiceActivity;
+import com.example.proiect_licenta.view.UploadImageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         signUpClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToSIGNup();
+               goToSIGNup();
 
             }
         });
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public void goToLogin() {
+        //Intent it = new Intent(this, ServiceDetailsActivity.class);
         Intent it = new Intent(this, LoginActivity.class);
         startActivity(it);
     }
@@ -109,5 +112,12 @@ public class MainActivity extends AppCompatActivity {
     public void goToSIGNupService() {
         Intent it = new Intent(this, SignUpServiceActivity.class);
         startActivity(it);
+    }
+
+    public void  goToImageUpload(){
+        Intent it = new Intent(this, UploadImageActivity.class);
+        it.putExtra("ServiceEmail","ricaaa@mail.com" );
+        startActivity(it);
+
     }
 }
