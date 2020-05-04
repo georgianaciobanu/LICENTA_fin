@@ -62,11 +62,11 @@ public class ChooseServicesActivity extends AppCompatActivity {
             serviciiSelectate = currentRequest.getServicii();
         }
         listView = findViewById(R.id.listView);
-        adapter = new ServicesListAdapter(getApplicationContext(), listaServiciiService,serviciiSelectate);
+        adapter = new ServicesListAdapter(getApplicationContext(), listaServiciiService,serviciiSelectate,1);
         listView.setAdapter(adapter);
 
 
-        int desiredBackgroundColor = Color.BLUE;
+
 
 
 

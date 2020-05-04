@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Review;
+import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.view.LoginActivity;
 import com.example.proiect_licenta.view.UploadImageActivity;
@@ -39,6 +40,24 @@ public class FirebaseFunctions {
         listener.onStartFirebaseRequest();
 
         FirebaseDatabase.getInstance().getReference().child("User").orderByChild("email").equalTo(currentUserEmail).addListenerForSingleValueEvent(new ValueEventListener() { @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            listener.onSuccess(dataSnapshot);
+        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+
+    }
+
+
+    public static void getUserByIdFirebase( final OnGetDataListener listener, String currentUserId ){
+
+        listener.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child("User").orderByChild("id").equalTo(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() { @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             listener.onSuccess(dataSnapshot);
         }
@@ -152,7 +171,23 @@ public class FirebaseFunctions {
             }
         });
     }
+    public static void UpdateServicii( int position,final OnGetDataListener listener) {
 
+        listener.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child("Service").child("sevicii").orderByChild(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
 
     public static void getReviewFirebase(String child, String value,final OnGetDataListener listener) {
 
@@ -218,6 +253,13 @@ public class FirebaseFunctions {
 
 
     }
+
+
+
+
+
+
+
 
 
 

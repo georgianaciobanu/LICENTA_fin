@@ -1,22 +1,34 @@
 package com.example.proiect_licenta.model;
 
+import java.util.Date;
+
 public class Review {
 
     private String idService;
     private String idClient;
     private String comment;
     private String rateValue;
+    private Date data;
 
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 
     public Review() {
 
     }
 
-    public Review(String idService, String idClient, String comment, String rateValue) {
+    public Review(String idService, String idClient, String comment, String rateValue, Date data) {
         this.idService = idService;
         this.idClient = idClient;
         this.comment = comment;
         this.rateValue = rateValue;
+        this.data=data;
     }
 
     public String getIdService() {

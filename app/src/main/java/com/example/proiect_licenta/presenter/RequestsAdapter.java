@@ -12,6 +12,7 @@ import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.ServiceDataModel;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,9 @@ public class RequestsAdapter extends ArrayAdapter<Request> {
 
             tw_numeServiciu.setText(currentItem.getServicii().get(0).getDenumire());
             tw_status.setText(currentItem.getStatus());
-            tw_dataTrimiterii.setText(currentItem.getDataTrimiterii().toString());
+            String dateToDisplay= DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(currentItem.getDataTrimiterii());
+
+            tw_dataTrimiterii.setText(dateToDisplay);
 
         }
 

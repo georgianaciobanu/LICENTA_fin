@@ -1,263 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
-    tools:context=".view.AboutServiceActivity">
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="189dp"
-        android:layout_height="152dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".view.AboutServiceActivity"
+    android:layout_height="match_parent">
+
+
+    <ImageButton
+        android:id="@+id/imageButtonUpdate"
+        android:layout_width="71dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_mode_edit_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintStart_toEndOf="@+id/tw_NumeService"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/carouselView"
+        android:layout_width="wrap_content"
+        android:layout_height="209dp"
+        android:layout_marginTop="24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.631"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_NumeService"
-        tools:srcCompat="@tools:sample/avatars[1]" />
+        app:radius="6dp"
+        app:strokeWidth="1dp">
 
-    <TextView
+    </com.synnapps.carouselview.CarouselView>
+
+    <EditText
         android:id="@+id/tw_descriereService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tw_descriereService"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_programService"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.052">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_PROGRAM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/tw_PROGRAM"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_TELEFON"
-        app:layout_constraintEnd_toStartOf="@+id/tw_programService"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_programService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tw_programService"
-        android:textColor="@color/colorBlue"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_telefonService"
-        app:layout_constraintEnd_toEndOf="parent">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_CONTACT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="48dp"
-        android:text="@string/tw_CONTACT"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_PROGRAM"
-        app:layout_constraintEnd_toStartOf="@+id/tw_programService"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_TELEFON"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/tw_TELEFON"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_MAIL"
-        app:layout_constraintEnd_toStartOf="@+id/tw_telefonService"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_telefonService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tw_telefonService"
-        android:textColor="@color/colorBlue"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_mailService"
-        app:layout_constraintEnd_toEndOf="parent">
-
-    </TextView>
-
-
-    <TextView
-        android:id="@+id/tw_MAIL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/tw_MAIL"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_listaServicii"
-        app:layout_constraintEnd_toStartOf="@+id/tw_mailService"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_mailService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="80dp"
-        android:text="@string/tw_mailService"
-        android:textColor="@color/colorBlue"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_adresaService"
-        app:layout_constraintEnd_toEndOf="parent">
-
-    </TextView>
-
-
-    <TextView
-        android:id="@+id/tw_PROPRIETAR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/tw_PROPRIETAR"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_descriereService">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_proprietarService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tw_proprietarService"
-        android:textColor="@color/colorBlue"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_CONTACT"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.363"
-        app:layout_constraintStart_toEndOf="@+id/tw_PROPRIETAR"
-        app:layout_constraintTop_toBottomOf="@+id/tw_descriereService"
-        app:layout_constraintVertical_bias="0.0">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_listaServicii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="144dp"
-        android:text="@string/tw_listaServicii"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/BTN_timiteCerere"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/tw_NumeService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tw_NumeService"
-        android:textColor="@color/colorBlue"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
-
-
-    <ImageView
-        android:id="@+id/loc_info"
-        android:layout_width="27dp"
-        android:layout_height="19dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_location_on_black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_listaServicii" />
-
-    <TextView
-        android:id="@+id/tw_adresaService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:text="@string/tw_descriereService"
+        android:textColor="@color/colorBlue"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carouselView">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/tw_programService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tw_programService"
+        android:textColor="@color/colorBlue"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview_detalii_service">
+
+    </EditText>
+
+    <!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/card_servicii"-->
+<!--        android:layout_width="108dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:cardBackgroundColor="@color/colorPrimary"-->
+<!--        app:cardCornerRadius="25dp"-->
+<!--        tools:layout_editor_absoluteX="303dp"-->
+<!--        tools:layout_editor_absoluteY="25dp">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="54dp">-->
+
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:layout_width="35dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/tw_listaServicii"-->
+<!--                app:layout_constraintHorizontal_bias="0.484"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="1.0"-->
+<!--                app:srcCompat="@drawable/servicii_icon" />-->
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+
+    <EditText
+        android:id="@+id/tw_telefonService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/tw_telefonService"
+        android:textColor="@color/colorBlue"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tw_mailService">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/tw_listaServicii"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Vezi ce servicii oferim"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/BTN_timiteCerere"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toEndOf="@+id/button_rating" />
+
+    <EditText
+        android:id="@+id/tw_mailService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/tw_mailService"
+        android:textColor="@color/colorBlue"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tw_programService">
+
+    </EditText>
+
+    <ImageView
+        android:id="@+id/loc_info"
+        android:layout_width="37dp"
+        android:layout_height="21dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/ic_location_on_black"
+        app:layout_constraintBottom_toTopOf="@+id/button_rating"
+        app:layout_constraintEnd_toStartOf="@+id/tw_adresaService"
+        app:layout_constraintHorizontal_bias="0.977"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_detalii_service"
+        android:layout_width="242dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/crimson"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tw_descriereService">
+
+        <TextView
+            android:id="@+id/tx_det"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Cum ne gasiti?"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="2dp" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tw_adresaService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="36dp"
         android:text="aceasta e adresa"
         android:textAppearance="?android:attr/textAppearanceButton"
         android:textColor="@color/colorBlue"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/BTN_timiteCerere"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toEndOf="@+id/loc_info"
-        app:layout_constraintTop_toBottomOf="@+id/tw_listaServicii"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintBottom_toTopOf="@+id/button_rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tw_telefonService"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/BTN_timiteCerere"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="56dp"
         android:background="@drawable/button_config"
         android:text="@string/BTN_timiteCerere"
         android:textColor="@color/colorBlue"
+        app:layout_constraintBottom_toTopOf="@+id/lista_reviews_scroll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tw_listaServicii" />
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toEndOf="@+id/ratingbar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_rating"
@@ -266,11 +235,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
+        android:layout_marginBottom="24dp"
+        android:visibility="invisible"
         android:backgroundTint="@android:color/holo_blue_bright"
+        app:layout_constraintBottom_toTopOf="@+id/ratingbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tw_adresaService"
         app:srcCompat="@drawable/ic_star_black" />
 
     <RatingBar
@@ -278,16 +249,54 @@
         android:layout_width="242dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="24dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:isIndicator="true"
         android:max="5"
         android:rating="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_rating"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintBottom_toTopOf="@+id/lista_reviews_scroll"
+        app:layout_constraintStart_toStartOf="parent">
 
     </RatingBar>
+
+    <ScrollView
+        android:id="@+id/lista_reviews_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ListView
+            android:id="@+id/lista_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingbar" />
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/tw_NumeService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="144dp"
+        android:text="@string/tw_NumeService"
+        android:textColor="@color/colorBlue"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </EditText>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+

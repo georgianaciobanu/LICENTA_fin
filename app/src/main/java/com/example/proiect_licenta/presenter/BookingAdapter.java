@@ -16,6 +16,7 @@ import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.view.ServicesListActivity;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,7 +65,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
 
 
 
-        ServicesListAdapter adapterServ = new ServicesListAdapter(getContext(),currentItem.getServicii(),null );
+        ServicesListAdapter adapterServ = new ServicesListAdapter(getContext(),currentItem.getServicii(),null,1 );
 
 
         if (currentItem != null) {
@@ -80,7 +81,9 @@ public class BookingAdapter extends ArrayAdapter<Request> {
             else if(currentItem.getStatus().equals("ANULATA")){
                 tw_status.setText("ANULATA");
             }
-            tw_dataProgramarii.setText(currentItem.getDataProgramare().toString());
+            String dateToDisplay= DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(currentItem.getDataProgramare());
+
+            tw_dataProgramarii.setText(dateToDisplay);
             tw_clientBD.setText(currentItem.getClient().getUsername());
             tw_detalii.setText(currentItem.getDetalii());
 

@@ -191,9 +191,15 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                             if (produseSelectate != null) {
                                 if (service != null) {
                                     boolean ok = false;
-                                    for (Serviciu s : service.getSevicii()) {
-                                        if (produseSelectate.contains(s.getProdus()))
-                                            ok = true;
+                                    if(service.getSevicii()!=null && service.getSevicii().size()>0) {
+                                        for (Serviciu s : service.getSevicii()) {
+                                            if (produseSelectate.contains(s.getProdus()))
+                                                ok = true;
+
+                                        }
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "acest service nu a introdus servicii", Toast.LENGTH_LONG).show();
 
                                     }
                                     if (ok) {

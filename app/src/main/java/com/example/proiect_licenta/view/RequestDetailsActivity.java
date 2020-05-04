@@ -25,6 +25,8 @@ import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.ServicesListAdapter;
 
+import java.text.DateFormat;
+
 
 public class RequestDetailsActivity extends AppCompatActivity  {
 
@@ -82,7 +84,9 @@ public class RequestDetailsActivity extends AppCompatActivity  {
 
 
         if (readRequest != null) {
-            tw_dataProgramarii.setText(readRequest.getDataProgramare().toString());
+            String dateToDisplay= DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(readRequest.getDataProgramare());
+
+            tw_dataProgramarii.setText(dateToDisplay);
             tw_status.setText(readRequest.getStatus());
             tw_clientBD.setText(readRequest.getClient().getUsername());
             tw_detalii.setText(readRequest.getDetalii());
@@ -102,7 +106,7 @@ public class RequestDetailsActivity extends AppCompatActivity  {
                 btn_Resping.setClickable(true);
             }
 
-            ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(), readRequest.getServicii(),null);
+            ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(), readRequest.getServicii(),null,1);
             listView_servicii.setAdapter(adapterServ);
         }
 

@@ -6,24 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.ServiceDataModel;
 import com.example.proiect_licenta.view.AboutServiceActivity;
-import com.example.proiect_licenta.view.SearchedServiceActivity;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-
 import java.util.List;
+
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class ServiceSwipeMapAdapter extends PagerAdapter {
 

@@ -3,40 +3,17 @@ package com.example.proiect_licenta;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.proiect_licenta.model.PhysicalLocation;
-import com.example.proiect_licenta.model.Request;
-import com.example.proiect_licenta.model.Service;
-import com.example.proiect_licenta.model.Serviciu;
-import com.example.proiect_licenta.model.User;
-import com.example.proiect_licenta.view.HomeScreenClientActivity;
+
 import com.example.proiect_licenta.view.LoginActivity;
-import com.example.proiect_licenta.view.ServiceDetailsActivity;
 import com.example.proiect_licenta.view.SignUpClientActivity;
 import com.example.proiect_licenta.view.SignUpServiceActivity;
 import com.example.proiect_licenta.view.UploadImageActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 

@@ -69,6 +69,7 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
     TextView textViewEmail;
     ArrayList<Service> services= new ArrayList<>();
 
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +80,6 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
         LinearLayout rl = (LinearLayout) findViewById(R.id.menu_layout);
         View vi = inflater.inflate(R.layout.nav_header, null);
-
 
 
 
@@ -152,6 +152,8 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                         drawer.addDrawerListener(toggle);
                         toggle.syncState();
                         if (savedInstanceState == null) {
+
+
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                     new ServiceProfileFragment()).commit();
                             navigationView.setCheckedItem(R.id.it_serviceProfile);
@@ -273,7 +275,7 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
 //                        new BookingFragment()).commit();
                 break;
-                //TODO: FRAGMENT BOOKING
+
             case R.id.it_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SetariFragment()).commit();
@@ -290,6 +292,10 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
             case R.id.it_serviceProfile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ServiceProfileFragment()).commit();
+                break;
+            case R.id.it_serviceProfileUpdate:
+                sProgressDialog.isShowing();
+                goToAboutService();
                 break;
             case R.id.it_logout:
                 goToMainPage();
@@ -313,5 +319,18 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         }
     }
 
+    private void goToAboutService(){
+
+        Intent intent = new Intent();
+        intent.setClass(context, AboutServiceActivity.class);
+        intent.putExtra("CurrentService", currentService);
+        startActivityForResult(intent,0);
+
+
+        if (sProgressDialog != null && sProgressDialog.isShowing()) {
+            sProgressDialog.dismiss();
+        }
+
+    }
 
 }
