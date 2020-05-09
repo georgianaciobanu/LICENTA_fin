@@ -10,14 +10,18 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.OnGetDataListener;
+import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.Serviciu;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
@@ -31,17 +35,19 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
 
     int rImages[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
     int reqq=1;
-    ProgressDialog pg;
-    Serviciu serviciu;
-    ArrayList<Serviciu> serviciiFirebase;
-    OnGetDataListener listenerUpdateServicii;
     Serviciu currentItem;
-
     ImageView images ;
     EditText myTitle ;
     EditText myDescription ;
     EditText myDetails ;
     ImageButton imageViewDelete;
+    FirebaseUser firebaseUser;
+    ArrayList<ProductsItem> listaProduse;
+    ProductImageAdapter mAdapter;
+    Spinner spinner;
+    String serviceEmail;
+    OnGetDataListener listenerUpdateServicii;
+    Service currentService;
 
     ArrayList<Serviciu> serviciiSelectate= new ArrayList<>();
     ArrayList<Serviciu> serviciiService= new ArrayList<>();
@@ -54,12 +60,17 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
 
      if(req==0){
          reqq=0;
+         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+         serviceEmail=firebaseUser.getEmail();
+
      }
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+
         return initView(position, convertView, parent);
 
 
@@ -76,6 +87,8 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
                     R.layout.row, parent, false
             );
         }
+        final View view=convertView;
+        spinner = convertView.findViewById(R.id.spinnerProd);
         listenerUpdateServicii = new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {
@@ -86,69 +99,92 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
             public void onSuccess(DataSnapshot data) {
 
                 for (DataSnapshot singleSnapshot : data.getChildren()) {
-                    serviciu = singleSnapshot.getValue(Serviciu.class);
-                    if (serviciu.getDenumire().equals(currentItem.getDenumire())) {
+                    currentService  = singleSnapshot.getValue(Service.class);
+                   if (currentService.getEmail().equals(serviceEmail)) {
+                       initList();
+                       mAdapter = new ProductImageAdapter(view.getContext(), listaProduse);
+                       spinner.setAdapter(mAdapter);
 
-                        HashMap<String, Object> result1 = new HashMap<>();
-                        result1.put("denumire", myTitle.getText().toString());
+                   }
+//
+//                        serviciiFirebase=currentService.getSevicii();
+//                        for(Serviciu s: serviciiFirebase){
+//                            if(s.getDenumire().equals(servicii.get(position).getDenumire())){
+//
+//                                s.setDenumire( myTitle.getText().toString());
+//                                s.setDetalii(myDetails.getText().toString());
+//                                s.setPret(Double.valueOf(myDescription.getText().toString()));
+//
+//                                currentService.setSevicii(serviciiFirebase);
+//
+//
+//
+//                            }
+//                        }
+                    // FirebaseFunctions.updateServicii(currentService.getServiceId(),serviciiFirebase);
 
-                        HashMap<String, Object> result2 = new HashMap<>();
-                        result2.put("detalii", myDescription.getText().toString());
-
-                        HashMap<String, Object> result3 = new HashMap<>();
-                        result3.put("pret", myDetails.getText().toString());
 
 
-                        singleSnapshot.getRef().updateChildren(result1);
-                        singleSnapshot.getRef().updateChildren(result2);
-                        singleSnapshot.getRef().updateChildren(result3);
 
 
-                        //pg.hide();
-                    }
+                    //}
                 }
 
 
-                //pg.hide();
+
 
 
             }
 
             @Override
             public void onFailed(DatabaseError databaseError) {
-                pg.hide();
+
 
             }
         };
+
+
+if(reqq==0) {
+
+    FirebaseFunctions.UpdateServicii(serviceEmail, listenerUpdateServicii);
+
+
+}
          images = convertView.findViewById(R.id.image);
          myTitle = convertView.findViewById(R.id.textView1);
          myDescription = convertView.findViewById(R.id.textView2);
          myDetails = convertView.findViewById(R.id.textView3);
          imageViewDelete=convertView.findViewById(R.id.imageViewDelete);
-        imageViewDelete.setVisibility(View.INVISIBLE);
-        if (reqq == 0) {
 
+
+
+         imageViewDelete.setVisibility(View.INVISIBLE);
+        if (reqq == 0) {
+            spinner.setVisibility(View.VISIBLE);
+            images.setVisibility(View.INVISIBLE);
             myTitle.setEnabled(true);
             myDescription.setEnabled(true);
             myDetails.setEnabled(true);
             imageViewDelete.setVisibility(View.VISIBLE);
+
 
         }
         else{
             myTitle.setEnabled(false);
             myDescription.setEnabled(false);
             myDetails.setEnabled(false);
+            imageViewDelete.setVisibility(View.INVISIBLE);
+            images.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.INVISIBLE);
         }
+
+
 
 
          currentItem = getItem(position);
 
-        imageViewDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseFunctions.UpdateServicii(position, listenerUpdateServicii);
-            }
-        });
+
+
 
 
 
@@ -180,5 +216,28 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
 
         return convertView;
     }
+
+    private void initList() {
+        listaProduse = new ArrayList<>();
+        for(String produs :currentService.getProduse()){
+            if(produs.equals("ELECTROCASNICE")) {
+                listaProduse.add(new ProductsItem("ELECTROCASNICE", R.drawable.electrocasnice));
+            }
+
+            if(produs.equals("TELEFON/TABLETA")) {
+                listaProduse.add(new ProductsItem("TELEFON/TABLETA", R.drawable.telefon));
+            }
+            if(produs.equals("MASINA")) {
+                listaProduse.add(new ProductsItem("MASINA", R.drawable.masina));
+            }
+            if(produs.equals("PC/LAPTOP")) {
+                listaProduse.add(new ProductsItem("PC/LAPTOP", R.drawable.pc));
+            }
+        }
+
+    }
 }
+
+
+
 

@@ -115,12 +115,11 @@ OnGetDataListener listenerCurrentReview;
                     ratingBar.setRating(sum/count);
                     reviewsAdapter = new ReviewsAdapter(view.getContext(), reviews);
                     listaReviews.setAdapter(reviewsAdapter);
-
                     progressDialog.hide();
                 }
 
 
-
+                progressDialog.hide();
 
             }
 

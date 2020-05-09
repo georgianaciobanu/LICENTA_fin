@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.model.Product;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.ProductsAdaptor;
 import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.R;
@@ -24,16 +25,16 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
 
     ArrayList<ProductsItem> listaProduse;
     ProductsAdaptor mAdapter;
-
+    Spinner spinner;
     Button completeProfile;
     Button add;
-    Spinner spinner;
     EditText pret;
     EditText denumire;
     EditText detalii;
     String clickedProdus;
     Service currentService;
     ArrayList<Serviciu> servicii;
+    int req=1;
 
 
     @Override
@@ -42,11 +43,22 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_add_services_list);
 
         servicii=new ArrayList<Serviciu>();
-        Intent i = getIntent();
-        currentService = (Service) i.getSerializableExtra("Service");
+        completeProfile = (Button) findViewById(R.id.BTNprofileRegisterService4);
+
+        if(getCallingActivity()!=null) {
+            if (getCallingActivity().getClassName().equals("com.example.proiect_licenta.view.ServicesListActivity")) {
+                req = 0;
+                Intent i = getIntent();
+                currentService = (Service) i.getSerializableExtra("Service");
+                completeProfile.setVisibility(View.INVISIBLE);
+            }
+        }else{
+            Intent i = getIntent();
+            currentService = (Service) i.getSerializableExtra("Service");
+        }
+
 
         initList();
-        completeProfile = (Button) findViewById(R.id.BTNprofileRegisterService4);
         add = (Button) findViewById(R.id.BTN_adaugaService);
         pret = (EditText) findViewById(R.id.et_pretServiciu);
         denumire = (EditText) findViewById(R.id.et_denumireServiciu);
@@ -148,14 +160,21 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         serv.setProdus(produs);
 
 
-        if (serv != null) {
 
-            servicii.add(serv);
+            if (serv != null) {
+                if (req == 0) {
+                    currentService.getSevicii().add(serv);
+                    FirebaseFunctions.updateServicii(currentService.getServiceId(), currentService.getSevicii());
+
+                } else {
+
+                    servicii.add(serv);
+                }
+            } else
+                Toast.makeText(AddServicesListActivity.this, "Seviciu nu a fost introdus", Toast.LENGTH_LONG).show();
+
         }
-        else
-            Toast.makeText(AddServicesListActivity.this, "Seviciu nu a fost introdus", Toast.LENGTH_LONG).show();
 
-    }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {

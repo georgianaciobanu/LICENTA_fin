@@ -182,9 +182,9 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
                     HashMap<String,String> hashMap=new HashMap<>();
                     hashMap.put("id",userid);
                     hashMap. put("username",user.getUsername());
-                    hashMap.put("phoneNumber",user.getTelefon());
+                    hashMap.put("telefon",user.getTelefon());
                     hashMap.put("email",user.getEmail());
-                    hashMap.put("password",user.getPass());
+                    hashMap.put("pass",user.getPass());
 
 
 

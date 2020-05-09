@@ -85,6 +85,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     OnGetDataListener listenerUpdateService;
     Service service;
     ProgressDialog pg;
+    ImageButton imageButtonUpdatePhotos;
 
 
 
@@ -104,7 +105,9 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
         currentService=(Service) i.getSerializableExtra("CurrentService");
 
         imgButUpdate=(ImageButton)findViewById(R.id.imageButtonUpdate);
+        imageButtonUpdatePhotos=(ImageButton)findViewById(R.id.imageButtonUpdatePhotos);
         imgButUpdate.setVisibility(View.INVISIBLE);
+        imageButtonUpdatePhotos.setVisibility(View.INVISIBLE);
 
         listaReviews=(ListView)findViewById(R.id.lista_reviews) ;
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -138,7 +141,11 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 nume.setEnabled(true);
                 req=0;
                 imgButUpdate.setVisibility(View.VISIBLE);
+                imageButtonUpdatePhotos.setVisibility(View.VISIBLE);
                 fab.hide();
+                fab.setVisibility(View.INVISIBLE);
+                cerere.setVisibility(View.INVISIBLE);
+
             }
         }
 
@@ -289,6 +296,9 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
                     carouselView.setViewListener(viewListener);
                     carouselView.setPageCount(mUploads.size());
+
+
+
                 }
 
 
@@ -424,12 +434,21 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                             btnAdresa.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if(deviceLocationNow!=null) {
-                                        goToMaps(deviceLocationNow.getLatitudine(),
-                                                deviceLocationNow.getLogitudine(),
-                                                currentService.getLoc().getLatitudine(),
-                                                currentService.getLoc().getLogitudine());
-                                    }
+                                   if(req==0) {
+                                       Intent intent = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                                       intent.putExtra("Service", currentService);
+                                       startActivityForResult(intent,0);
+
+                                   }
+                                   else {
+
+                                       if (deviceLocationNow != null) {
+                                           goToMaps(deviceLocationNow.getLatitudine(),
+                                                   deviceLocationNow.getLogitudine(),
+                                                   currentService.getLoc().getLatitudine(),
+                                                   currentService.getLoc().getLogitudine());
+                                       }
+                                   }
                                 }
                             });
 
@@ -446,6 +465,16 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
             @Override
             public void onClick(View view) {
                showRatingDialog();
+            }
+        });
+
+
+        imageButtonUpdatePhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), UpdatePhotosActivity.class);
+                intent.putExtra("Images", mUploads);
+                startActivity(intent);
             }
         });
 
@@ -466,11 +495,11 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     public void goToListaServicii() {
         if(req==0){
             Intent intent = new Intent(this, ServicesListActivity.class);
-            intent.putExtra("Servicii", currentService.getSevicii());
+            intent.putExtra("Service", currentService);
             startActivityForResult(intent,0);
         }else {
             Intent it = new Intent(this, ServicesListActivity.class);
-            it.putExtra("Servicii", currentService.getSevicii());
+            it.putExtra("Service", currentService);
             startActivity(it);
         }
 

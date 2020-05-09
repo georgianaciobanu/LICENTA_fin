@@ -130,11 +130,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }
 
 
-        email.setText("itfixall@mail.com");
-        password.setText("parola");
+       email.setText("itfixall@mail.com");
+         password.setText("parola");
 
-        //email.setText("client22@mail.com");
-        //password.setText("parola");
+       // email.setText("client@mail.com");
+      //  password.setText("parola");
         mFirebaseAuth = FirebaseAuth.getInstance();
 
 

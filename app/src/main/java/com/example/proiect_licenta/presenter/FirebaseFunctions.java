@@ -7,9 +7,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.proiect_licenta.model.OnGetDataListener;
+import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Review;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.Serviciu;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.view.LoginActivity;
 import com.example.proiect_licenta.view.UploadImageActivity;
@@ -171,11 +173,11 @@ public class FirebaseFunctions {
             }
         });
     }
-    public static void UpdateServicii( int position,final OnGetDataListener listener) {
+    public static void UpdateServicii( String emailService ,final OnGetDataListener listener) {
 
         listener.onStartFirebaseRequest();
 
-        FirebaseDatabase.getInstance().getReference().child("Service").child("sevicii").orderByChild(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Service").orderByChild("email").equalTo(emailService).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -254,6 +256,42 @@ public class FirebaseFunctions {
 
     }
 
+    public static void updateServicii (String idService, ArrayList<Serviciu> servicii){
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Service").child(idService);
+        databaseReference.child("sevicii").setValue(servicii);
+
+
+
+
+    }
+
+    public static void updateUsernameService (String idService, String username, String proprietar){
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Service").child(idService);
+        databaseReference.child("username").setValue(username);
+        databaseReference.child("proprietar").setValue(proprietar);
+
+
+
+
+    }
+
+    public static void updateUsernameUser (String idUser, String username, String telefon){
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("User").child(idUser);
+        databaseReference.child("username").setValue(username);
+        databaseReference.child("telefon").setValue(telefon);
+
+
+
+
+    }
+    public static void updateLocatie (String idService, PhysicalLocation locatie){
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Service").child(idService);
+        databaseReference.child("loc").setValue(locatie);
+
+
+
+
+    }
 
 
 

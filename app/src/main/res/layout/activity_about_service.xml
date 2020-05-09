@@ -25,14 +25,24 @@
         app:layout_constraintStart_toEndOf="@+id/tw_NumeService"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/imageButtonUpdatePhotos"
+        android:layout_width="71dp"
+        android:layout_height="56dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_add_a_photo_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/tw_descriereService"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonUpdate"
+        app:layout_constraintVertical_bias="0.863" />
+
     <com.synnapps.carouselview.CarouselView
         android:id="@+id/carouselView"
-        android:layout_width="wrap_content"
-        android:layout_height="209dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="281dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="32dp"
         android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonUpdatePhotos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_NumeService"
         app:radius="6dp"
@@ -178,6 +188,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_descriereService">
 
+
+
+
+
         <TextView
             android:id="@+id/tx_det"
             android:layout_width="217dp"
@@ -284,7 +298,7 @@
         android:id="@+id/tw_NumeService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="144dp"
         android:text="@string/tw_NumeService"
         android:textColor="@color/colorBlue"

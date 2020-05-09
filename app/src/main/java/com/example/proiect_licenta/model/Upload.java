@@ -1,6 +1,8 @@
 package com.example.proiect_licenta.model;
 
-public class Upload {
+import java.io.Serializable;
+
+public class Upload implements Serializable {
 
     private String mImageUrl;
     private String emailService;

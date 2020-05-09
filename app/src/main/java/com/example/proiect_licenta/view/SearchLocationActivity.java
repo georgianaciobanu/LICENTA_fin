@@ -32,6 +32,7 @@ import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -69,7 +70,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
     String adresaService;
     Service currentService;
     PhysicalLocation currentLocation;
-
+    int req=1;
     FirebaseAuth fAuth;
     DatabaseReference reference;
     FirebaseUser firebaseUser;
@@ -222,14 +223,25 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_search_location);
         currentService= new Service();
+        btnFinish = (Button) findViewById(R.id.BTN_finish_service_register);
         currentLocation = new PhysicalLocation();
 
-        Intent i = getIntent();
-        currentService = (Service) i.getSerializableExtra("Service");
+        if(getCallingActivity()!=null) {
+            if (getCallingActivity().getClassName().equals("com.example.proiect_licenta.view.AboutServiceActivity")) {
+                req = 0;
+                Intent i = getIntent();
+                currentService = (Service) i.getSerializableExtra("Service");
+                btnFinish.setText("Schimba locatia");
+            }
+        } else {
+
+            Intent i = getIntent();
+            currentService = (Service) i.getSerializableExtra("Service");
+        }
+
 
         mSearchText = (AutoCompleteTextView) findViewById(R.id.et_searchLocation);
         mGps = (ImageView) findViewById(R.id.ic_loc);
-        btnFinish = (Button) findViewById(R.id.BTN_finish_service_register);
         clearIc = (ImageView) findViewById(R.id.ic_clear);
         checkLocationPermission();
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -238,9 +250,14 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
                 location selected
              */
             public void onClick(View v) {
-                setPhysicalLocationService();
-                serviceRegisterFirebase(currentService);
+                if (req == 0) {
+                    setPhysicalLocationService();
+                }
+                else{
+                    setPhysicalLocationService();
+                    serviceRegisterFirebase(currentService);
 
+                }
             }
         });
     }
@@ -432,13 +449,16 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
             currentLocation.setLatitudine(latitude);
             currentLocation.setLogitudine(longitude);
-            adresaService=mSearchText.getText().toString();
+            adresaService = mSearchText.getText().toString();
             currentLocation.setAdresa(adresaService);
 
             currentService.setLoc(currentLocation);
+            if (req == 0) {
+                FirebaseFunctions.updateLocatie(currentService.getServiceId(), currentLocation);
 
             }
         }
+    }
 
 
 
@@ -451,21 +471,23 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
                 if(task.isSuccessful()) {
 
 
-                    reference= FirebaseDatabase.getInstance().getReference("Service");
+    reference = FirebaseDatabase.getInstance().getReference("Service");
 
 
-                    String key = reference.push().getKey();
-                    service.setServiceId(key);
-                    reference.child(service.getServiceId()).setValue(service);
+    String key = reference.push().getKey();
+    service.setServiceId(key);
+    reference.child(service.getServiceId()).setValue(service);
 
-                    reference.push().setValue(service);
+   // reference.push().setValue(service);
 
-                    goToImageUpload();
+    goToImageUpload();
+
+
 
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Emailul a fost deja utilizat",Toast.LENGTH_LONG ).show();
-                    Log.i(TAG,"error service");
+                    Toast.makeText(getApplicationContext(),task.getException().toString(),Toast.LENGTH_LONG ).show();
+
                 }
             }
         });
