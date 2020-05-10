@@ -32,7 +32,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
@@ -78,7 +77,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     ReviewsAdapter reviewsAdapter;
     Request request;
     ArrayList<Request> bookingList;
-    FloatingActionButton fab;
+   //FloatingActionButton fab;
     FirebaseUser firebaseUser;
     int req=1;
     ImageButton imgButUpdate;
@@ -86,6 +85,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     Service service;
     ProgressDialog pg;
     ImageButton imageButtonUpdatePhotos;
+    ImageButton imageButtonChat;
 
 
 
@@ -106,13 +106,14 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
         imgButUpdate=(ImageButton)findViewById(R.id.imageButtonUpdate);
         imageButtonUpdatePhotos=(ImageButton)findViewById(R.id.imageButtonUpdatePhotos);
+        imageButtonChat=(ImageButton)findViewById(R.id.imageButtonChat);
         imgButUpdate.setVisibility(View.INVISIBLE);
         imageButtonUpdatePhotos.setVisibility(View.INVISIBLE);
 
         listaReviews=(ListView)findViewById(R.id.lista_reviews) ;
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-         fab = findViewById(R.id.button_rating);
-         fab.hide();
+        // fab = findViewById(R.id.button_rating);
+         //fab.hide();
          currentuser= firebaseUser.getEmail();
         request=new Request();
         bookingList=new ArrayList<>();
@@ -142,14 +143,21 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 req=0;
                 imgButUpdate.setVisibility(View.VISIBLE);
                 imageButtonUpdatePhotos.setVisibility(View.VISIBLE);
-                fab.hide();
-                fab.setVisibility(View.INVISIBLE);
+                //fab.hide();
+                //fab.setVisibility(View.INVISIBLE);
                 cerere.setVisibility(View.INVISIBLE);
+                imageButtonChat.setVisibility((View.INVISIBLE));
 
             }
         }
 
-
+        imageButtonChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ratingBar=(RatingBar)findViewById(R.id.ratingbar);
         ratingBar.isIndicator();
@@ -246,11 +254,11 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 }
 
                 if (bookingList==null && bookingList.size() == 0) {
-                    fab.hide();
+                   // fab.hide();
 
                 }else{
 
-                    fab.show();
+                   // fab.show();
 
 
                 }
@@ -461,12 +469,12 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                         //rating bar
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               showRatingDialog();
-            }
-        });
+      //  fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               showRatingDialog();
+//            }
+//        });
 
 
         imageButtonUpdatePhotos.setOnClickListener(new View.OnClickListener() {

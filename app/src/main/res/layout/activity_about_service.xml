@@ -21,7 +21,7 @@
         android:backgroundTint="@color/transparent"
         android:src="@drawable/ic_mode_edit_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tw_NumeService"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +35,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonUpdate"
         app:layout_constraintVertical_bias="0.863" />
+
+    <ImageButton
+        android:id="@+id/imageButtonChat"
+        android:layout_width="71dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_chat_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tw_telefonService"
+        app:layout_constraintTop_toBottomOf="@+id/tw_programService">
+
+    </ImageButton>
 
     <com.synnapps.carouselview.CarouselView
         android:id="@+id/carouselView"
@@ -136,7 +150,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
         android:text="Vezi ce servicii oferim"
         android:textAlignment="center"
         android:textColor="#fff"
@@ -150,12 +163,12 @@
         android:id="@+id/tw_mailService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:text="@string/tw_mailService"
         android:textColor="@color/colorBlue"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_programService">
 
@@ -215,7 +228,8 @@
         android:id="@+id/tw_adresaService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="36dp"
         android:text="aceasta e adresa"
         android:textAppearance="?android:attr/textAppearanceButton"
@@ -242,27 +256,27 @@
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toEndOf="@+id/ratingbar" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_rating"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="24dp"
-        android:visibility="invisible"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        app:layout_constraintBottom_toTopOf="@+id/ratingbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_star_black" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/button_rating"-->
+<!--        style="@style/Widget.MaterialComponents.FloatingActionButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|right"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:visibility="invisible"-->
+<!--        android:backgroundTint="@android:color/holo_blue_bright"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/ratingbar"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_star_black" />-->
 
     <RatingBar
         android:id="@+id/ratingbar"
         android:layout_width="242dp"
         android:layout_height="46dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"

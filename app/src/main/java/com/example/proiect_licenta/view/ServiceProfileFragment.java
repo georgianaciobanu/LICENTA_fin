@@ -33,6 +33,10 @@ public class ServiceProfileFragment extends Fragment {
         service=new Service();
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
        final String currentUserEmail= firebaseUser.getEmail();
+
+        Intent intent = new Intent(view.getContext(), ChatActivity.class);
+        startActivity(intent);
+
         listenerServ=new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {

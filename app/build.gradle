@@ -59,4 +59,22 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:10.2.0'
     implementation 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
 
+
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
+
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:6.2.1'
+
+    implementation 'com.google.android.material:material:1.0.0-rc01'
+
+
+
+
 }
