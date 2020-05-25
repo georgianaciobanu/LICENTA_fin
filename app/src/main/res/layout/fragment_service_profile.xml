@@ -6,11 +6,12 @@
     tools:context=".view.ServiceProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/splashscreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:text="Service Profile Fragment"
-        android:textSize="30sp" />/>
+        android:layout_gravity="center"
+        android:src="@drawable/servicep"
+         />
 
 </FrameLayout>
