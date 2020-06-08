@@ -31,16 +31,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.505" />
 
-    <ImageButton
-        android:id="@+id/imageButtonDeletePhotos"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:backgroundTint="@color/transparent"
-        android:src="@drawable/ic_delete_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/photosListForUpdate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonAddPhotos"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <ImageButton-->
+<!--        android:id="@+id/imageButtonDeletePhotos"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:backgroundTint="@color/transparent"-->
+<!--        android:src="@drawable/ic_delete_black_24dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/photosListForUpdate"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/imageButtonAddPhotos"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-    </ImageButton>
+<!--    </ImageButton>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

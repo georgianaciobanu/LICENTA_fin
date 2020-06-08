@@ -12,6 +12,18 @@
     tools:context=".view.AboutServiceActivity"
     android:layout_height="match_parent">
 
+<!--    <ImageButton-->
+<!--        android:id="@+id/button_rating"-->
+<!--        android:layout_width="71dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:backgroundTint="@color/transparent"-->
+<!--        android:src="@drawable/ic_star_black"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/tw_programService"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/cardview_detalii_service"-->
+<!--        app:layout_constraintHorizontal_bias="0.615"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tw_descriereService"-->
+<!--        app:layout_constraintVertical_bias="0.2"></ImageButton>-->
 
     <ImageButton
         android:id="@+id/imageButtonUpdate"
@@ -156,8 +168,9 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/BTN_timiteCerere"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.816"
-        app:layout_constraintStart_toEndOf="@+id/button_rating" />
+        app:layout_constraintHorizontal_bias="0.816">
+
+    </TextView>
 
     <EditText
         android:id="@+id/tw_mailService"
@@ -183,7 +196,6 @@
         android:layout_centerVertical="true"
         android:layout_marginBottom="28dp"
         android:src="@drawable/ic_location_on_black"
-        app:layout_constraintBottom_toTopOf="@+id/button_rating"
         app:layout_constraintEnd_toStartOf="@+id/tw_adresaService"
         app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toStartOf="parent" />
@@ -200,9 +212,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_descriereService">
-
-
-
 
 
         <TextView
@@ -236,7 +245,6 @@
         android:textColor="@color/colorBlue"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_rating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_telefonService"
         app:layout_constraintVertical_bias="0.0" />

@@ -61,51 +61,46 @@ public class ChooseServicesActivity extends AppCompatActivity {
         if(currentRequest.getServicii()!=null) {
             serviciiSelectate = currentRequest.getServicii();
         }
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.listViewChoose);
         adapter = new ServicesListAdapter(getApplicationContext(), listaServiciiService,serviciiSelectate,1);
         listView.setAdapter(adapter);
 
 
-
-
-
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                View vw = listView.getChildAt(position);
-
-
-                int desiredBackgroundColor = Color.BLUE;
-
-                ColorDrawable viewColor = (ColorDrawable) vw.getBackground();
-
-                if (viewColor == null) {
-                    vw.setBackgroundColor(desiredBackgroundColor);
-                    final Serviciu selectedValue = listaServiciiService.get(position);
-                    serviciiSelectate.add(selectedValue);
-                    return;
-                }
-
-                int currentColorId = viewColor.getColor();
-
-                if (currentColorId == desiredBackgroundColor) {
-                    vw.setBackgroundColor(Color.TRANSPARENT);
-                    final Serviciu selectedValue = listaServiciiService.get(position);
-                    serviciiSelectate.remove(selectedValue);
-                } else {
-                    vw.setBackgroundColor(desiredBackgroundColor);
-                    final Serviciu selectedValue = listaServiciiService.get(position);
-                    serviciiSelectate.add(selectedValue);
-
-                }
-
-
-                }
-
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                View vw = listView.getChildAt(position);
+//
+//
+//                int desiredBackgroundColor = Color.BLUE;
+//
+//                ColorDrawable viewColor = (ColorDrawable) vw.getBackground();
+//
+//                if (viewColor == null) {
+//                    vw.setBackgroundColor(desiredBackgroundColor);
+//                    final Serviciu selectedValue = listaServiciiService.get(position);
+//                    serviciiSelectate.add(selectedValue);
+//                    return;
+//                }
+//
+//                int currentColorId = viewColor.getColor();
+//
+//                if (currentColorId == desiredBackgroundColor) {
+//                    vw.setBackgroundColor(Color.TRANSPARENT);
+//                    final Serviciu selectedValue = listaServiciiService.get(position);
+//                    serviciiSelectate.remove(selectedValue);
+//                } else {
+//                    vw.setBackgroundColor(desiredBackgroundColor);
+//                    final Serviciu selectedValue = listaServiciiService.get(position);
+//                    serviciiSelectate.add(selectedValue);
+//
+//                }
+//
+//
+//                }
+//
+//        });
 
 
     }

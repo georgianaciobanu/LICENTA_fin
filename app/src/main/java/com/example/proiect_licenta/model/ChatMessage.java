@@ -7,11 +7,13 @@ public class ChatMessage {
 
     private String messageText;
     private String messageUser;
+    private String messageFor;
     private Date messageTime;
 
-    public ChatMessage(String messageText, String messageUser) {
+    public ChatMessage(String messageText, String messageUser, String messageFor) {
         this.messageText = messageText;
         this.messageUser = messageUser;
+        this.messageFor=messageFor;
 
         // Initialize to current time
         messageTime = Calendar.getInstance().getTime();
@@ -19,6 +21,14 @@ public class ChatMessage {
 
     public ChatMessage(){
 
+    }
+
+    public String getMessageFor() {
+        return messageFor;
+    }
+
+    public void setMessageFor(String messageFor) {
+        this.messageFor = messageFor;
     }
 
     public String getMessageText() {

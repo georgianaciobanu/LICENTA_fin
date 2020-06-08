@@ -93,6 +93,7 @@ public class UploadImageActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent it = new Intent(getApplicationContext(), HomeScreenClientActivity.class);
                 startActivity(it);
 

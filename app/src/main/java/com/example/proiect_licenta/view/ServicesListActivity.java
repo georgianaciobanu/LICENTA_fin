@@ -101,12 +101,12 @@ public class ServicesListActivity extends AppCompatActivity {
                    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                        final int position=i;
                         vwParentRow = (LinearLayout)view.getParent();
-                       btnChild = (Button)vwParentRow.getChildAt(0);
+                         btnChild = (Button)vwParentRow.getChildAt(0);
                          images = (ImageView)vwParentRow.getChildAt(1);
-                       vwParentRow2 = (LinearLayout) vwParentRow.getChildAt(2);
+                        vwParentRow2 = (LinearLayout) vwParentRow.getChildAt(2);
                           myTitle = (EditText)vwParentRow2.getChildAt(0);
                           myDescription = (EditText)vwParentRow2.getChildAt(1);
-                       myDetails = (EditText)vwParentRow2.getChildAt(2);
+                          myDetails = (EditText)vwParentRow2.getChildAt(2);
 
 
 
@@ -164,8 +164,8 @@ public class ServicesListActivity extends AppCompatActivity {
 
                        FirebaseFunctions.UpdateServicii(serviceEmail, listenerUpdateServicii);
 
-                   }
-               });
+                  }
+              });
 
 
 

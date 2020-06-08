@@ -209,6 +209,25 @@ public class FirebaseFunctions {
         });
     }
 
+
+    public static void getMessagesFirebase(final OnGetDataListener listener) {
+
+        listener.onStartFirebaseRequest();
+
+        FirebaseDatabase.getInstance().getReference().child("ChatMessage").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
+
     public static void getImageFire(String child, String value,final OnGetDataListener listener) {
 
         listener.onStartFirebaseRequest();

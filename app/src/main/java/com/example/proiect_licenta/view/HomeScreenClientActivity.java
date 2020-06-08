@@ -285,6 +285,11 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
                         new ReviewsFragment()).commit();
                 break;
 
+            case R.id.it_chat:
+                sProgressDialog.isShowing();
+                goToChat();
+                break;
+
             case R.id.it_search:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SearchServiceFragment()).commit();
@@ -333,4 +338,9 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
 
     }
 
+    private  void goToChat(){
+        Intent intent = new Intent();
+        intent.setClass(context, ChatConversationActivity.class);
+        startActivity(intent);
+    }
 }

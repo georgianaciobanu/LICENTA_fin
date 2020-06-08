@@ -3,9 +3,12 @@ package com.example.proiect_licenta.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.proiect_licenta.R;
@@ -24,6 +27,7 @@ public class ServiceProfileFragment extends Fragment {
     Service service;
     FirebaseUser firebaseUser;
     Service currentService= new Service();
+    ImageButton chatButtonServ;
     View view;
     @Nullable
     @Override
@@ -33,9 +37,8 @@ public class ServiceProfileFragment extends Fragment {
         service=new Service();
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
        final String currentUserEmail= firebaseUser.getEmail();
+        chatButtonServ=(ImageButton)view.findViewById(R.id.chatButtonServ);
 
-        Intent intent = new Intent(view.getContext(), ChatActivity.class);
-        startActivity(intent);
 
         listenerServ=new OnGetDataListener() {
             @Override
@@ -70,6 +73,17 @@ public class ServiceProfileFragment extends Fragment {
         FirebaseFunctions.getServiceFirebase("email",currentUserEmail,listenerServ);
 
 
+        chatButtonServ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToChat(view);
+            }
+        });
         return view;
+    }
+
+    public void goToChat(View view){
+        Intent intent = new Intent(view.getContext(), ChatConversationActivity.class);
+        startActivity(intent);
     }
 }

@@ -15,6 +15,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
@@ -77,7 +79,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     ReviewsAdapter reviewsAdapter;
     Request request;
     ArrayList<Request> bookingList;
-   //FloatingActionButton fab;
+    //ImageButton fab;
     FirebaseUser firebaseUser;
     int req=1;
     ImageButton imgButUpdate;
@@ -101,7 +103,8 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_service);
 
-        Intent i = getIntent();
+
+        final Intent i = getIntent();
         currentService=(Service) i.getSerializableExtra("CurrentService");
 
         imgButUpdate=(ImageButton)findViewById(R.id.imageButtonUpdate);
@@ -112,8 +115,9 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
         listaReviews=(ListView)findViewById(R.id.lista_reviews) ;
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        // fab = findViewById(R.id.button_rating);
-         //fab.hide();
+       //  fab = (ImageButton) findViewById(R.id.button_rating);
+        ratingBar=(RatingBar)findViewById(R.id.ratingbar);
+        ratingBar.isIndicator();
          currentuser= firebaseUser.getEmail();
         request=new Request();
         bookingList=new ArrayList<>();
@@ -140,13 +144,14 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 telefon.setEnabled(true);
                 email.setEnabled(true);
                 nume.setEnabled(true);
+               // fab.setVisibility(View.INVISIBLE);
+                ratingBar.setVisibility(View.INVISIBLE);
                 req=0;
                 imgButUpdate.setVisibility(View.VISIBLE);
                 imageButtonUpdatePhotos.setVisibility(View.VISIBLE);
-                //fab.hide();
-                //fab.setVisibility(View.INVISIBLE);
                 cerere.setVisibility(View.INVISIBLE);
                 imageButtonChat.setVisibility((View.INVISIBLE));
+                listaReviews.setVisibility(View.INVISIBLE);
 
             }
         }
@@ -155,12 +160,12 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-                startActivity(intent);
+                intent.putExtra("messageFor", currentService.getEmail());
+               startActivity(intent);
             }
         });
 
-        ratingBar=(RatingBar)findViewById(R.id.ratingbar);
-        ratingBar.isIndicator();
+
 
         mUploads = new ArrayList<>();
         reviews=new ArrayList<>();
@@ -400,7 +405,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
             public void onSuccess(DataSnapshot data) {
 
                 for(DataSnapshot singleSnapshot : data.getChildren()) {
-                    currentReview = singleSnapshot.getValue(Review.class);
+
                     if(currentReview.getIdClient()==currentuser){
                         singleSnapshot.getRef().removeValue();
                     }
@@ -469,7 +474,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                         //rating bar
 
 
-      //  fab.setOnClickListener(new View.OnClickListener() {
+//        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //               showRatingDialog();
@@ -594,6 +599,8 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
         public View setViewForPosition(final int position) {
             View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
             final ImageView myImageView = customView.findViewById(R.id.myImage);
+            final ImageView deleteImage = customView.findViewById(R.id.imageButtonDeletePhotos);
+            deleteImage.setVisibility(View.INVISIBLE);
             Picasso.get().load(Uri.parse(imageUrls.get(position))).into(myImageView );
             return customView;
         }

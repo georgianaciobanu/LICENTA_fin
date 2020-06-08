@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-
+        <activity android:name=".view.ChatConversationActivity"></activity>
         <activity android:name=".view.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".view.ChatActivity" />
         <activity android:name=".view.UpdatePhotosActivity" />
         <activity android:name=".view.UploadImageActivity" />
