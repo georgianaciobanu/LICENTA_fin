@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">proiect_licenta</string>
+    <string name="app_name">FixItUp</string>
     MAIN ACTIVITY
     <string name="BTNlogin">LOGIN</string>
     <string name="BTNsignUpClient">I am  client</string>
@@ -80,7 +80,7 @@
 
     <string name="tw_dataCererii">DATA: </string>
     <string name="tw_oraCererii">ORA: </string>
-    <string name="tw_serviciuCerere">Serviciul solicitat: </string>
+    <string name="tw_serviciuCerere">Produsul defect:  </string>
     <string name="et_detaliiSuplimentare">Detalii suplimentare </string>
     <string name="btn_trimite">Trimite cererea </string>
     <string name="tw_cerere">CERERE </string>

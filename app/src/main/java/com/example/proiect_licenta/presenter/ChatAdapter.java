@@ -19,9 +19,11 @@ import com.example.proiect_licenta.model.ProductsItem;
 import java.util.ArrayList;
 
     public class ChatAdapter extends ArrayAdapter<ChatMessage> {
+        String currentUser;
 
-        public ChatAdapter(Context context, ArrayList<ChatMessage> countryList) {
+        public ChatAdapter(Context context, ArrayList<ChatMessage> countryList, String user) {
             super(context, 0, countryList);
+            currentUser =user;
         }
 
         @NonNull
@@ -50,6 +52,12 @@ import java.util.ArrayList;
             ChatMessage model = getItem(position);
 
             if (model != null) {
+
+                if(model.getMessageUser().equals(currentUser)){
+                    messageText.setBackground(convertView.getResources().getDrawable(R.drawable.shape_bg_outgoing_bubble));
+                }else{
+                    messageText.setBackground(convertView.getResources().getDrawable(R.drawable.shape_bg_incoming_bubble));
+                }
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,14 @@ import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
 
     int rImages[] = {R.drawable.electrocasnice, R.drawable.telefon, R.drawable.masina, R.drawable.pc};
     int reqq=1;
     Serviciu currentItem;
+    int isCheked;
 
     FirebaseUser firebaseUser;
     ArrayList<ProductsItem> listaProduse;
@@ -53,12 +56,15 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
     ArrayList<Serviciu> serviciiService= new ArrayList<>();
     ArrayList<Serviciu> serviciiFirebase=new ArrayList<>();
 
-    public ServicesListAdapter(Context context, ArrayList<Serviciu> servicesList,ArrayList<Serviciu> servicesListSelected, int req) {
+
+
+    public ServicesListAdapter(Context context, ArrayList<Serviciu> servicesList,ArrayList<Serviciu> servicesListSelected, int req, int isChecked) {
         super(context, 0, servicesList);
         if(servicesList!=null)
         serviciiService=servicesList;
         if(servicesListSelected!=null)
             serviciiSelectate = servicesListSelected;
+        isCheked=isChecked;
 
 
 
@@ -88,29 +94,43 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
     }
 
     private View initView(final int position, View convertView, ViewGroup parent) {
+    final ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.row, parent, false
             );
+            viewHolder=new ViewHolder();
+            viewHolder.spinner = convertView.findViewById(R.id.spinnerProd);
+            viewHolder.images = convertView.findViewById(R.id.image);
+            viewHolder.myTitle = convertView.findViewById(R.id.textView1);
+            viewHolder.myDescription = convertView.findViewById(R.id.textView2);
+            viewHolder.myDetails = convertView.findViewById(R.id.textView3);
+            viewHolder.imageViewDelete=convertView.findViewById(R.id.imageViewDelete);
+            viewHolder.imageViewUpdate=convertView.findViewById(R.id.imageViewUpdate);
+
+            convertView.setTag(viewHolder);
         }
-        final View view=convertView;
+        else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        final View convertView2=convertView;
 
 
-        final ImageButton imageViewDelete;
-        final ImageButton imageViewUpdate;
-        final ImageView images ;
-        final  EditText myTitle ;
-        final EditText myDescription ;
-        final  EditText myDetails ;
-        final Spinner spinner;
+//        final ImageButton imageViewDelete;
+//        final ImageButton imageViewUpdate;
+//        final ImageView images ;
+//        final  EditText myTitle ;
+//        final EditText myDescription ;
+//        final  EditText myDetails ;
+//        final Spinner spinner;
 
-        spinner = convertView.findViewById(R.id.spinnerProd);
-        images = convertView.findViewById(R.id.image);
-        myTitle = convertView.findViewById(R.id.textView1);
-        myDescription = convertView.findViewById(R.id.textView2);
-        myDetails = convertView.findViewById(R.id.textView3);
-        imageViewDelete=convertView.findViewById(R.id.imageViewDelete);
-        imageViewUpdate=convertView.findViewById(R.id.imageViewUpdate);
+//        spinner = convertView.findViewById(R.id.spinnerProd);
+//        images = convertView.findViewById(R.id.image);
+//        myTitle = convertView.findViewById(R.id.textView1);
+//        myDescription = convertView.findViewById(R.id.textView2);
+//        myDetails = convertView.findViewById(R.id.textView3);
+//        imageViewDelete=convertView.findViewById(R.id.imageViewDelete);
+//        imageViewUpdate=convertView.findViewById(R.id.imageViewUpdate);
 
 
 
@@ -129,10 +149,10 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
                     currentService  = singleSnapshot.getValue(Service.class);
                     if (currentService.getEmail().equals(serviceEmail)) {
                         initList();
-                        mAdapter = new ProductImageAdapter(view.getContext(), listaProduse);
-                        spinner.setAdapter(mAdapter);
+                        mAdapter = new ProductImageAdapter(convertView2.getContext(), listaProduse);
+                       viewHolder.spinner.setAdapter(mAdapter);
 
-                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        viewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 ProductsItem clickedItem = (ProductsItem) parent.getItemAtPosition(position);
@@ -162,35 +182,35 @@ public class ServicesListAdapter extends ArrayAdapter<Serviciu> {
         };
 
 
-        imageViewDelete.setVisibility(View.INVISIBLE);
-        imageViewUpdate.setVisibility(View.INVISIBLE);
+        viewHolder.imageViewDelete.setVisibility(View.INVISIBLE);
+        viewHolder.imageViewUpdate.setVisibility(View.INVISIBLE);
 
 
 
         if (reqq == 0) {
             FirebaseFunctions.UpdateServicii(serviceEmail, listenerUpdateServicii);
-            spinner.setVisibility(View.VISIBLE);
-            images.setVisibility(View.INVISIBLE);
-            myTitle.setEnabled(true);
-            myDescription.setEnabled(true);
-            myDetails.setEnabled(true);
-            imageViewDelete.setVisibility(View.VISIBLE);
-            imageViewUpdate.setVisibility(View.VISIBLE);
+            viewHolder.spinner.setVisibility(View.VISIBLE);
+            viewHolder.images.setVisibility(View.INVISIBLE);
+            viewHolder.myTitle.setEnabled(true);
+            viewHolder.myDescription.setEnabled(true);
+            viewHolder.myDetails.setEnabled(true);
+            viewHolder.imageViewDelete.setVisibility(View.VISIBLE);
+            viewHolder.imageViewUpdate.setVisibility(View.VISIBLE);
 
         }
         else{
-            myTitle.setEnabled(false);
-            myDescription.setEnabled(false);
-            myDetails.setEnabled(false);
-            imageViewDelete.setVisibility(View.INVISIBLE);
-            images.setVisibility(View.VISIBLE);
-            spinner.setVisibility(View.INVISIBLE);
-            imageViewUpdate.setVisibility(View.INVISIBLE);
+            viewHolder.myTitle.setEnabled(false);
+            viewHolder.myDescription.setEnabled(false);
+            viewHolder.myDetails.setEnabled(false);
+            viewHolder.imageViewDelete.setVisibility(View.INVISIBLE);
+            viewHolder.images.setVisibility(View.VISIBLE);
+            viewHolder.spinner.setVisibility(View.INVISIBLE);
+            viewHolder.imageViewUpdate.setVisibility(View.INVISIBLE);
         }
 
 
-if(reqq!=0) {
-    view.setOnClickListener(new View.OnClickListener() {
+if(reqq!=0  && isCheked==1 ) {
+    convertView2.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
@@ -224,7 +244,7 @@ if(reqq!=0) {
 
 }
 
-        imageViewDelete.setOnClickListener(new View.OnClickListener() {
+        viewHolder.imageViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -240,11 +260,25 @@ if(reqq!=0) {
                 }
                 serviciiFirebase.removeAll(serviciiFirebaseToRemove);
                 currentService.setSevicii(serviciiFirebase);
+
+                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View layout = inflater.inflate(R.layout.custom_toast,
+                        (ViewGroup) convertView2.findViewById(R.id.custom_toast_container));
+
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText("Informatiile au fost modificate cu succes");
+
+                Toast toast = new Toast(getContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+
                 FirebaseFunctions.updateServicii(currentService.getServiceId(),serviciiFirebase);
 
             }
         });
-      imageViewUpdate.setOnClickListener(new View.OnClickListener() {
+      viewHolder.imageViewUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -257,9 +291,11 @@ if(reqq!=0) {
                     if(s.getDenumire().equals(serviciiService.get(position).getDenumire())){
 
                         Serviciu nou= new Serviciu();
-                        nou.setDenumire( myTitle.getText().toString());
-                        nou.setDetalii(myDetails.getText().toString());
-                        nou.setPret(Double.valueOf(myDescription.getText().toString()));
+                        nou.setDenumire( viewHolder.myTitle.getText().toString());
+                        nou.setDetalii(viewHolder.myDetails.getText().toString());
+                        String[] separated = viewHolder.myDescription.getText().toString().split(" ");
+
+                        nou.setPret(Double.valueOf(separated[0]));
 
 
 
@@ -277,7 +313,20 @@ if(reqq!=0) {
                 serviciiFirebase.removeAll(serviciiFirebaseToRemove);
                 serviciiFirebase.addAll(serviciiFirebaseToAdd);
                 currentService.setSevicii(serviciiFirebase);
+
                 FirebaseFunctions.updateServicii(currentService.getServiceId(),serviciiFirebase);
+                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View layout = inflater.inflate(R.layout.custom_toast,
+                        (ViewGroup) convertView2.findViewById(R.id.custom_toast_container));
+
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText("Informatiile au fost modificate cu succes");
+
+                Toast toast = new Toast(getContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
 
 
             }
@@ -291,7 +340,7 @@ if(reqq!=0) {
 
 
 
-        int desiredBackgroundColor = Color.RED;
+        int desiredBackgroundColor = Color.BLUE;
 
 
             if(serviciiSelectate.contains(currentItem)){
@@ -304,20 +353,20 @@ if(reqq!=0) {
 
         if (currentItem != null) {
 
-            myTitle.setText(currentItem.getDenumire());
-            myDescription.setText(currentItem.getPret().toString());
-            myDetails.setText(currentItem.getDetalii());
+            viewHolder.myTitle.setText(currentItem.getDenumire());
+            viewHolder.myDescription.setText(currentItem.getPret().toString()+" RON");
+            viewHolder.myDetails.setText(currentItem.getDetalii());
 
 
 
     if (currentItem.getProdus().equals("ELECTROCASNICE") )
-        images.setImageResource(rImages[0]);
+        viewHolder.images.setImageResource(rImages[0]);
     if (currentItem.getProdus().equals("TELEFON/TABLETA") )
-        images.setImageResource(rImages[1]);
+        viewHolder.images.setImageResource(rImages[1]);
     if (currentItem.getProdus().equals("MASINA"))
-        images.setImageResource(rImages[2]);
+        viewHolder.images.setImageResource(rImages[2]);
     if (currentItem.getProdus().equals("PC/LAPTOP"))
-        images.setImageResource(rImages[3]);
+        viewHolder.images.setImageResource(rImages[3]);
 
         }
 
@@ -345,6 +394,16 @@ if(reqq!=0) {
             }
         }
 
+    }
+
+    static class ViewHolder {
+         ImageButton imageViewDelete;
+         ImageButton imageViewUpdate;
+         ImageView images ;
+          EditText myTitle ;
+         EditText myDescription ;
+          EditText myDetails ;
+          Spinner spinner;
     }
 }
 

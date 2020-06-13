@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class RequestsAdapter extends ArrayAdapter<Request> {
 
@@ -44,16 +45,19 @@ public class RequestsAdapter extends ArrayAdapter<Request> {
             );
         }
 
+        convertView.setBackgroundColor(position % 2 == 0 ? ContextCompat.getColor(getContext(),R.color.paleblue)  : ContextCompat.getColor(getContext(),R.color.teacherActivGradientStop));
 
         TextView tw_status = (TextView)convertView.findViewById(R.id.tw_status);
         TextView tw_numeServiciu = (TextView)convertView.findViewById(R.id.tw_numeServiciu);
         TextView tw_dataTrimiterii = (TextView)convertView.findViewById(R.id.tw_dataTrimiterii);
+        TextView tw_nrServicii = (TextView)convertView.findViewById(R.id.tw_nrServicii);
         Request currentItem = getItem(position);
 
         if (currentItem != null) {
 
             tw_numeServiciu.setText(currentItem.getServicii().get(0).getDenumire());
             tw_status.setText(currentItem.getStatus());
+            tw_nrServicii.setText(String.valueOf(currentItem.getServicii().size()));
             String dateToDisplay= DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(currentItem.getDataTrimiterii());
 
             tw_dataTrimiterii.setText(dateToDisplay);

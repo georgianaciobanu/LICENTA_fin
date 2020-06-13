@@ -92,80 +92,80 @@ public class ServicesListActivity extends AppCompatActivity {
         }
 
         listView = findViewById(R.id.listView);
-        adapter = new ServicesListAdapter(getApplicationContext(), servicii,null,req);
+        adapter = new ServicesListAdapter(getApplicationContext(), servicii,null,req,0);
         listView.setAdapter(adapter);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                   @Override
-                   public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                       final int position=i;
-                        vwParentRow = (LinearLayout)view.getParent();
-                         btnChild = (Button)vwParentRow.getChildAt(0);
-                         images = (ImageView)vwParentRow.getChildAt(1);
-                        vwParentRow2 = (LinearLayout) vwParentRow.getChildAt(2);
-                          myTitle = (EditText)vwParentRow2.getChildAt(0);
-                          myDescription = (EditText)vwParentRow2.getChildAt(1);
-                          myDetails = (EditText)vwParentRow2.getChildAt(2);
-
-
-
-                       listenerUpdateServicii = new OnGetDataListener() {
-                           @Override
-                           public void onStartFirebaseRequest() {
-
-                           }
-
-                           @Override
-                           public void onSuccess(DataSnapshot data) {
-
-                               for (DataSnapshot singleSnapshot : data.getChildren()) {
-                                   currentService  = singleSnapshot.getValue(Service.class);
-                                   if (currentService.getEmail().equals(serviceEmail)) {
-
-                                       serviciiFirebase=currentService.getSevicii();
-                                       for(Serviciu s: serviciiFirebase){
-                                           if(s.getDenumire().equals(servicii.get(position).getDenumire())){
-
-                                               s.setDenumire( myTitle.getText().toString());
-                                               s.setDetalii(myDetails.getText().toString());
-                                               s.setPret(Double.valueOf(myDescription.getText().toString()));
-
-                                               currentService.setSevicii(serviciiFirebase);
-
-
-
-                                           }
-                                       }
-                                       FirebaseFunctions.updateServicii(currentService.getServiceId(),serviciiFirebase);
-
-
-
-
-                                       //pg.hide();
-                                   }
-                               }
-
-
-                               //pg.hide();
-
-
-                           }
-
-                           @Override
-                           public void onFailed(DatabaseError databaseError) {
-                               pg.hide();
-
-                           }
-                       };
-
-
-
-
-                       FirebaseFunctions.UpdateServicii(serviceEmail, listenerUpdateServicii);
-
-                  }
-              });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                   @Override
+//                   public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+//                       final int position=i;
+//                        vwParentRow = (LinearLayout)view.getParent();
+//                         btnChild = (Button)vwParentRow.getChildAt(0);
+//                         images = (ImageView)vwParentRow.getChildAt(1);
+//                        vwParentRow2 = (LinearLayout) vwParentRow.getChildAt(2);
+//                          myTitle = (EditText)vwParentRow2.getChildAt(0);
+//                          myDescription = (EditText)vwParentRow2.getChildAt(1);
+//                          myDetails = (EditText)vwParentRow2.getChildAt(2);
+//
+//
+//
+//                       listenerUpdateServicii = new OnGetDataListener() {
+//                           @Override
+//                           public void onStartFirebaseRequest() {
+//
+//                           }
+//
+//                           @Override
+//                           public void onSuccess(DataSnapshot data) {
+//
+//                               for (DataSnapshot singleSnapshot : data.getChildren()) {
+//                                   currentService  = singleSnapshot.getValue(Service.class);
+//                                   if (currentService.getEmail().equals(serviceEmail)) {
+//
+//                                       serviciiFirebase=currentService.getSevicii();
+//                                       for(Serviciu s: serviciiFirebase){
+//                                           if(s.getDenumire().equals(servicii.get(position).getDenumire())){
+//
+//                                               s.setDenumire( myTitle.getText().toString());
+//                                               s.setDetalii(myDetails.getText().toString());
+//                                               s.setPret(Double.valueOf(myDescription.getText().toString()));
+//
+//                                               currentService.setSevicii(serviciiFirebase);
+//
+//
+//
+//                                           }
+//                                       }
+//                                       FirebaseFunctions.updateServicii(currentService.getServiceId(),serviciiFirebase);
+//
+//
+//
+//
+//                                       //pg.hide();
+//                                   }
+//                               }
+//
+//
+//                               //pg.hide();
+//
+//
+//                           }
+//
+//                           @Override
+//                           public void onFailed(DatabaseError databaseError) {
+//                               pg.hide();
+//
+//                           }
+//                       };
+//
+//
+//
+//
+//                       FirebaseFunctions.UpdateServicii(serviceEmail, listenerUpdateServicii);
+//
+//                  }
+//              });
 
 
 

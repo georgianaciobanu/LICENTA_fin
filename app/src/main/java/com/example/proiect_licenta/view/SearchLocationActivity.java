@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.proiect_licenta.model.AESCrypt;
 import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.Request;
@@ -473,9 +474,16 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
 
     reference = FirebaseDatabase.getInstance().getReference("Service");
 
+                    try {
+                        String encryptPass= AESCrypt.encrypt(service.getPass());
+                        service.setPass(encryptPass);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-    String key = reference.push().getKey();
+   String key = reference.push().getKey();
     service.setServiceId(key);
+
     reference.child(service.getServiceId()).setValue(service);
 
    // reference.push().setValue(service);

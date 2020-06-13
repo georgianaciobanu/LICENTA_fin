@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="?attr/backgroundcolor"
     tools:context=".view.SignUpServiceProfile2Activity">
 
 
@@ -16,9 +16,8 @@
         android:layout_marginTop="108dp"
         android:layout_marginEnd="24dp"
         android:text="@string/TWceRepari"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +31,7 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="30dp"
         android:text="@string/Cbox_PC"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintEnd_toStartOf="@+id/Cbox_Electrocasnice"
         app:layout_constraintHorizontal_bias="0.687"
@@ -46,7 +45,7 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="16dp"
         android:text="@string/Cbox_Telefon"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Cbox_Electrocasnice" />
@@ -59,7 +58,7 @@
         android:layout_marginTop="52dp"
         android:layout_marginEnd="55dp"
         android:text="@string/Cbox_Masina"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintEnd_toStartOf="@+id/Cbox_Telefon"
         app:layout_constraintHorizontal_bias="0.562"
@@ -73,7 +72,7 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="36dp"
         android:text="@string/Cbox_Electrocasnice"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TWceRepari" />
@@ -88,7 +87,8 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_config"
         android:text="@string/BTNprofileRegisterService3"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.89"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/gradient"
+    android:background="?attr/backgroundcolor"
     tools:context=".view.SearchServiceFragment">
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/tw_searchService"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.212"
@@ -31,7 +31,7 @@
         android:layout_marginTop="68dp"
         android:layout_marginEnd="8dp"
         android:text="@string/Cbox_PC"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.733"
@@ -45,7 +45,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
         android:text="@string/Cbox_Telefon"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_searchService" />
@@ -58,7 +58,7 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:text="@string/Cbox_Masina"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.346"
@@ -72,40 +72,53 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="68dp"
         android:text="@string/Cbox_Electrocasnice"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Cbox_Telefon" />
 
 
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button_config"
-        android:text="@string/btn_search"
-        android:textColor="@color/colorBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Cbox_PC" />
+<!--    <Button-->
+<!--        android:id="@+id/btn_search"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="36dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:background="@drawable/button_config"-->
+<!--        android:text="@string/btn_search"-->
+<!--        android:textColor="?attr/textcolor"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.912"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/Cbox_PC" />-->
 
+    <ImageButton
+        android:id="@+id/btn_search"
+        android:layout_width="102dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@mipmap/search_icon"
+        app:layout_constraintBottom_toTopOf="@+id/listViewService"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cbox_PC"
+        app:layout_constraintVertical_bias="0.0">
+
+    </ImageButton>
 
     <ListView
         android:id="@+id/listViewService"
-        android:layout_width="411dp"
-        android:layout_height="376dp"
+        android:layout_width="420dp"
+        android:layout_height="267dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search">
+        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintStart_toStartOf="parent">
 
     </ListView>
 

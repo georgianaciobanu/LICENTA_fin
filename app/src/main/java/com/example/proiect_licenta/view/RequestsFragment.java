@@ -1,5 +1,6 @@
 package com.example.proiect_licenta.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class RequestsFragment extends Fragment {
     Integer userOrService=2;
     // 1- user 2- service
     ArrayList<Service> services;//services = new ArrayList<>();
+    ProgressDialog progressDialog;
 
     public static RequestsFragment newInstanceServ(Service serv) {
         RequestsFragment fragment = new RequestsFragment();
@@ -68,7 +70,9 @@ public class RequestsFragment extends Fragment {
         services = new ArrayList<>();
         requests = new ArrayList<>();
 
-
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
 
         listView = (ListView) view.findViewById(R.id.list_requests);
         final String currentUserEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -84,7 +88,6 @@ public class RequestsFragment extends Fragment {
         listenerRequest = new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {
-                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
 
             }
 
@@ -113,6 +116,7 @@ public class RequestsFragment extends Fragment {
                 if (requests.size() > 0) {
                     adapter = new RequestsAdapter(view.getContext(), requests);
                     listView.setAdapter(adapter);
+                    progressDialog.dismiss();
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

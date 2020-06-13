@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class SearchServiceFragment extends Fragment {
-    Button cauta;
+    ImageButton cauta;
     ListView listView;
     ArrayList<String> produseSelectate;
     CheckBox cb_pc;
@@ -53,7 +54,7 @@ public class SearchServiceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.fragment_search, container, false);
         listView = (ListView) view.findViewById(R.id.listViewService);
-        cauta = (Button) view.findViewById(R.id.btn_search);
+        cauta = (ImageButton) view.findViewById(R.id.btn_search);
         cb_pc=(CheckBox)view.findViewById(R.id.Cbox_PC);
         cb_elc=(CheckBox)view.findViewById(R.id.Cbox_Electrocasnice);
         cb_mas=(CheckBox)view.findViewById(R.id.Cbox_Masina);

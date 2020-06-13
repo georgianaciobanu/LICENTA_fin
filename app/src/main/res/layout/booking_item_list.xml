@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:background="@drawable/gradient"
+    android:background="?attr/backgroundcolor"
     android:orientation="vertical">
 
 
@@ -33,27 +32,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ListView>
 
+
     <TextView
         android:id="@+id/tw_dataProgramarii"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="16dp"
         android:text="azi"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
+        android:textColor="?attr/textcolor"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/tw_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView_serviciiBook"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.096" />
+
+    <TextView
+        android:id="@+id/tw_emailServ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:text="email"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?attr/textcolor"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/tw_nrtelefonServ"
+        app:layout_constraintStart_toEndOf="@+id/tw_client"
+        app:layout_constraintTop_toBottomOf="@+id/tw_clientBD"
+        app:layout_constraintVertical_bias="0.625">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tw_nrtelefonServ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="52dp"
+        android:text="telefon"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?attr/textcolor"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/tw_detalii"
+        app:layout_constraintStart_toEndOf="@+id/tw_client"></TextView>
 
     <TextView
         android:id="@+id/tw_status"
@@ -63,23 +92,39 @@
         android:layout_marginBottom="8dp"
         android:text="trimisa spre confirmare"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/sunflower"
+        android:textColor="?attr/colorAccent"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_anulareProg" />
+
+    <ImageButton
+        android:id="@+id/imageButtonChat"
+        android:layout_width="68dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@mipmap/chat_button"
+        app:layout_constraintBottom_toTopOf="@+id/tw_dataProgramarii"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintStart_toEndOf="@+id/tw_nrtelefonServ"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632">
+
+    </ImageButton>
 
     <TextView
         android:id="@+id/tw_pretTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Total:  "
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="Pret Total:  "
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/sunflower"
+        android:textColor="?attr/colorAccent"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_client"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView_serviciiBook" />
 
@@ -87,83 +132,83 @@
         android:id="@+id/tw_pretTotalCalc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:text="1000 "
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
+        android:textColor="?attr/textcolor"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_clientBD"
-        app:layout_constraintStart_toEndOf="@+id/tw_pretTotal" />
+        app:layout_constraintStart_toEndOf="@+id/tw_pretTotal"
+        app:layout_constraintTop_toBottomOf="@+id/listView_serviciiBook" />
 
     <TextView
         android:id="@+id/tw_client"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:text="Client:"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
+        android:textColor="?attr/textcolor"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_alteDetalii"
-        app:layout_constraintEnd_toStartOf="@+id/tw_clientBD"
-        app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tw_pretTotal" />
 
     <TextView
         android:id="@+id/tw_clientBD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="284dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
         android:text="Clientul"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
+        android:textColor="?attr/textcolor"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_alteDetalii"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tw_client"
+        app:layout_constraintTop_toBottomOf="@+id/tw_pretTotalCalc" />
 
     <TextView
         android:id="@+id/tw_alteDetalii"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="52dp"
         android:text="Alte detalii:"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
+        android:textColor="?attr/textcolor"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_anulareProg"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tw_nrtelefonServ"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tw_detalii"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="216dp"
+        android:layout_marginBottom="36dp"
         android:text="detaliisupl"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
+        android:textColor="?attr/textcolor"
         android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_anulareProg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tw_alteDetalii"
-        app:layout_constraintTop_toBottomOf="@+id/tw_clientBD" />
+        app:layout_constraintHorizontal_bias="0.655"
+        app:layout_constraintStart_toEndOf="@+id/tw_alteDetalii" />
 
     <Button
         android:id="@+id/btn_anulareProg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_config"
         android:text="Anulare"
-        android:textColor="@color/colorBlue"
-        app:layout_constraintBottom_toBottomOf="@+id/tw_status"
+        android:textColor="?attr/textcolor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent" />
 
 

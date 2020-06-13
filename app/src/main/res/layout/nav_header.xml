@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_layout"
     android:layout_width="match_parent"
-    android:layout_height="176dp"
-    android:background="@color/sea"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimaryDark"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
@@ -12,13 +12,15 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        android:background="@color/transparent"
+        android:src="@mipmap/logo" />
 
     <TextView
         android:id="@+id/tw_usernameMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
+        android:textColor="?attr/textcolor"
         android:text="username client"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -26,6 +28,7 @@
         android:id="@+id/tw_emailMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="client@email.com" />
+        android:text="client@email.com"
+        android:textColor="?attr/textcolor"/>
 
 </LinearLayout>

@@ -41,21 +41,27 @@ OnGetDataListener listenerCurrentReview;
     FirebaseUser firebaseUser;
     Service currentService= new Service();
     ProgressDialog progressDialog ;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view=inflater.inflate(R.layout.fragment_reviews, container, false);
 
+
+
         progressDialog = new ProgressDialog(getContext());
 
         progressDialog.setTitle("Loading");
         progressDialog.show();
+
+
         listaReviews=(ListView)view.findViewById(R.id.lista_reviews_serv) ;
         currentReview=new Review();
         reviews=new ArrayList<>();
         ratingBar=(RatingBar)view.findViewById(R.id.ratingBarServ);
         ratingBar.isIndicator();
+
 
         service=new Service();
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();

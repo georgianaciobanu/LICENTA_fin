@@ -62,7 +62,7 @@ public class ChooseServicesActivity extends AppCompatActivity {
             serviciiSelectate = currentRequest.getServicii();
         }
         listView = findViewById(R.id.listViewChoose);
-        adapter = new ServicesListAdapter(getApplicationContext(), listaServiciiService,serviciiSelectate,1);
+        adapter = new ServicesListAdapter(getApplicationContext(), listaServiciiService,serviciiSelectate,1,1);
         listView.setAdapter(adapter);
 
 

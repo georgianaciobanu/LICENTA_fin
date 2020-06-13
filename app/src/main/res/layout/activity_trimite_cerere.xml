@@ -4,153 +4,147 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="?attr/backgroundcolor"
     tools:context=".presenter.TrimiteCerereActivity">
 
-    <TextView
-        android:id="@+id/tw_cerere"
-        android:layout_width="370dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tw_cerere"
-        android:textColor="@color/colorBlue"
-        android:textSize="23dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
-
-    <TextView
-        android:id="@+id/tw_adaugaServicii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="@string/tw_adaugaServicii"
-        android:textColor="@color/colorBlue"
-        android:textSize="23dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_serviciuCerere"></TextView>
-
-    <TextView
-        android:id="@+id/tw_serviciuCerere"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/tw_serviciuCerere"
-        android:textColor="@color/colorBlue"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_cerere"></TextView>
-
-    <Spinner
-        android:id="@+id/spinnerCategorii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:background="#11000000"
-        android:textColor="@color/colorBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toEndOf="@+id/tw_serviciuCerere"
-        app:layout_constraintTop_toBottomOf="@+id/tw_cerere">
-
-    </Spinner>
-
-    <TextView
-        android:id="@+id/tw_dataCererii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="28dp"
-        android:text="@string/tw_dataCererii"
-        android:textColor="@color/colorBlue"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/tw_oraCererii"
-        app:layout_constraintEnd_toStartOf="@+id/tw_alegeData"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/tw_oraCererii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="92dp"
-        android:text="@string/tw_oraCererii"
-        android:textColor="@color/colorBlue"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/et_detaliiSuplimentare"
-        app:layout_constraintEnd_toStartOf="@+id/tw_alegeOra"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/tw_alegeData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/tw_alegeData"
-        android:textColor="@color/colorBlue"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_adaugaServicii"></TextView>
-
-<!--    <TextView-->
-<!--        android:id="@+id/tw_alegeOra"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="28dp"-->
-<!--        android:layout_marginEnd="36dp"-->
-<!--        android:text="@string/tw_alegeOra"-->
-<!--        android:textColor="@color/colorBlue"-->
-<!--        android:textSize="18dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tw_alegeData"></TextView>-->
-
-
-
-    <EditText
-        android:id="@+id/et_detaliiSuplimentare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="112dp"
-        android:background="#11000000"
-        android:ems="10"
-        android:hint="@string/et_detaliiSuplimentare"
-        android:inputType="textMultiLine"
-        android:textColor="@color/colorBlue"
-        android:textColorHint="@color/colorBlue"
-        app:layout_constraintBottom_toTopOf="@+id/btn_trimite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"></EditText>
-
-    <Button
-        android:id="@+id/btn_trimite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/button_config"
-        android:text="@string/btn_trimite"
-        android:textColor="@color/colorBlue"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.888"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tw_cerere"
+                android:layout_width="370dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/tw_cerere"
+                android:textColor="?attr/textcolor"
+                android:textSize="23dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+
+            <TextView
+                android:id="@+id/tw_adaugaServicii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/tw_adaugaServicii"
+                android:textColor="?attr/textcolor"
+                android:textSize="23dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_trimite"
+                app:layout_constraintStart_toStartOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/tw_serviciuCerere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/tw_serviciuCerere"
+                android:textColor="?attr/textcolor"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tw_cerere"></TextView>
+
+            <Spinner
+                android:id="@+id/spinnerCategorii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#11000000"
+                android:textColor="@color/colorBlue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tw_serviciuCerere"
+                app:layout_constraintTop_toBottomOf="@+id/tw_cerere">
+
+            </Spinner>
+
+            <TextView
+                android:id="@+id/tw_dataCererii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="60dp"
+                android:text="@string/tw_dataCererii"
+                android:textColor="?attr/textcolor"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tw_serviciuCerere"></TextView>
+
+            <TextView
+                android:id="@+id/tw_alegeData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/tw_alegeData"
+                android:textColor="?attr/textcolor"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.958"
+                app:layout_constraintStart_toEndOf="@+id/tw_dataCererii"
+                app:layout_constraintTop_toBottomOf="@+id/tw_serviciuCerere"></TextView>
+
+            <EditText
+                android:id="@+id/et_detaliiSuplimentare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/cardbackground"
+                android:ems="10"
+                android:hint="@string/et_detaliiSuplimentare"
+                android:inputType="textMultiLine"
+                android:textColor="?attr/textcolor"
+                android:textColorHint="?attr/textcolor"
+                app:layout_constraintBottom_toTopOf="@+id/tw_adaugaServicii"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.043"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tw_alegeData"
+                app:layout_constraintVertical_bias="0.0"></EditText>
+
+            <Button
+                android:id="@+id/btn_trimite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="176dp"
+                android:background="@drawable/button_config"
+                android:text="@string/btn_trimite"
+                android:textColor="?attr/textcolor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.719"
+                app:layout_constraintStart_toEndOf="@+id/tw_adaugaServicii"
+                app:layout_constraintTop_toBottomOf="@+id/tw_alegeData" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ListView
+            android:id="@+id/lista_servicii_selectate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.161" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

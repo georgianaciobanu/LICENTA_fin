@@ -3,7 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="powderblue">#B0E0E6</color>
     <color name="colorBlue">#B0E0E6</color>
+    <color name="lightblue">#ADD8E6</color>
+    <color name="backed">#11000000</color>
+
+    <color name="startColor">#3D5069</color>
+    <color name="centreColor">#2A3c58</color>
+    <color name="endcolor">#192943</color>
 
     <color name="Silver">#dcdcdc</color>
     <color name="Transparent">#80000000</color>
@@ -52,5 +59,7 @@
     <color name="mist">#acd0c0</color>
     <color name="blush">#d09683</color>
     <color name="rust">#aa4b41</color>
+    <color name="midnightblue">	#191970</color>
+    <color name="royalblue">#4169E1</color>
 
 </resources>

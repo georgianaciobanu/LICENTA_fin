@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="?attr/backgroundcolor"
     tools:context=".view.SearchLocationActivity">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -100,7 +100,8 @@
         android:layout_marginBottom="-69dp"
         android:background="@drawable/button_config"
         android:text="NEXT"
-        android:textColor="@color/colorBlue" />
+        android:textColor="?attr/textcolor"
+        />
 
 
 

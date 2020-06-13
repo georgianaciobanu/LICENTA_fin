@@ -2,10 +2,15 @@ package com.example.proiect_licenta.view;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,6 +32,7 @@ import com.example.proiect_licenta.model.Upload;
 import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.ReviewsAdapter;
 import com.example.proiect_licenta.presenter.TrimiteCerereActivity;
+import com.example.proiect_licenta.presenter.Utility;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,7 +56,7 @@ import java.util.List;
 
 public class AboutServiceActivity extends AppCompatActivity implements RatingDialogListener {
     Button cerere;
-    TextView listaServicii;
+    ImageButton listaServicii;
     TextView btnAdresa;
     EditText program;
     EditText telefon;
@@ -79,7 +85,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     ReviewsAdapter reviewsAdapter;
     Request request;
     ArrayList<Request> bookingList;
-    //ImageButton fab;
+    ImageButton fab;
     FirebaseUser firebaseUser;
     int req=1;
     ImageButton imgButUpdate;
@@ -88,6 +94,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
     ProgressDialog pg;
     ImageButton imageButtonUpdatePhotos;
     ImageButton imageButtonChat;
+
 
 
 
@@ -115,10 +122,10 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
         listaReviews=(ListView)findViewById(R.id.lista_reviews) ;
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-       //  fab = (ImageButton) findViewById(R.id.button_rating);
+        fab = (ImageButton) findViewById(R.id.button_rating);
         ratingBar=(RatingBar)findViewById(R.id.ratingbar);
         ratingBar.isIndicator();
-         currentuser= firebaseUser.getEmail();
+        currentuser= firebaseUser.getEmail();
         request=new Request();
         bookingList=new ArrayList<>();
         final String currentUserId = firebaseUser.getUid();
@@ -144,7 +151,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 telefon.setEnabled(true);
                 email.setEnabled(true);
                 nume.setEnabled(true);
-               // fab.setVisibility(View.INVISIBLE);
+                fab.setVisibility(View.INVISIBLE);
                 ratingBar.setVisibility(View.INVISIBLE);
                 req=0;
                 imgButUpdate.setVisibility(View.VISIBLE);
@@ -154,6 +161,20 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 listaReviews.setVisibility(View.INVISIBLE);
 
             }
+        }else{
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(program.getWindowToken(), 0);
+            mgr.hideSoftInputFromWindow(telefon.getWindowToken(), 0);
+            mgr.hideSoftInputFromWindow(descriere.getWindowToken(), 0);
+            mgr.hideSoftInputFromWindow(email.getWindowToken(), 0);
+            mgr.hideSoftInputFromWindow(nume.getWindowToken(), 0);
+
+            program.setFocusable(false);
+            telefon.setFocusable(false);
+            descriere.setFocusable(false);
+            email.setFocusable(false);
+            nume.setFocusable(false);
+
         }
 
         imageButtonChat.setOnClickListener(new View.OnClickListener() {
@@ -171,8 +192,8 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
         reviews=new ArrayList<>();
         ex = new Upload();
 
-        listaServicii = (TextView) findViewById(R.id.tw_listaServicii);
 
+        listaServicii = (ImageButton) findViewById(R.id.imageButtonServ);
         btnAdresa = (TextView) findViewById(R.id.tw_adresaService);
 
         listenerUpdateService = new OnGetDataListener() {
@@ -210,6 +231,18 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
 
                         pg.hide();
+                        LayoutInflater inflater = getLayoutInflater();
+                        View layout = inflater.inflate(R.layout.custom_toast,
+                                (ViewGroup) findViewById(R.id.custom_toast_container));
+
+                        TextView text = (TextView) layout.findViewById(R.id.text);
+                        text.setText("Informatiile au fost modificate cu succes");
+
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
                     }
                 }
 
@@ -380,6 +413,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                       ratingBar.setRating(sum/count);
                       reviewsAdapter = new ReviewsAdapter(getApplicationContext(), reviews);
                       listaReviews.setAdapter(reviewsAdapter);
+
                   }
 
 
@@ -474,12 +508,12 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                         //rating bar
 
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//               showRatingDialog();
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               showRatingDialog();
+            }
+        });
 
 
         imageButtonUpdatePhotos.setOnClickListener(new View.OnClickListener() {

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/gradient"
+    android:background="?attr/tintcolor"
     tools:context=".view.HomeScreenClientActivity"
     tools:openDrawer="start">
 
@@ -36,9 +36,9 @@
         android:id="@+id/nav_viewhomescreen"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorBlue"
-        app:itemIconTint="@color/colorPrimaryDark"
-        app:itemTextColor="@color/colorPrimaryDark"
+        android:background="?attr/actionMenuTextAppearance"
+        app:itemIconTint="?attr/textcolor"
+        app:itemTextColor="?attr/textcolor"
         app:headerLayout="@layout/nav_header"/>
 <!--        app:menu="@menu/drawermenu"/>-->
 

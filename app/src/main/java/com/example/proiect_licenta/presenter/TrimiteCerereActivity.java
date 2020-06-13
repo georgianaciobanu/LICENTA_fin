@@ -1,16 +1,30 @@
 package com.example.proiect_licenta.presenter;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.proiect_licenta.MainActivity;
 import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.ProductsItem;
@@ -26,6 +40,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -44,6 +60,7 @@ public class TrimiteCerereActivity extends AppCompatActivity {
     Service currentService=new Service();
     FirebaseUser firebaseUser;
     User cUser;
+    ListView listaServ;
     String TAG="TrimiteCerereActivity";
     OnGetDataListener listenerUser;
 
@@ -56,6 +73,7 @@ public class TrimiteCerereActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trimite_cerere);
 
+        listaServ=(ListView)findViewById(R.id.lista_servicii_selectate);
 
         listenerUser = new
 
@@ -120,7 +138,15 @@ else if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.
         servicii=(TextView)findViewById(R.id.tw_adaugaServicii);
 
         if(request.getDataProgramare()!=null){
-            mDisplayDate.setText(request.getDataProgramare().toString());
+            if(System.currentTimeMillis() > request.getDataProgramare().getTime()){
+                Toast.makeText(TrimiteCerereActivity.this, "Data invalida", Toast.LENGTH_SHORT).show();
+                mDisplayDate.setTextColor(Color.RED);
+
+            }else {
+                String dateToDisplay = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(request.getDataProgramare());
+
+                mDisplayDate.setText(dateToDisplay);
+            }
         }
 
 
@@ -162,7 +188,10 @@ else if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.
             }
         });
 
-
+          if(request!=null && request.getServicii()!=null){
+              ServicesListAdapter adapterServ = new ServicesListAdapter(getApplicationContext(), request.getServicii(),null,1,0);
+              listaServ.setAdapter(adapterServ);
+          }
 
         trimiteCerere.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,36 +221,50 @@ else if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.
     }
 
     private void trimiteCererea(final Request request){
+if(request.getDataProgramare()==null){
+    Toast.makeText(TrimiteCerereActivity.this, "Selectati data programarii", Toast.LENGTH_SHORT).show();
+
+}else if(request.getServicii()==null){
+    Toast.makeText(TrimiteCerereActivity.this, "Alegeti serviciile dorite", Toast.LENGTH_SHORT).show();
+
+} else
+        if(System.currentTimeMillis() > request.getDataProgramare().getTime()) {
+            Toast.makeText(TrimiteCerereActivity.this, "Data invalida", Toast.LENGTH_SHORT).show();
+            mDisplayDate.setTextColor(Color.RED);
+        }else {
+            request.setDataTrimiterii(Calendar.getInstance().getTime());
+
+            if (detalii.getText().toString() != null) {
+                request.setDetalii(detalii.getText().toString());
+            }
+
+            request.setStatus("trimis spre validare");
+
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            reference = FirebaseDatabase.getInstance().getReference();
+            if (firebaseUser != null) {
+                String currentUserEmail = firebaseUser.getEmail();
+                listenerUser.onStartFirebaseRequest();
+                FirebaseDatabase.getInstance().getReference().child("User").orderByChild("email").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            listenerUser.onSuccess(dataSnapshot);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
 
-        request.setDataTrimiterii(Calendar.getInstance().getTime());
+                    }
 
-        if(detalii.getText().toString()!=null){
-            request.setDetalii(detalii.getText().toString());
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listenerUser.onFailed(databaseError);
+                    }
+                });
+            }
+
         }
-
-        request.setStatus("trimis spre validare");
-
-        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference();
-        if(firebaseUser!=null) {
-            String currentUserEmail = firebaseUser.getEmail();
-            listenerUser.onStartFirebaseRequest();
-            FirebaseDatabase.getInstance().getReference().child("User").orderByChild("email").equalTo(currentUserEmail).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                 listenerUser.onSuccess(dataSnapshot);
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    listenerUser.onFailed(databaseError);
-                }
-            });
-        }
-
-
 
 
     }
@@ -233,9 +276,25 @@ else if(getCallingActivity().getClassName().equals("com.example.proiect_licenta.
         String key = reference.push().getKey();
         request.setRequestId(key);
         reference.child(request.getRequestId()).setValue(request);
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.custom_toast_container));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText("Cererea a fost trimisa cu succes");
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
 
 
 
 
     }
+
+
+
+
 }

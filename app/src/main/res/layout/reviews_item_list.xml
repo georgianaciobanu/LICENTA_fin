@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
@@ -10,8 +11,8 @@
         android:id="@+id/defaultAvatar"
         android:layout_width="63dp"
         android:layout_height="47dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="76dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -23,7 +24,6 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="220dp"
         android:text="TextView"
-        android:textColor="@color/colorBlue"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.959"
@@ -54,7 +54,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
         android:text="TextView"
-        android:textColor="@color/colorBlue"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/defaultAvatar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +69,6 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="216dp"
         android:text="TextView"
-        android:textColor="@color/colorBlue"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

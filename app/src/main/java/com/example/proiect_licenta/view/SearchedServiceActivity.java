@@ -2,6 +2,7 @@ package com.example.proiect_licenta.view;
 
 
 import android.animation.ArgbEvaluator;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -107,6 +108,11 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searched_service);
+
+        final ProgressDialog pd = new ProgressDialog(SearchedServiceActivity.this);
+        pd.setMessage("loading");
+        pd.show();
+
         servicesTolist = new HashMap<>();
         Intent i = getIntent();
         produseSelectate = (ArrayList<String>) i.getSerializableExtra("produseSelectate");
@@ -181,7 +187,6 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                 OnGetDataListener() {
                     @Override
                     public void onStartFirebaseRequest() {
-                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -223,7 +228,7 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
 
                                 }
                                 markerOption=new MarkerOptions().position(serviceMarker)
-                                        .title(s.getNumeService()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1));
+                                        .title(s.getNumeService()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.mipmap.pin_locatie_2));
                                 myMarker=mGoogleMap.addMarker(markerOption);
 
                             }
@@ -237,7 +242,7 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                             for (double d : sortedDistance) {
                                 Log.i(TAG, " distance " + " " + d);
                                 servicesToAdapter.add(servicesTolist.get(d));
-                                dataModels.add(new ServiceDataModel(servicesTolist.get(d).getNumeService(), servicesTolist.get(d).getLoc().getAdresa(), servicesTolist.get(d).getProgram(), servicesTolist.get(d).getLoc()));
+                                dataModels.add(new ServiceDataModel(servicesTolist.get(d).getNumeService(), servicesTolist.get(d).getLoc().getAdresa(), servicesTolist.get(d).getProgram(), servicesTolist.get(d).getLoc(),servicesTolist.get(d).getEmail()) );
                             }
                             if (dataModels.size() > 0) {
                                 adapter = new ServiceSwipeMapAdapter(dataModels, getApplicationContext());
@@ -247,8 +252,10 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                                 LatLng curentServiceLoc = new LatLng(s.getLatitudine(), s.getLogitudine());
 
                                 myMarker=mGoogleMap.addMarker(new MarkerOptions().position(curentServiceLoc)
-                                        .title(dataModels.get(viewPager.getCurrentItem()).getName()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_maps_1)));
+                                        .title(dataModels.get(viewPager.getCurrentItem()).getName()).icon(bitmapDescriptorFromVector(getApplicationContext(),R.mipmap.pin_locatie_2)));
                                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(curentServiceLoc));
+
+                                pd.hide();
 
 
                             }
@@ -285,7 +292,7 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
         MarkerOptions nou=new MarkerOptions()
                 .position(curentServiceLoc)
                 .title(dataModels.get(viewPager.getCurrentItem()).getName())
-                .icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_map_2));
+                .icon(bitmapDescriptorFromVector(getApplicationContext(),R.mipmap.pin_locatie_2));
 
         myMarker=mGoogleMap.addMarker(nou);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(curentServiceLoc));

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient"
+    android:background="?attr/backgroundcolor"
     tools:context=".view.ServicesListActivity">
 
 <!--    <Button-->
@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_config"
         android:text="Adauga"
-        android:textColor="@color/colorBlue"
+        android:textColor="?attr/textcolor"
         app:layout_constraintBottom_toTopOf="@+id/listView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

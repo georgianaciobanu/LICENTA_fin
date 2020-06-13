@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseError;
 public interface OnGetDataListener {
 
     public void onStartFirebaseRequest();
-    public void onSuccess(DataSnapshot data);
+    public void onSuccess(DataSnapshot data) throws Exception;
     public void onFailed(DatabaseError databaseError);
 
 }

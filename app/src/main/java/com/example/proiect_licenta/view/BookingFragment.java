@@ -1,5 +1,6 @@
 package com.example.proiect_licenta.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.presenter.BookingAdapter;
 import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.RequestsAdapter;
+import com.example.proiect_licenta.presenter.Utility;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,10 +59,11 @@ public class BookingFragment extends Fragment {
     Request request = new Request();
     View view;
     ArrayList<Service> services;
-
+    ProgressDialog progressDialog;
     User currentClient;
     FirebaseUser firebaseUser;
     View view2;
+
 
 
     public static BookingFragment newInstanceServ(Service serv) {
@@ -89,6 +92,11 @@ public class BookingFragment extends Fragment {
          view = inflater.inflate(R.layout.fragment_programari, container, false);
         view2 = inflater.inflate(R.layout.booking_item_list, container, false);
 
+        progressDialog = new ProgressDialog(getContext());
+
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+
         currentService = (Service) getArguments().getSerializable(
                 "Service");
         if(currentService==null) {
@@ -108,7 +116,7 @@ public class BookingFragment extends Fragment {
         listenerRequest = new OnGetDataListener() {
             @Override
             public void onStartFirebaseRequest() {
-                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_LONG).show();
+
 
             }
 
@@ -117,7 +125,7 @@ public class BookingFragment extends Fragment {
                 for (DataSnapshot singleSnapshot : data.getChildren()) {
                     request = singleSnapshot.getValue(Request.class);
                     if (currentClient == null) {
-                        if (request != null && request.getService().getEmail().equals(currentUserEmail)){
+                        if (request != null && request.getService().getEmail().equals(currentUserEmail) && (request.getStatus().equals("confirmata") ||request.getStatus().equals("anulata"))){
                             try {
                                 bookingList.add(request);
                             } catch (Exception e) {
@@ -126,7 +134,7 @@ public class BookingFragment extends Fragment {
                         }
                     }
                     else{
-                        if (request != null && request.getClient().getEmail().equals(currentUserEmail)){
+                        if (request != null && request.getClient().getEmail().equals(currentUserEmail) && (request.getStatus().equals("confirmata") ||request.getStatus().equals("anulata"))){
                             try {
                                 bookingList.add(request);
                             } catch (Exception e) {
@@ -138,6 +146,7 @@ public class BookingFragment extends Fragment {
                 if (bookingList.size() > 0){
                     adapter = new BookingAdapter(view.getContext(), bookingList);
                     listView.setAdapter(adapter);
+                    progressDialog.hide();
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

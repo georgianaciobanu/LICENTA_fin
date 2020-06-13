@@ -11,6 +11,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -33,7 +34,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
+import java.net.InetAddress;
 
 public class LoginActivity extends AppCompatActivity implements LocationListener {
 
@@ -59,157 +60,145 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(!isNetworkConnected() && !isInternetAvailable() ){
+            Toast.makeText(LoginActivity.this,"Momentan nu aveti acces la internet. Incercati mai tarziu",Toast.LENGTH_SHORT).show();
+
+        }else {
 
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        provider = locationManager.getBestProvider(new Criteria(), false);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            provider = locationManager.getBestProvider(new Criteria(), false);
 
 
+            logIn = (CardView) findViewById(R.id.CardView_btnlogin);
+            email = (EditText) findViewById(R.id.et_login_mail);
+            password = (EditText) findViewById(R.id.et_login_pass);
+            forgetPass = (TextView) findViewById(R.id.TWforgetpass);
+
+            checkedTextView = (CheckBox) findViewById(R.id.checkedTextView);
+
+            forgetPass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            LoginActivity.this);
+
+                    // set title
+                    alertDialogBuilder.setTitle("Doriti sa resetati parola?");
+
+                    // set dialog message
+                    alertDialogBuilder
+
+                            .setCancelable(false)
+                            .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    String editEmail = email.getText().toString();
+                                    if (editEmail != null) {
+                                        FirebaseFunctions.forgetPass(editEmail);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Email necompletat!", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    dialog.cancel();
+                                }
+                            });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
+                }
+            });
 
 
-        logIn = (CardView) findViewById(R.id.CardView_btnlogin);
-        email = (EditText) findViewById(R.id.et_login_mail);
-        password = (EditText) findViewById(R.id.et_login_pass);
-        forgetPass=(TextView) findViewById(R.id.TWforgetpass);
+            SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            String username = pref.getString(PREF_USERNAME, null);
+            String pass = pref.getString(PREF_PASSWORD, null);
 
-        checkedTextView=(CheckBox)findViewById(R.id.checkedTextView) ;
+            if (username != null || pass != null) {
+                email.setText(username);
+                password.setText(pass);
+                checkedTextView.setChecked(true);
 
-       forgetPass.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                     LoginActivity.this);
-
-               // set title
-               alertDialogBuilder.setTitle("Doriti sa resetati parola?");
-
-               // set dialog message
-               alertDialogBuilder
-
-                       .setCancelable(false)
-                       .setPositiveButton("Da", new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int id) {
-                          String editEmail=email.getText().toString();
-                               if(editEmail !=null) {
-                                   FirebaseFunctions.forgetPass(editEmail);
-                               }else{
-                                   Toast.makeText(LoginActivity.this,"Email necompletat!",Toast.LENGTH_SHORT).show();
-
-                               }
-                           }
-                       })
-                       .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int id) {
-
-                               dialog.cancel();
-                           }
-                       });
-
-               // create alert dialog
-               AlertDialog alertDialog = alertDialogBuilder.create();
-
-               // show it
-               alertDialog.show();
-           }
-       });
-
-
-
-
-
-        SharedPreferences pref = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        String username = pref.getString(PREF_USERNAME, null);
-        String pass = pref.getString(PREF_PASSWORD, null);
-
-        if (username != null || pass != null) {
-            email.setText(username);
-            password.setText(pass);
-            checkedTextView.setChecked(true);
-
-           //TODO: ELIMINARE PAGINA MAIN ACTIVITY
-        }
+                //TODO: ELIMINARE PAGINA MAIN ACTIVITY
+            }
 
 
 //         email.setText("servicecars@gmail.com");
 //         password.setText("parola1234");
 
-        email.setText("client@mail.com");
-        password.setText("parola");
-        mFirebaseAuth = FirebaseAuth.getInstance();
+            email.setText("client@mail.com");
+            password.setText("parola");
+            mFirebaseAuth = FirebaseAuth.getInstance();
 
 
-
-
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged( FirebaseAuth firebaseAuth) {
-                FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-                if( mFirebaseUser != null ){
-                    Toast.makeText(LoginActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this, HomeScreenClientActivity.class);
-                    startActivity(i);
+            mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+                    FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+                    if (mFirebaseUser != null) {
+                        Toast.makeText(LoginActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(LoginActivity.this, HomeScreenClientActivity.class);
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    Toast.makeText(LoginActivity.this,"Please Login",Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
+            };
 
-        logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            logIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                final String emailS = email.getText().toString();
-                String pwd = password.getText().toString();
-                if(emailS.isEmpty()){
-                    email.setError("Please enter email id");
-                    email.requestFocus();
-                }
-                else  if(pwd.isEmpty()){
-                    password.setError("Please enter your password");
-                    password.requestFocus();
-                }
-                else  if(emailS.isEmpty() && pwd.isEmpty()){
-                    Toast.makeText(LoginActivity.this,"Fields Are Empty!",Toast.LENGTH_SHORT).show();
-                }
-                else  if(!(emailS.isEmpty() && pwd.isEmpty())){
-                    mFirebaseAuth.signInWithEmailAndPassword(emailS, pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete( Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this,"Login Error, Please Login Again",Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                if(checkedTextView.isChecked()) {
-                                    getSharedPreferences(PREFS_NAME,MODE_PRIVATE)
-                                            .edit()
-                                            .putString(PREF_USERNAME, email.getText().toString())
-                                            .putString(PREF_PASSWORD, password.getText().toString())
-                                            .commit();
+                    final String emailS = email.getText().toString();
+                    String pwd = password.getText().toString();
+                    if (emailS.isEmpty()) {
+                        email.setError("Please enter email id");
+                        email.requestFocus();
+                    } else if (pwd.isEmpty()) {
+                        password.setError("Please enter your password");
+                        password.requestFocus();
+                    } else if (emailS.isEmpty() && pwd.isEmpty()) {
+                        Toast.makeText(LoginActivity.this, "Fields Are Empty!", Toast.LENGTH_SHORT).show();
+                    } else if (!(emailS.isEmpty() && pwd.isEmpty())) {
+                        mFirebaseAuth.signInWithEmailAndPassword(emailS, pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Login Error, Please Login Again", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (checkedTextView.isChecked()) {
+                                        getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+                                                .edit()
+                                                .putString(PREF_USERNAME, email.getText().toString())
+                                                .putString(PREF_PASSWORD, password.getText().toString())
+                                                .commit();
+                                    }
+
+
+                                    goToHomeScreenClient();
+
                                 }
-
-
-
-
-                                goToHomeScreenClient();
-
                             }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(LoginActivity.this,"Error Occurred!",Toast.LENGTH_SHORT).show();
+                        });
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
+
+                    }
 
                 }
 
-            }
-
-        });
+            });
 
 
-
-        checkLocationPermission();
+            checkLocationPermission();
+        }
     }
 
 
@@ -333,5 +322,24 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

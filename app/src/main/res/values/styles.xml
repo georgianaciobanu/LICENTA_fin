@@ -4,16 +4,20 @@
     <!--Light/day mode theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/cadet_blue</item>
-        <item name="colorPrimaryDark">@color/grennery</item>
-        <item name="colorAccent">@color/grass</item>
+        <item name="colorPrimary">@color/middleBlue</item>
+        <item name="colorPrimaryDark">@color/middleBlue</item>
+        <item name="colorAccent">@color/endcolor</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="backgroundcolor">@color/white</item>
-        <item name="cardbackground">@color/gray</item>
+        <item name="backgroundcolor">@color/teacherActivGradientStart</item>
+        <item name="cardbackground">@color/teacherActivGradientStop</item>
         <item name="textcolor">@color/blue_black</item>
-        <item name="tintcolor">@color/lightBlue</item>
-        <item name="buttoncolor">@color/grass</item>
+        <item name="actionBarItemBackground">@color/blue_black</item>
+        <item name="tintcolor">@color/backed</item>
+        <item name="buttoncolor">@color/middleBlue</item>
+        <item name="android:navigationBarColor">@color/middleBlue</item>
+        <item name="actionMenuTextAppearance">@color/teacherActivGradientStop</item>
+        <item name="actionMenuTextColor">@color/blue_black</item>
 
     </style>
 
@@ -21,23 +25,26 @@
     <!--Dark/Night mode theme. -->
     <style name="darktheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#121212</item>
-        <item name="colorPrimaryDark">@color/Black</item>
-        <item name="colorAccent">@color/blue_black</item>
+        <item name="colorPrimary">@color/Black</item>
+        <item name="colorPrimaryDark">@color/blue_black</item>
+        <item name="colorAccent">@color/sunglow
+        </item>
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="backgroundcolor">@color/darkGrayDrawer</item>
-        <item name="cardbackground">#121212 </item>
-        <item name="textcolor">@color/colorBlue</item>
-        <item name="tintcolor">#272727</item>
-        <item name="buttoncolor">@color/lightBlue </item>
+        <item name="windowNoTitle">false</item>
+        <item name="backgroundcolor">@color/centreColor</item>
+        <item name="actionMenuTextColor">@color/midnightblue</item>
+        <item name="actionMenuTextAppearance">@color/lightBlue</item>
+        <item name="textcolor">@color/teacherActivGradientStop </item>
+        <item name="cardbackground">@color/endcolor</item>
+        <item name="tintcolor">@color/backed</item>
+        <item name="buttoncolor">@color/gold </item>
 
     </style>
 
 
     <style name="darkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/middleBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>

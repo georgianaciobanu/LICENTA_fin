@@ -50,7 +50,7 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
                 req = 0;
                 Intent i = getIntent();
                 currentService = (Service) i.getSerializableExtra("Service");
-                completeProfile.setVisibility(View.INVISIBLE);
+                completeProfile.setText("Finish");
             }
         }else{
             Intent i = getIntent();
@@ -94,8 +94,13 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         completeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentService.setSevicii(servicii);
-                goToLocationScreenService();
+
+                if (req == 0){
+                    goToProfile();
+                }else {
+                    currentService.setSevicii(servicii);
+                    goToLocationScreenService();
+                }
             }
         });
 
@@ -147,6 +152,14 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
                 listaProduse.add(new ProductsItem("PC/LAPTOP", R.drawable.pc));
             }
         }
+
+    }
+
+
+    public void goToProfile(){
+        Intent it = new Intent(this, HomeScreenClientActivity.class);
+        startActivity(it);
+
 
     }
 

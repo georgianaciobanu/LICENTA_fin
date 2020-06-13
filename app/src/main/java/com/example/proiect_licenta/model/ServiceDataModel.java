@@ -8,13 +8,22 @@ public class ServiceDataModel {
     String adresa;
     String program;
     PhysicalLocation locatie;
+    String email;
 
-    public ServiceDataModel(String name, String adresa, String program,PhysicalLocation locatie) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public ServiceDataModel(String name, String adresa, String program, PhysicalLocation locatie, String email) {
         this.name = name;
         this.adresa = adresa;
         this.program= program;
         this.locatie=locatie;
-
+        this.email=email;
 
     }
 

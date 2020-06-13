@@ -43,7 +43,11 @@ public class FirebaseFunctions {
 
         FirebaseDatabase.getInstance().getReference().child("User").orderByChild("email").equalTo(currentUserEmail).addListenerForSingleValueEvent(new ValueEventListener() { @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            listener.onSuccess(dataSnapshot);
+            try {
+                listener.onSuccess(dataSnapshot);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
             @Override
@@ -61,7 +65,11 @@ public class FirebaseFunctions {
 
         FirebaseDatabase.getInstance().getReference().child("User").orderByChild("id").equalTo(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() { @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            listener.onSuccess(dataSnapshot);
+            try {
+                listener.onSuccess(dataSnapshot);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
             @Override
@@ -80,7 +88,11 @@ public class FirebaseFunctions {
         FirebaseDatabase.getInstance().getReference().child("Request").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -97,7 +109,11 @@ public class FirebaseFunctions {
         FirebaseDatabase.getInstance().getReference().child("Service").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -113,7 +129,11 @@ public class FirebaseFunctions {
         FirebaseDatabase.getInstance().getReference().child(child).orderByChild("email").equalTo("servicegeo@mail.com").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -130,7 +150,11 @@ public class FirebaseFunctions {
         FirebaseDatabase.getInstance().getReference().child("Request").orderByChild("requestId").equalTo("-M0nFBg1cckdaSl6Qj9O").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -143,10 +167,14 @@ public class FirebaseFunctions {
 
         listener.onStartFirebaseRequest();
 
-        FirebaseDatabase.getInstance().getReference().child("Request").orderByChild("status").equalTo("confirmata").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Request").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -164,7 +192,11 @@ public class FirebaseFunctions {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -181,7 +213,11 @@ public class FirebaseFunctions {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -199,7 +235,11 @@ public class FirebaseFunctions {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -218,7 +258,11 @@ public class FirebaseFunctions {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -237,7 +281,11 @@ public class FirebaseFunctions {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -255,7 +303,11 @@ public class FirebaseFunctions {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                listener.onSuccess(dataSnapshot);
+                try {
+                    listener.onSuccess(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

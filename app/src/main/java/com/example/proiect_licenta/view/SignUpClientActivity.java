@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proiect_licenta.MainActivity;
+import com.example.proiect_licenta.model.AESCrypt;
 import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +34,7 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
     EditText telefon;
     EditText pass;
     EditText comfirmedPass;
+
 
     FirebaseAuth fAuth;
     DatabaseReference reference;
@@ -184,8 +186,11 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
                     hashMap. put("username",user.getUsername());
                     hashMap.put("telefon",user.getTelefon());
                     hashMap.put("email",user.getEmail());
-                    hashMap.put("pass",user.getPass());
-
+                    try {
+                        hashMap.put("pass",AESCrypt.encrypt(user.getPass()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {

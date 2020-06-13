@@ -94,7 +94,7 @@ public class ChatActivity extends AppCompatActivity  {
 
                     }
                  listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-                 adapter=new ChatAdapter(getApplicationContext(),chatList);
+                 adapter=new ChatAdapter(getApplicationContext(),chatList,firebaseUser.getEmail());
                  listOfMessages.setAdapter(adapter);
 
                 }
