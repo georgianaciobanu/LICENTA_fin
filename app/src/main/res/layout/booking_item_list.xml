@@ -92,7 +92,8 @@
         android:layout_marginBottom="8dp"
         android:text="trimisa spre confirmare"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?attr/colorAccent"
+        android:textColor="@color/sunset"
+        android:textStyle="bold"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,6 +126,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?attr/colorAccent"
         android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView_serviciiBook" />
 
@@ -145,12 +147,13 @@
         android:id="@+id/tw_client"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="36dp"
         android:text="Client:"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?attr/textcolor"
         android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tw_pretTotal" />
 
@@ -174,6 +177,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="52dp"
         android:text="Alte detalii:"
+        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?attr/textcolor"
         android:textSize="15dp"

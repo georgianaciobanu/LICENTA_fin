@@ -11,44 +11,39 @@
 
     <RatingBar
         android:id="@+id/ratingBarServ"
-        android:layout_width="252dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:isIndicator="true"
         android:max="5"
         android:rating="0"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_lista_reviews_serv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.433"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.275" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scroll_lista_reviews_serv"
-        android:layout_width="519dp"
-        android:layout_height="368dp"
+    <ListView
+        android:id="@+id/lista_reviews_serv"
+        android:layout_width="389dp"
+        android:layout_height="590dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:isScrollContainer="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ListView
-            android:id="@+id/lista_reviews_serv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
-            android:isScrollContainer="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.666"
-            app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarServ"
+        app:layout_constraintVertical_bias="0.785">
 
 
-        </ListView>
-    </ScrollView>
+    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

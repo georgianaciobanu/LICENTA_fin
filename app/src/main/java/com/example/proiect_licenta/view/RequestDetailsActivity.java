@@ -88,14 +88,7 @@ public class RequestDetailsActivity extends AppCompatActivity  {
         btn_Anuleaza = (Button) findViewById(R.id.btn_Anulare);
         imageButtonChat=(ImageButton)findViewById(R.id.ButtonChat);
 
-        imageButtonChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-                intent.putExtra("messageFor", readRequest.getService().getEmail());
-                startActivity(intent);
-            }
-        });
+
 
 
         if (userOrService == 1) {
@@ -107,7 +100,14 @@ public class RequestDetailsActivity extends AppCompatActivity  {
             tw_telefon.setText(readRequest.getService().getTelefon());
             tw_email.setText(readRequest.getService().getEmail());
 
-
+            imageButtonChat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                    intent.putExtra("messageFor", readRequest.getService().getEmail());
+                    startActivity(intent);
+                }
+            });
 
 
         } else if (userOrService == 2) {
@@ -115,13 +115,20 @@ public class RequestDetailsActivity extends AppCompatActivity  {
             btn_Resping.setVisibility(View.VISIBLE);
             btn_Anuleaza.setVisibility(View.INVISIBLE);
 
-            imageButtonChat.setVisibility(View.INVISIBLE);
+
 
             tw_clientBD.setText(readRequest.getClient().getUsername());
             tw_telefon.setText(readRequest.getClient().getTelefon());
             tw_email.setText(readRequest.getClient().getEmail());
 
-
+            imageButtonChat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                    intent.putExtra("messageFor", readRequest.getClient().getEmail());
+                    startActivity(intent);
+                }
+            });
 
         }
 

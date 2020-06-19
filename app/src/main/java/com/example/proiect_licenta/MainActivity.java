@@ -148,11 +148,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
 
-         email.setText("servicecars@gmail.com");
-         password.setText("parola1234");
+//         email.setText("servicecars@gmail.com");
+//         password.setText("parola1234");
 
-//            email.setText("client@mail.com");
-//            password.setText("parola");
+            email.setText("client@mail.com");
+            password.setText("parola");
 
 
 
@@ -177,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             logIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     final String emailS = email.getText().toString();
                     String pwd = password.getText().toString();
                     if (emailS.isEmpty()) {
@@ -202,16 +201,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                                                 .putString(PREF_PASSWORD, password.getText().toString())
                                                 .commit();
                                     }
-
-
                                     goToHomeScreenClient();
-
                                 }
                             }
                         });
                     } else {
                         Toast.makeText(MainActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
-
                     }
 
                 }
@@ -265,12 +260,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         startActivity(it);
     }
 
-    public void  goToImageUpload(){
-        Intent it = new Intent(this, UploadImageActivity.class);
-        it.putExtra("ServiceEmail","ricaaa@mail.com" );
-        startActivity(it);
-
-    }
 
     public void goToHomeScreenClient() {
         Intent it = new Intent(this, HomeScreenClientActivity.class);

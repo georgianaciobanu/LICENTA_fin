@@ -215,7 +215,7 @@ if(reqq!=0  && isCheked==1 ) {
         public void onClick(View view) {
 
 
-            int desiredBackgroundColor = Color.BLUE;
+            int desiredBackgroundColor = getContext().getResources().getColor(R.color.middleBlue);
 
             ColorDrawable viewColor = (ColorDrawable) view.getBackground();
 
@@ -340,7 +340,7 @@ if(reqq!=0  && isCheked==1 ) {
 
 
 
-        int desiredBackgroundColor = Color.BLUE;
+        int desiredBackgroundColor = getContext().getResources().getColor(R.color.middleBlue);
 
 
             if(serviciiSelectate.contains(currentItem)){

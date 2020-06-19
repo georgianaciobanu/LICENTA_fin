@@ -36,7 +36,8 @@
         <activity android:name=".view.UploadImageActivity" />
         <activity android:name=".view.DateTimePickerActivity" />
         <activity android:name=".view.ChooseServicesActivity" />
-        <activity android:name=".view.SearchedServiceActivity" />
+        <activity android:name=".view.SearchedServiceActivity"
+            />
         <activity android:name=".presenter.TrimiteCerereActivity" />
         <activity android:name=".view.ServicesListActivity" />
         <activity android:name=".view.AboutServiceActivity" />

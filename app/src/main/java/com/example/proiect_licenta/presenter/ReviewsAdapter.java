@@ -6,8 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,20 +32,13 @@ import java.util.ArrayList;
 public class ReviewsAdapter extends ArrayAdapter<Review> {
 
 
-      OnGetDataListener listenerUser;
-      User u;
-      String userName;
-      Review currentItem;
 
-     TextView tw_nume;
-    TextView tw_data;
-    RatingBar rating;
-    ImageView avatarRew;
-    TextView tx_commentRew;
+    Review currentItem;
 
 
     public ReviewsAdapter(Context context, ArrayList<Review> reviews) {
         super(context, 0, reviews);
+
 
     }
 
@@ -57,65 +54,51 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
     }
 
     private View initView(int position, View convertView, ViewGroup parent) {
+        final Viewholder viewHolder;
+
+
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.reviews_item_list, parent, false
             );
+            viewHolder = new Viewholder();
+
+            viewHolder.tw_nume = convertView.findViewById(R.id.numeUserRew);
+            viewHolder.tw_data = convertView.findViewById(R.id.dataRew);
+            viewHolder.rating = convertView.findViewById(R.id.ratingBarList);
+            viewHolder.avatarRew = convertView.findViewById(R.id.defaultAvatar);
+            viewHolder.tx_commentRew = convertView.findViewById(R.id.tx_commentRew);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (Viewholder) convertView.getTag();
         }
 
 
-       tw_nume = convertView.findViewById(R.id.numeUserRew);
-      tw_data = convertView.findViewById(R.id.dataRew);
-        rating= convertView.findViewById(R.id.ratingBarList);
-        avatarRew=convertView.findViewById(R.id.defaultAvatar);
-        tx_commentRew=convertView.findViewById(R.id.tx_commentRew);
-
-        listenerUser=new OnGetDataListener() {
-            @Override
-            public void onStartFirebaseRequest() {
-
-
-            }
-
-            @Override
-            public void onSuccess(DataSnapshot data) {
-
-                for(DataSnapshot singleSnapshot : data.getChildren()) {
-                    u = singleSnapshot.getValue(User.class);
-                    if(u.getEmail().equals(currentItem.getIdClient())){
-                        userName=u.getUsername();
-                        tw_nume.setText(userName);
-                        if(currentItem.getData()!=null) {
-                           String dateToDisplay= DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(currentItem.getData());
-                            tw_data.setText(dateToDisplay);
-                        }
-                        rating.setRating(Float.valueOf(currentItem.getRateValue()));
-                        avatarRew.setImageResource(R.drawable.ic_person_black_24dp);
-                        tx_commentRew.setText(currentItem.getComment());
-
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailed(DatabaseError databaseError) {
-
-            }
-        };
-
-
         currentItem = getItem(position);
-           if(currentItem!=null) {
+        if (currentItem != null) {
 
-               FirebaseFunctions.getUserFirebase(listenerUser,currentItem.getIdClient());
+            viewHolder.tw_nume.setText(currentItem.getIdClient());
+            if (currentItem.getData() != null) {
+                String dateToDisplay = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(currentItem.getData());
+                viewHolder.tw_data.setText(dateToDisplay);
+            }
+            viewHolder.rating.setRating(Float.valueOf(currentItem.getRateValue()));
+            viewHolder.avatarRew.setImageResource(R.drawable.ic_person_black_24dp);
+            viewHolder.tx_commentRew.setText(currentItem.getComment());
+        }
 
 
-       }
+
 
         return convertView;
     }
-
+    static class Viewholder {
+         TextView tw_nume;
+         TextView tw_data;
+         RatingBar rating;
+         ImageView avatarRew;
+         TextView tx_commentRew;
+    }
 
     }

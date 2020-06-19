@@ -17,6 +17,7 @@ import com.example.proiect_licenta.R;
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Review;
 import com.example.proiect_licenta.model.Service;
+import com.example.proiect_licenta.model.User;
 import com.example.proiect_licenta.presenter.FirebaseFunctions;
 import com.example.proiect_licenta.presenter.ReviewsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 
@@ -41,7 +43,7 @@ OnGetDataListener listenerCurrentReview;
     FirebaseUser firebaseUser;
     Service currentService= new Service();
     ProgressDialog progressDialog ;
-
+    //OnGetDataListener listenerUser;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -95,6 +97,40 @@ OnGetDataListener listenerCurrentReview;
 
         FirebaseFunctions.getServiceFirebase("email",currentUserEmail,listenerServ);
 
+//        listenerUser=new OnGetDataListener() {
+//            @Override
+//            public void onStartFirebaseRequest() {
+//
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(DataSnapshot data) {
+//
+//                for(DataSnapshot singleSnapshot : data.getChildren()) {
+//                    u = singleSnapshot.getValue(User.class);
+//                    if(u.getEmail().equals(currentItem.getIdClient())){
+//                        userName=u.getUsername();
+//                        viewHolder.tw_nume.setText(userName);
+//                        if(currentItem.getData()!=null) {
+//                            String dateToDisplay= DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(currentItem.getData());
+//                            viewHolder.tw_data.setText(dateToDisplay);
+//                        }
+//                        viewHolder.rating.setRating(Float.valueOf(currentItem.getRateValue()));
+//                        viewHolder.avatarRew.setImageResource(R.drawable.ic_person_black_24dp);
+//                        viewHolder.tx_commentRew.setText(currentItem.getComment());
+//
+//                    }
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailed(DatabaseError databaseError) {
+//
+//            }
+//        };
 
 
         listenerCurrentReview=new OnGetDataListener() {

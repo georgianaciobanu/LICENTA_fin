@@ -188,7 +188,8 @@ public class FirebaseFunctions {
 
         listener.onStartFirebaseRequest();
 
-        FirebaseDatabase.getInstance().getReference().child("Service").orderByChild(child).equalTo(value).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Service").orderByChild(child).equalTo(value)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -319,11 +320,10 @@ public class FirebaseFunctions {
 
 
     public static void updateRequest (Request request, String status){
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Request").child(request.getRequestId());
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance()
+                .getReference("Request").child(request.getRequestId());
         databaseReference.child("status").setValue(status);
         request.setStatus(status);
-
-
 
     }
 

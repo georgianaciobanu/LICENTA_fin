@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.PhysicalLocation;
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.Product;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Review;
 import com.example.proiect_licenta.model.Service;
@@ -151,6 +153,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 telefon.setEnabled(true);
                 email.setEnabled(true);
                 nume.setEnabled(true);
+                listaReviews.setVisibility(View.INVISIBLE);
                 fab.setVisibility(View.INVISIBLE);
                 ratingBar.setVisibility(View.INVISIBLE);
                 req=0;
@@ -158,7 +161,6 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 imageButtonUpdatePhotos.setVisibility(View.VISIBLE);
                 cerere.setVisibility(View.INVISIBLE);
                 imageButtonChat.setVisibility((View.INVISIBLE));
-                listaReviews.setVisibility(View.INVISIBLE);
 
             }
         }else{
@@ -400,6 +402,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
             public void onSuccess(DataSnapshot data) {
                    int count=0;
                    float sum=0;
+                reviews=new ArrayList<>();
                 for(DataSnapshot singleSnapshot : data.getChildren()) {
                     currentReview = singleSnapshot.getValue(Review.class);
                     if(currentReview!=null){
@@ -413,6 +416,9 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                       ratingBar.setRating(sum/count);
                       reviewsAdapter = new ReviewsAdapter(getApplicationContext(), reviews);
                       listaReviews.setAdapter(reviewsAdapter);
+                      Utility.setListViewHeightBasedOnItems(listaReviews);
+
+
 
                   }
 
@@ -440,7 +446,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
 
                 for(DataSnapshot singleSnapshot : data.getChildren()) {
 
-                    if(currentReview.getIdClient()==currentuser){
+                    if(currentReview.getIdClient().equals(currentuser)){
                         singleSnapshot.getRef().removeValue();
                     }
 
@@ -580,12 +586,12 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
                 .setDefaultRating(1)
                 .setTitle("Rate this Service")
                 .setDescription("Please select some stars and give us your feedback")
-                .setTitleTextColor(R.color.colorPrimary)
-                .setDescriptionTextColor(R.color.colorPrimary)
+                .setTitleTextColor(R.color.middleBlue)
+                .setDescriptionTextColor(R.color.middleBlue)
                 .setHint("Please write your comment here...")
-                .setHintTextColor(R.color.colorAccent)
+                .setHintTextColor(R.color.white)
                 .setCommentTextColor(R.color.white)
-                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setCommentBackgroundColor(R.color.middleBlue)
                 .setWindowAnimation(R.style.RatingDialogFadeAnim)
                 .create(AboutServiceActivity.this)
                 .show();
@@ -621,6 +627,7 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
         String key = reference.push().getKey();
         reference.child(key).setValue(review);
 
+        FirebaseFunctions.getReviewFirebase("idService",currentService.getServiceId(),listenerCurrentReview);
 
 
 
@@ -640,6 +647,23 @@ public class AboutServiceActivity extends AppCompatActivity implements RatingDia
         }
     };
 
+
+
+    @Override
+    public void onBackPressed() {
+if(req==0) {
+
+    Intent it = new Intent(this, HomeScreenClientActivity.class);
+    startActivity(it);
+}else{
+   //super.onBackPressed();
+    Intent intent=new Intent(this,SearchedServiceActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    startActivity(intent);
+    finish();
+}
+
+    }
 
 
 }

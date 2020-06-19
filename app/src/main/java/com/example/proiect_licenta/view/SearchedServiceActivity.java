@@ -2,6 +2,8 @@ package com.example.proiect_licenta.view;
 
 
 import android.animation.ArgbEvaluator;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -258,8 +260,16 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                                 pd.hide();
 
 
+                            }else{
+                                pd.hide();
+                                Toast.makeText(getApplicationContext(),"Nu s-au gasit rezultate pentru dumneavoastra",Toast.LENGTH_LONG).show();
                             }
 
+
+                        }
+                        else{
+                            pd.hide();
+                            Toast.makeText(getApplicationContext(),"Nu s-au gasit rezultate pentru dumneavoastra",Toast.LENGTH_LONG).show();
 
                         }
 
@@ -381,5 +391,13 @@ viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(android.R.id.content, new SearchServiceFragment()).commit();
+
     }
 }

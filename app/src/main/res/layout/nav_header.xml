@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryDark"
+    android:layout_width="660dp"
+    android:layout_height="270dp"
+    android:background="@drawable/student_nav_menu_background"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="153dp"
         android:background="@color/transparent"
-        android:src="@mipmap/logo" />
+        android:src="@drawable/usericon" />
 
     <TextView
         android:id="@+id/tw_usernameMenu"

@@ -127,7 +127,6 @@ public class SetariFragment extends Fragment {
             @Override
             public void onStartFirebaseRequest() {
 
-
             }
 
             @Override
@@ -142,15 +141,12 @@ public class SetariFragment extends Fragment {
                     proprietarEt.setHint("Proprietar");
                     proprietarEt.setText(currentService.getProprietar());
                     pass= AESCrypt.decrypt(currentService.getPass());
-
                     progressDialog.dismiss();
                 }
                 else{
                     FirebaseFunctions.getUserFirebase(listnerUser,currentUserEmail);
 
                 }
-
-
 
 
             }

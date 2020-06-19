@@ -102,10 +102,6 @@ public class SearchServiceFragment extends Fragment {
 
 
     private void getDeviceLocation() {
-        /*
-            getting the device current location
-         */
-        Log.d(TAG, "getDeviceLocation");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view.getContext());
 
@@ -119,11 +115,6 @@ public class SearchServiceFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
                              currentLoc = (Location) task.getResult();
-                            //currentLocation=new LatLng(currentLoc.getLatitude(),currentLoc.getLongitude());
-
-
-
-
 
                         }
                     }

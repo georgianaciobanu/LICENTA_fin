@@ -127,8 +127,8 @@ public class UploadImageActivity extends AppCompatActivity {
 
             progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
-            final StorageReference imagename = Folder.child("image" + FilePathUri.getLastPathSegment());
 
+            final StorageReference imagename = Folder.child("image" + FilePathUri.getLastPathSegment());
             imagename.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

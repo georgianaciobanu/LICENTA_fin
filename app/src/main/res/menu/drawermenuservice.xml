@@ -3,8 +3,8 @@
     tools:showIn="navigation_view_service">
     <item android:id="@+id/it_serviceProfile" android:title="Homescreen" android:icon="@drawable/ic_action_service_profile"/>
     <item android:id="@+id/it_serviceProfileUpdate" android:title="Update Info" android:icon="@drawable/ic_mode_edit_black_24dp"/>
-    <item android:id="@+id/it_istoricCereri" android:title="Istoric cereri" android:icon="@drawable/ic_action_history"/>
-    <item android:id="@+id/it_programari" android:title="Programari" android:icon="@drawable/ic_build_black_24dp"/>
+    <item android:id="@+id/it_istoricCereri" android:title="Request History" android:icon="@drawable/ic_action_history"/>
+    <item android:id="@+id/it_programari" android:title="Appointments" android:icon="@drawable/ic_build_black_24dp"/>
     <item android:id="@+id/it_reviews" android:title="Reviews" android:icon="@drawable/ic_action_review"/>
     <item android:id="@+id/it_settings" android:title="Settings" android:icon="@drawable/ic_action_settings"/>
     <item android:id="@+id/it_logout" android:title="Logout" android:icon="@drawable/ic_action_logout"/>

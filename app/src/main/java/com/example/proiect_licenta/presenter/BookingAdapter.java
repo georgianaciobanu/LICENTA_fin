@@ -89,7 +89,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
 
             ServicesListAdapter adapterServ = new ServicesListAdapter( convertView.getContext(),currentItem.getServicii(),null,1 ,0);
             listView_serviciiBook.setAdapter(adapterServ);
-            Utility.setListViewHeightBasedOnChildren(listView_serviciiBook);
+            Utility.setListViewHeightBasedOnItems(listView_serviciiBook);
 
 
 
@@ -100,14 +100,7 @@ public class BookingAdapter extends ArrayAdapter<Request> {
                 tw_status.setText("IN PROGRES");
             }
 
-            imageButtonChat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), ChatActivity.class);
-                    intent.putExtra("messageFor", currentItem.getService().getEmail());
-                    con.startActivity(intent);
-                }
-            });
+
 
             if(currentItem.getStatus().equals("anulata")){
                 if(currentItem.getClient().getEmail().equals(currentUserEmail)) {
@@ -127,11 +120,28 @@ public class BookingAdapter extends ArrayAdapter<Request> {
                 tw_clientBD.setText(currentItem.getService().getUsername());
                 tw_cl.setText("Service: ");
 
+                imageButtonChat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ChatActivity.class);
+                        intent.putExtra("messageFor", currentItem.getService().getEmail());
+                        con.startActivity(intent);
+                    }
+                });
+
             }else if(currentItem.getService().getEmail().equals(currentUserEmail)){
                 tw_nrTel.setText(currentItem.getClient().getTelefon());
                 tw_email.setText(currentItem.getClient().getEmail());
                 tw_clientBD.setText(currentItem.getClient().getUsername());
 
+                imageButtonChat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ChatActivity.class);
+                        intent.putExtra("messageFor", currentItem.getClient().getEmail());
+                        con.startActivity(intent);
+                    }
+                });
             }
             tw_dataProgramarii.setText(dateToDisplay);
             tw_detalii.setText(currentItem.getDetalii());

@@ -1,6 +1,7 @@
 package com.example.proiect_licenta.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,6 +62,8 @@ public class ChatConversationActivity extends AppCompatActivity {
                 ListView chatsList = (ListView)findViewById(R.id.chatsListview);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, chatConversation);
                 chatsList.setAdapter(adapter);
+                chatsList.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teacherActivGradientStart));
+
 
                 chatsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

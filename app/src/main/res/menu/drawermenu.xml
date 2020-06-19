@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view_client">
     <item android:id="@+id/it_search" android:title="Search" android:icon="@drawable/ic_action_search"/>
-    <item android:id="@+id/it_istoricCereri" android:title="Istoric cereri" android:icon="@drawable/ic_action_history"/>
-    <item android:id="@+id/it_programari" android:title="Programari" android:icon="@drawable/ic_build_black_24dp"/>
+    <item android:id="@+id/it_istoricCereri" android:title="Request History" android:icon="@drawable/ic_action_history"/>
+    <item android:id="@+id/it_programari" android:title="Appointments" android:icon="@drawable/ic_build_black_24dp"/>
     <item android:id="@+id/it_favs" android:title="Favorite" android:icon="@drawable/ic_favorite_black_24dp"/>
     <item android:id="@+id/it_chat" android:title="Chat" android:icon="@drawable/ic_chat_black_24dp"/>
     <item android:id="@+id/it_settings" android:title="Settings" android:icon="@drawable/ic_action_settings"/>

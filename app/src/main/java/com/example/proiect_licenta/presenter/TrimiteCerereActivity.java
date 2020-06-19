@@ -31,8 +31,11 @@ import com.example.proiect_licenta.model.ProductsItem;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
 import com.example.proiect_licenta.model.User;
+import com.example.proiect_licenta.view.AboutServiceActivity;
 import com.example.proiect_licenta.view.ChooseServicesActivity;
 import com.example.proiect_licenta.view.DateTimePickerActivity;
+import com.example.proiect_licenta.view.HomeScreenClientActivity;
+import com.example.proiect_licenta.view.SearchServiceFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -269,13 +272,25 @@ if(request.getDataProgramare()==null){
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), AboutServiceActivity.class);
+        intent.putExtra("CurrentService", currentService);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
+
+
+    }
     public void requestInsertFirebase(final Request request) {
 
         reference= FirebaseDatabase.getInstance().getReference("Request");
         String key = reference.push().getKey();
         request.setRequestId(key);
         reference.child(request.getRequestId()).setValue(request);
+
+
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast,
                 (ViewGroup) findViewById(R.id.custom_toast_container));
@@ -288,6 +303,9 @@ if(request.getDataProgramare()==null){
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+
+        Intent it = new Intent(this, HomeScreenClientActivity.class);
+        startActivity(it);
 
 
 

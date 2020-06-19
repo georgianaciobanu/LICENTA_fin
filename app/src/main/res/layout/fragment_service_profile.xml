@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/tintcolor"
+    android:background="@drawable/serviceprofile2"
     tools:context=".view.ServiceProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,46 +14,45 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/chatButtonServ"
-            android:layout_width="58dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/splashscreen"
-            app:layout_constraintEnd_toStartOf="@+id/tw_chatservice"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.026"
-            tools:src="@mipmap/messages_service" />
+<!--        <ImageView-->
+<!--            android:id="@+id/chatButtonServ"-->
+<!--            android:layout_width="55dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="44dp"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:src="@drawable/ic_chat_black_24dp" />-->
 
         <TextView
             android:id="@+id/tw_chatservice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="124dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="bold"
             android:paddingTop="20dp"
             android:text="0 Mesaje noi"
             android:textColor="?attr/textcolor"
-            android:textSize="22dp"
-            app:layout_constraintBottom_toTopOf="@+id/splashscreen"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/splashscreen"
-            android:layout_width="421dp"
-            android:layout_height="521dp"
-            android:layout_gravity="center"
-            android:src="@drawable/servicep"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.592"
-            app:layout_constraintStart_toStartOf="parent" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/splashscreen"-->
+        <!--            android:layout_width="421dp"-->
+        <!--            android:layout_height="521dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:src="@drawable/servicep"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.592"-->
+        <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

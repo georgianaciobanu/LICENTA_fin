@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,11 +34,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 import java.util.Queue;
@@ -50,34 +54,43 @@ public class ServiceProfileFragment extends Fragment {
     Service service;
     FirebaseUser firebaseUser;
     Service currentService= new Service();
-    ImageButton chatButtonServ;
+   // ImageView chatButtonServ;
     FirebaseDatabase database;
     DatabaseReference reference;
     Request request= new Request();
     int id;
     String lastChildKey;
     String currentUserEmail;
+    TextView tw_chatservice;
 
     View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         reference = database.getInstance().getReference().child("Request");
-
         view=inflater.inflate(R.layout.fragment_service_profile, container, false);
         service=new Service();
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         currentUserEmail= firebaseUser.getEmail();
-        chatButtonServ=(ImageButton)view.findViewById(R.id.chatButtonServ);
+        //chatButtonServ=(ImageView)view.findViewById(R.id.chatButtonServ);
+        tw_chatservice=(TextView) view.findViewById(R.id.tw_chatservice);
 
-//
+
+
+
 //        reference.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                 Iterable<DataSnapshot> children=dataSnapshot.getChildren();
+//                for(DataSnapshot child: children){
+//                    request = child.getValue(Request.class);
 //
-//                if (dataSnapshot.exists()){
-//                    id = (int)dataSnapshot.getChildrenCount();
-//                }
+//                    if (request.getService().getEmail().equals(currentUserEmail)) {
+//                        notification();
+//                    }
+//
+//                    }
+//
 //
 //            }
 //
@@ -194,7 +207,7 @@ public class ServiceProfileFragment extends Fragment {
         FirebaseFunctions.getServiceFirebase("email",currentUserEmail,listenerServ);
 
 
-        chatButtonServ.setOnClickListener(new View.OnClickListener() {
+        tw_chatservice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToChat(view);
@@ -273,5 +286,9 @@ public class ServiceProfileFragment extends Fragment {
 
     //}
 
+    public void onDestroy() {
 
+        super.onDestroy();
+
+    }
 }

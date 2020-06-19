@@ -25,10 +25,10 @@
     <string name="et_confPass_service"></string>
 
     <string name="registerBtn">REGISTER</string>
-    <string name="BTNprofileRegisterService1">Complete your service profile</string>
-    <string name="BTNprofileRegisterService2">Complete your service profile</string>
-    <string name="BTNprofileRegisterService3">Complete your service profile</string>
-    <string name="BTNprofileRegisterService4">Complete your service profile</string>
+    <string name="BTNprofileRegisterService1">Next</string>
+    <string name="BTNprofileRegisterService2">Next</string>
+    <string name="BTNprofileRegisterService3">Next</string>
+    <string name="BTNprofileRegisterService4">Next</string>
     <string name="fragment_container"></string>
 
     <string name="et_serviceName">Service Name</string>

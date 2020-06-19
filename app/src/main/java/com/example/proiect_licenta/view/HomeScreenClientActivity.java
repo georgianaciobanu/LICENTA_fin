@@ -324,7 +324,7 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
         }
     }
 
@@ -347,6 +347,7 @@ public class HomeScreenClientActivity extends AppCompatActivity implements Navig
         intent.setClass(context, ChatConversationActivity.class);
         startActivity(intent);
     }
+
 
 
 }
