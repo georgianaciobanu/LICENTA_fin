@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -143,9 +144,7 @@ public class RequestDetailsActivity extends AppCompatActivity  {
             if(userOrService==1 && (readRequest.getStatus().equals("confirmata") || readRequest.getStatus().equals("respinsa"))) {
                 btn_Anuleaza.setVisibility(View.INVISIBLE);
             }
-//            }else if(userOrService==2 && readRequest.getStatus().equals("anulata")) {
-//                tw_status.setText("Anulata de catre: " + readRequest.getService().getUsername());
-//            }else{
+//
                 tw_status.setText(readRequest.getStatus());
 //            }
 
@@ -196,6 +195,16 @@ public class RequestDetailsActivity extends AppCompatActivity  {
                         .setPositiveButton("Da", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 FirebaseFunctions.updateRequest(readRequest, "respinsa");
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("message/rfc822");
+                                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{readRequest.getClient().getEmail()});
+                                i.putExtra(Intent.EXTRA_SUBJECT, "Cererea nr. "+ readRequest.getRequestId());
+                                i.putExtra(Intent.EXTRA_TEXT   , "Ne cerem scuze dar, cererea dumneavoastra din data de "+ readRequest.getDataTrimiterii()+" a fost respinsa. Din pacate, data programarii din "+readRequest.getDataProgramare()+" nu este disponibila. Va rog sa ne contactati pentru a stabili o alta programare. "+" Multumim si va asteptam! Service "+ readRequest.getService().getNumeService());
+                                try {
+                                    startActivity(Intent.createChooser(i, "Send mail..."));
+                                } catch (android.content.ActivityNotFoundException ex) {
+                                    Toast.makeText(RequestDetailsActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                                }
                                 tw_status.setText("respinsa");
                                 btn_Resping.setVisibility(View.INVISIBLE);
                                 btn_Confirma.setVisibility(View.VISIBLE);
@@ -235,13 +244,6 @@ public class RequestDetailsActivity extends AppCompatActivity  {
                         .setPositiveButton("Da", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 FirebaseFunctions.updateRequest(readRequest, "anulata");
-
-//                                if(userOrService==1) {
-//                                    tw_status.setText("Anulata de catre: " + readRequest.getClient().getUsername());
-//                                }else if(userOrService==2) {
-//                                    tw_status.setText("Anulata de catre: " + readRequest.getService().getUsername());
-//                                }
-
                                 btn_Anuleaza.setVisibility(View.INVISIBLE);
                                 tw_status.setText("Anulata");
                             }
@@ -282,6 +284,16 @@ public class RequestDetailsActivity extends AppCompatActivity  {
                         .setPositiveButton("Da", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 FirebaseFunctions.updateRequest(readRequest, "confirmata");
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("message/rfc822");
+                                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{readRequest.getClient().getEmail()});
+                                i.putExtra(Intent.EXTRA_SUBJECT, "Cererea nr. "+ readRequest.getRequestId());
+                                i.putExtra(Intent.EXTRA_TEXT   , "Cererea dumneavoastra din data de "+ readRequest.getDataTrimiterii()+" a fost confirmata. Data programarii a fost stabilita la: "+readRequest.getDataProgramare()+" desfasurata la sediul nostru din "+readRequest.getService().getLoc().getAdresa()+" Multumim si va asteptam! Service "+ readRequest.getService().getNumeService());
+                                try {
+                                    startActivity(Intent.createChooser(i, "Send mail..."));
+                                } catch (android.content.ActivityNotFoundException ex) {
+                                    Toast.makeText(RequestDetailsActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                                }
                                 tw_status.setText("confirmata");
                                 btn_Confirma.setVisibility(View.INVISIBLE);
                                 btn_Resping.setVisibility(View.VISIBLE);

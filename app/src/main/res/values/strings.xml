@@ -53,7 +53,7 @@
     <string name="spinnerCategorii"></string>
     <string name="tw_alegeData">Alege data programarii</string>
     <string name="tw_alegeOra">Alege ora programarii</string>
-
+    <string name="lastTime"></string>
     <string-array name="categoriiProduse">
         <item>ELECTROCASNICE</item>
         <item>MASINA</item>

@@ -43,7 +43,7 @@ public class FavoritesFragment extends Fragment {
     Service service;
     Review review;
     FirebaseUser firebaseUser;
-    ProgressDialog progressDialog ;
+
    // ServiceSwipeMapAdapter adpater;
     //FavServicesAdapter adapter;
 
@@ -55,10 +55,6 @@ public class FavoritesFragment extends Fragment {
 
 
 
-        progressDialog = new ProgressDialog(getContext());
-
-        progressDialog.setTitle("Loading");
-        progressDialog.show();
 
 
         listaFavServices=(ListView)view.findViewById(R.id.lista_fav_services) ;
@@ -88,9 +84,9 @@ public class FavoritesFragment extends Fragment {
                 if(favServices.size()>0){
                     FavServicesAdapter  adapter = new FavServicesAdapter(view.getContext(),favServices);
                     listaFavServices.setAdapter(adapter);
-                     progressDialog.hide();
+
                 }else{
-                     progressDialog.hide();
+
                     Toast.makeText(view.getContext(),"Nu aveti service-uri favorite!",Toast.LENGTH_LONG).show();
 
                 }
@@ -121,7 +117,7 @@ public class FavoritesFragment extends Fragment {
             public void onSuccess(DataSnapshot data) {
                if(data==null) {
                    Toast.makeText(view.getContext(),"Nu aveti service-uri favorite!",Toast.LENGTH_LONG).show();
-                   progressDialog.hide();
+
                }
 
 

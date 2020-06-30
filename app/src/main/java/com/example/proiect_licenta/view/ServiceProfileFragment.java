@@ -3,7 +3,10 @@ package com.example.proiect_licenta.view;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -21,6 +24,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import com.example.proiect_licenta.R;
+import com.example.proiect_licenta.model.ChatMessage;
 import com.example.proiect_licenta.model.OnGetDataListener;
 import com.example.proiect_licenta.model.Request;
 import com.example.proiect_licenta.model.Service;
@@ -42,7 +46,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Queue;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
@@ -53,21 +63,27 @@ public class ServiceProfileFragment extends Fragment {
     OnGetDataListener listenerServ;
     Service service;
     FirebaseUser firebaseUser;
+
     Service currentService= new Service();
    // ImageView chatButtonServ;
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference messageReference;
     Request request= new Request();
+    ChatMessage chatMessage= new ChatMessage();
     int id;
     String lastChildKey;
     String currentUserEmail;
     TextView tw_chatservice;
+
+
 
     View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         reference = database.getInstance().getReference().child("Request");
+        messageReference = database.getInstance().getReference().child("ChatMessage");
         view=inflater.inflate(R.layout.fragment_service_profile, container, false);
         service=new Service();
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -75,103 +91,93 @@ public class ServiceProfileFragment extends Fragment {
         //chatButtonServ=(ImageView)view.findViewById(R.id.chatButtonServ);
         tw_chatservice=(TextView) view.findViewById(R.id.tw_chatservice);
 
+        String time=Calendar.getInstance().getTime().toString();
+        final SharedPreferences prefs = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("lastTime", time);
+        editor.commit();
 
 
 
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                 Iterable<DataSnapshot> children=dataSnapshot.getChildren();
-//                for(DataSnapshot child: children){
-//                    request = child.getValue(Request.class);
-//
-//                    if (request.getService().getEmail().equals(currentUserEmail)) {
-//                        notification();
-//                    }
-//
-//                    }
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
-//
-//            reference.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                    request = dataSnapshot.getValue(Request.class);
-//
-//                    if (request.getService().getEmail().equals(currentUserEmail)) {
-//
-//                        lastChildKey = dataSnapshot.getKey();
-//
-//                    }
-//
-//
-//                }
-//
-//                @Override
-//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//
-//        if(lastChildKey!=null) {
-//            Query query = reference.orderByKey().startAt(lastChildKey);
-//            query.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                    request = dataSnapshot.getValue(Request.class);
-//
-//                    if (request.getService().getEmail().equals(currentUserEmail)) {
-//
-//                        notification();
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(getActivity()!=null) {
+                SharedPreferences prefs1 = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+
+                    String date = prefs1.getString("lastTime", null);
+
+                    Date lastTime = null;
+                    try {
+                        lastTime = stringToDate(date, "MMM d, yyyy HH:mm:ss");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    for (DataSnapshot child : children) {
+                        request = child.getValue(Request.class);
+
+                        if (request.getService().getEmail().equals(currentUserEmail) && request.getDataTrimiterii().getTime() > lastTime.getTime() && request.getDataTrimiterii().getTime() <= Calendar.getInstance().getTime().getTime()) {
+                            if (request.getStatus().equals("anulata")) {
+                                notification(request.getClient().getUsername() + " a anulat programarea.");
+
+                            } else {
+                                notification(request.getClient().getUsername() + " a trimis o cerere noua!");
+                            }
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        messageReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(getActivity()!=null) {
+                    SharedPreferences prefs1 = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+
+                    String date = prefs1.getString("lastTime", null);
+
+                    Date lastTime = null;
+                    try {
+                        lastTime = stringToDate(date, "MMM d, yyyy HH:mm:ss");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    for (DataSnapshot child : children) {
+                        chatMessage = child.getValue(ChatMessage.class);
+
+                        if (chatMessage.getMessageFor().equals(currentUserEmail) && chatMessage.getMessageTime().getTime() > lastTime.getTime() && chatMessage.getMessageTime().getTime() <= Calendar.getInstance().getTime().getTime()) {
+
+                                notification(chatMessage.getMessageUser() + " v-a trimis un mesaj nou!");
+                            }
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         listenerServ=new OnGetDataListener() {
@@ -189,9 +195,6 @@ public class ServiceProfileFragment extends Fragment {
                     if(service.getEmail().equals(currentUserEmail)){
                         currentService=service;
 
-//                        it = new Intent(view.getContext(), AboutServiceActivity.class);
-//                        it.putExtra("CurrentService",currentService);
-//                        startActivity(it);
                     }
                 }
 
@@ -223,10 +226,10 @@ public class ServiceProfileFragment extends Fragment {
 
 
 
-    private void notification(){
+    private void notification(String message){
 
 
-        String message = " Aveti o cerere noua!";
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel =
                     new NotificationChannel("n","n", NotificationManager.IMPORTANCE_DEFAULT);
@@ -243,52 +246,52 @@ public class ServiceProfileFragment extends Fragment {
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(view.getContext());
         managerCompat.notify(999,builder.build());
+
+        String currentTime=Calendar.getInstance().getTime().toString();
+        SharedPreferences prefs = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("lastTime", currentTime);
+        editor.commit();
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if(lastChildKey!=null) {
-//            Query query = reference.orderByKey().startAt(lastChildKey);
-//            query.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                    request = dataSnapshot.getValue(Request.class);
-//
-//                    if (request.getService().getEmail().equals(currentUserEmail)) {
-//
-//                        notification();
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-       // }
-
-    //}
 
     public void onDestroy() {
 
         super.onDestroy();
+        String currentTime=Calendar.getInstance().getTime().toString();
+        SharedPreferences prefs = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("lastTime", currentTime);
+        editor.commit();
+
+    }
+    public void onPause() {
+        super.onPause();
+        String currentTime=Calendar.getInstance().getTime().toString();
+        SharedPreferences prefs = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("lastTime", currentTime);
+        editor.commit();
+    }
+
+    public void onStop() {
+        super.onStop();
+        String currentTime=Calendar.getInstance().getTime().toString();
+        SharedPreferences prefs = getActivity().getSharedPreferences("X", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("lastTime", currentTime);
+        editor.commit();
+    }
+
+
+    private Date stringToDate(String aDate,String aFormat) throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy",
+                Locale.ENGLISH);
+        Date parsedDate = sdf.parse(aDate);
+       return parsedDate;
+
+
+
 
     }
 }

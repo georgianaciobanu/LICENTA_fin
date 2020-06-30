@@ -148,11 +148,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
 
-//         email.setText("servicecars@gmail.com");
-//         password.setText("parola1234");
+         email.setText("gscservice@mail.com");
+         password.setText("parola1234");
 
-            email.setText("client@mail.com");
-            password.setText("parola");
+//            email.setText("client@mail.com");
+//            password.setText("parola");
 
 
 

@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class FirebaseFunctions {
 
@@ -323,6 +324,7 @@ public class FirebaseFunctions {
         DatabaseReference databaseReference= FirebaseDatabase.getInstance()
                 .getReference("Request").child(request.getRequestId());
         databaseReference.child("status").setValue(status);
+        databaseReference.child("dataTrimiterii").setValue(Calendar.getInstance().getTime());
         request.setStatus(status);
 
     }

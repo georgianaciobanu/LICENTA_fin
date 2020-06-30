@@ -28,10 +28,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ChatActivity" />
+        <activity android:name=".view.ChatActivity"/>
         <activity android:name=".view.UpdatePhotosActivity" />
         <activity android:name=".view.UploadImageActivity" />
         <activity android:name=".view.DateTimePickerActivity" />

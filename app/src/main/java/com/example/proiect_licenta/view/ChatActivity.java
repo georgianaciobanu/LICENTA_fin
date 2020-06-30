@@ -3,6 +3,7 @@ package com.example.proiect_licenta.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,7 +68,7 @@ public class ChatActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-
+        NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         btnSend  = (FloatingActionButton)findViewById(R.id.fabChat);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 

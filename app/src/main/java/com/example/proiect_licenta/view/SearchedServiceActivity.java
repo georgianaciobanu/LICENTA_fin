@@ -206,7 +206,6 @@ public class SearchedServiceActivity extends AppCompatActivity implements OnMapR
                                         }
                                     }
                                     else{
-                                        Toast.makeText(getApplicationContext(), "acest service nu a introdus servicii", Toast.LENGTH_LONG).show();
 
                                     }
                                     if (ok) {
