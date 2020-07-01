@@ -82,11 +82,7 @@ public class SignUpServiceActivity extends AppCompatActivity implements View.OnF
 
 
         if (serviceNou != null) {
-            Toast.makeText(SignUpServiceActivity.this, "Info service 1: "
-                    + serviceNou.getUsername() + " "
-                    + serviceNou.getEmail() + " "
-                    + serviceNou.getTelefon() + " "
-                    + serviceNou.getPass(), Toast.LENGTH_LONG).show();
+         
             goToServiceProfile();
         }
     }

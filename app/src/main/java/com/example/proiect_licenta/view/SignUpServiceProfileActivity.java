@@ -110,15 +110,7 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
 
 
         if (currentService != null) {
-            Toast.makeText(SignUpServiceProfileActivity.this, "Info service 1: "
-                    + currentService.getUsername() + " "
-                    + currentService.getEmail() + " "
-                    + currentService.getTelefon() + " "
-                    + currentService.getPass() + " "
-                    + currentService.getDescriere() + " "
-                    + currentService.getNumeService() + " "
-                    + currentService.getProgram() + " "
-                    + currentService.getProprietar(), Toast.LENGTH_LONG).show();
+
             goToServiceProfile();
         }
     }
