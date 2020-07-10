@@ -270,7 +270,7 @@ public class SearchLocationActivity extends AppCompatActivity implements Locatio
             case R.id.ic_search:
                 List<Address> addressList = null;
                 MarkerOptions userMarkerOptions = new MarkerOptions();
-
+                address=mSearchText.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
                     Geocoder geocoder = new Geocoder(this);
                     try {

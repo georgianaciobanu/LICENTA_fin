@@ -38,10 +38,10 @@ public class SignUpServiceProfileActivity extends AppCompatActivity implements V
         numeService = (EditText) findViewById(R.id.et_serviceName);
         descriere = (EditText) findViewById(R.id.et_descriereService);
         program = (EditText) findViewById(R.id.et_program);
-        proprietar.setText("proprietar service");
-        numeService.setText("nume service");
-        descriere.setText("descrierea service-ului este aici");
-        program.setText("program service");
+//        proprietar.setText("proprietar service");
+//        numeService.setText("nume service");
+//        descriere.setText("descrierea service-ului este aici");
+//        program.setText("program service");
 
 
 

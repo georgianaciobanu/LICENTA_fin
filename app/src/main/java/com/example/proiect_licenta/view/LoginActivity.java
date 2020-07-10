@@ -126,15 +126,15 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                 password.setText(pass);
                 checkedTextView.setChecked(true);
 
-                //TODO: ELIMINARE PAGINA MAIN ACTIVITY
+
             }
 
 
-//         email.setText("servicecars@gmail.com");
-//         password.setText("parola1234");
+         email.setText("georgianaciobanu00@gmail.com");
+         password.setText("parola1234");
 
-            email.setText("client@mail.com");
-            password.setText("parola");
+//            email.setText("client@mail.com");
+//            password.setText("parola");
             mFirebaseAuth = FirebaseAuth.getInstance();
 
 

@@ -52,11 +52,11 @@ public class SignUpServiceActivity extends AppCompatActivity implements View.OnF
         pass = (EditText) findViewById(R.id.et_pass_service);
         comfirmedPass = (EditText) findViewById(R.id.et_confPass_service);
 
-        username.setText("username service");
-        email.setText("service@mail.com");
-        telefon.setText("0789554333");
-        pass.setText("pass666&");
-        comfirmedPass.setText("pass666&");
+//        username.setText("username service");
+//        email.setText("service@mail.com");
+//        telefon.setText("0789554333");
+//        pass.setText("pass666&");
+//        comfirmedPass.setText("pass666&");
 
         completeProfile.setOnClickListener(new View.OnClickListener() {
             @Override

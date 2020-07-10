@@ -64,9 +64,9 @@ public class AddServicesListActivity extends AppCompatActivity implements View.O
         denumire = (EditText) findViewById(R.id.et_denumireServiciu);
         detalii = (EditText) findViewById(R.id.et_detaliiServiciu);
 
-        denumire.setText("denumirea unui serviciu");
-        detalii.setText("detalii");
-        pret.setText("23.4");
+//        denumire.setText("denumirea unui serviciu");
+//        detalii.setText("detalii");
+//        pret.setText("23.4");
 
         detalii.setOnFocusChangeListener(this);
         denumire.setOnFocusChangeListener(this);

@@ -64,11 +64,11 @@ public class SignUpClientActivity extends AppCompatActivity implements View.OnFo
         telefon = (EditText) findViewById(R.id.et_telefon);
         pass = (EditText) findViewById(R.id.et_pass);
         comfirmedPass = (EditText) findViewById(R.id.et_confPass);
-        username.setText("username client");
-        email.setText("client@mail.com");
-        telefon.setText("0789554333");
-        pass.setText("pass123!");
-        comfirmedPass.setText("pass123!");
+//        username.setText("username client");
+//        email.setText("client@mail.com");
+//        telefon.setText("0789554333");
+//        pass.setText("pass123!");
+//        comfirmedPass.setText("pass123!");
         username.setOnFocusChangeListener(this);
         email.setOnFocusChangeListener(this);
         telefon.setOnFocusChangeListener(this);
