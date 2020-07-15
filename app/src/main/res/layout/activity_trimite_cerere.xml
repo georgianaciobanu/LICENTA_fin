@@ -22,15 +22,15 @@
 
             <TextView
                 android:id="@+id/tw_cerere"
-                android:layout_width="370dp"
-                android:layout_height="52dp"
+                android:layout_width="342dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/tw_cerere"
-                android:textStyle="bold"
                 android:textColor="?attr/textcolor"
                 android:textSize="23dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
@@ -52,11 +52,12 @@
                 android:id="@+id/tw_serviciuCerere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/tw_serviciuCerere"
-                android:textStyle="bold"
                 android:textColor="?attr/textcolor"
                 android:textSize="14dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tw_cerere"></TextView>
 
@@ -64,6 +65,7 @@
                 android:id="@+id/spinnerCategorii"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:background="#11000000"
                 android:textColor="@color/colorBlue"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,11 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="88dp"
                 android:text="@string/tw_dataCererii"
-                android:textStyle="bold"
                 android:textColor="?attr/textcolor"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tw_serviciuCerere"></TextView>
 
@@ -90,13 +92,13 @@
                 android:id="@+id/tw_alegeData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="92dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/tw_alegeData"
                 android:textColor="?attr/textcolor"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.958"
+                app:layout_constraintHorizontal_bias="0.957"
                 app:layout_constraintStart_toEndOf="@+id/tw_dataCererii"
                 app:layout_constraintTop_toBottomOf="@+id/tw_serviciuCerere"></TextView>
 
